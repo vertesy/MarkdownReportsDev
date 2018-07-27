@@ -1,0 +1,6 @@
+name	user	system	elapsed
+Color_Check	0.006	0.002	0.408	
+UnlessSpec	0.008	0.003	0.432	
+as.factor.numeric	0.006	0.003	0.891	
+as.logical.wNames	0.002	0.000	0.270	
+barplot_label	0.009	0.003	0.344	
