@@ -276,6 +276,8 @@ create_set_OutDir <- function (setDir = TRUE, ...) {
 #' Save the currently active graphic device (for complicated plots).  Insert links to your markdown
 #' report, set by "path_of_report". Name the file by naming the variable!
 #' @param plotname Title of the plot (main parameter) and also the name of the file.
+#' @param OverwritePrevPDF Overwrite previous PDF image (as name stored in plotnameLastPlot).
+#' If FALSE, it creates a name from the date.
 #' @param ... Pass any other parameter of the corresponding plotting function (most of them should
 #'   work).
 #' @param w Width of the saved pdf image, in inches.
@@ -290,10 +292,14 @@ create_set_OutDir <- function (setDir = TRUE, ...) {
 wplot_save_this <-
   function (plotname = ww.autoPlotName(),
             ...,
+            OverwritePrevPDF = TRUE,
             w = unless.specified("b.defSize", 7),
             h = w,
             mdlink = FALSE,
             PNG = unless.specified("b.usepng")) {
+    condition = F
+    if (!OverwritePrevPDF) {plotname = make.names(date())}
+
     ww.dev.copy(
       PNG_ = PNG,
       fname_ = plotname,
@@ -1660,6 +1666,7 @@ wvioplot_list <-
 #' function (most of them should work).
 #' @param main Title of the plot (main parameter) and also the name of the file.
 #' @param sub Subtitle below the plot.
+#' @param xlab X-axis label.
 #' @param ylab Y-axis label.
 #' @param pch Define the symbol for each data point. A number [0-25] or any string between ""-s.
 #' @param viocoll Background color of each individual violing plot.
@@ -1689,15 +1696,16 @@ wvioplot_list <-
 wviostripchart_list <-
   function (yourlist,
             ...,
-            pch = 23,
-            viocoll = 0,
+            pch = 20,
+            viocoll = c(2:(length(yourlist) + 1)),
             vioborder = 1,
-            bg = 0,
-            col = "black",
+            bg = 1,
+            col = 1,
             metod = "jitter",
-            jitter = 0.1,
+            jitter = 0.25,
             main = as.character(substitute(yourlist)),
             sub = NULL,
+            xlab = names(yourlist),
             ylab = "",
             incrBottMarginBy = 0,
             savefile = unless.specified("b.save.wplots"),
@@ -1735,13 +1743,18 @@ wviostripchart_list <-
         vioplot(
           na.omit.strip(yourlist[[i]]),
           ...,
-          at = i
-          ,
+          at = i,
           add = TRUE,
           col = viocoll[i],
           border = 1
         )
       } #if
+      axis(
+        side = 1,
+        at = 1:l_list,
+        labels = xlab,
+        las = 2
+      )
     }
     for (i in 1:length(yourlist)) {
       if (length(na.omit.strip(yourlist[[i]]))) {
@@ -1756,8 +1769,7 @@ wviostripchart_list <-
           na.omit.strip(yourlist[[i]]),
           at = i,
           add = TRUE,
-          vertical = TRUE
-          ,
+          vertical = TRUE,
           method = metod,
           jitter = jitter,
           pch = pch,
@@ -1782,6 +1794,7 @@ wviostripchart_list <-
       md.image.linker(fname_wo_ext = fname)
     }
   }
+
 
 
 
@@ -2378,7 +2391,7 @@ wlegend.label <-
 
 barplot_label <-
   function (barplotted_variable,
-            labels,
+            labels = iround(barplotted_variable),
             bottom = FALSE,
             TopOffset = .5,
             relpos_bottom = 0.1,
@@ -2731,26 +2744,19 @@ md.image.linker <-
   function (fname_wo_ext, OutDir_ = ww.set.OutDir()) {
     splt = strsplit(fname_wo_ext, "/")
     fn = splt[[1]][length(splt[[1]])]
-    llogit(kollapse("![]", "(", fname_wo_ext, ".pdf)", print = FALSE))
     if (unless.specified("b.usepng")) {
       if (unless.specified("b.png4Github")) {
         dirnm = strsplit(x = OutDir_, split = "/")[[1]]
         dirnm = dirnm[length(dirnm)]
-        llogit(kollapse(
-          "![]",
-          "(Reports/",
-          dirnm,
-          "/",
-          fname_wo_ext,
-          ".png)",
-          print = FALSE
-        ))
+        llogit(kollapse( "![]", "(Reports/", dirnm, "/", fname_wo_ext, ".png)", print = FALSE))
       }	else {
         if (exists('b.Subdirname') && !b.Subdirname == FALSE) {
           fname_wo_ext = paste0(b.Subdirname, "/", fname_wo_ext)
         } # set only if b.Subdirname is defined, it is not FALSE.
         llogit(kollapse("![", fn, "]", "(", fname_wo_ext, ".png)", print = FALSE))
       }
+    } else {
+      llogit(kollapse("![", fn, "]", "(", fname_wo_ext, ".pdf)", print = FALSE))
     } # if b.usepng
   }
 
@@ -3122,8 +3128,10 @@ filter_HP <-
       print  ("NOT LOGGED")
     }
     if (plot.hist) {
+      plotname = substitute(numeric_vector)
       whist(
         variable = numeric_vector,
+        main = plotname,
         vline = threshold,
         filtercol = 1,
         savefile = saveplot,
@@ -3177,14 +3185,14 @@ filter_LP <-
       length(numeric_vector), " entries in ", substitute (numeric_vector),
       " fall below a threshold value of: ", iround(threshold)
     )
-    if (ww.variable.and.path.exists(path_of_report)) {
+    if (ww.variable.and.path.exists(path_of_report, alt.message = "NOT LOGGED")) {
       llogit (conclusion)
-    } else {
-      print  ("NOT LOGGED")
     }
     if (plot.hist) {
+      plotname = substitute(numeric_vector)
       whist(
         variable = numeric_vector,
+        main = plotname,
         vline = threshold,
         filtercol = -1,
         savefile = saveplot,
@@ -3251,8 +3259,10 @@ filter_MidPass <-
       print  ("NOT LOGGED")
     }
     if (plot.hist) {
+      plotname = substitute(numeric_vector)
       whist(
         variable = numeric_vector,
+        main = plotname,
         vline = c(HP_threshold, LP_threshold),
         filtercol = if (EdgePass) - 1 else 1,
         savefile = saveplot,

@@ -4,10 +4,11 @@
 \alias{wviostripchart_list}
 \title{wviostripchart_list}
 \usage{
-wviostripchart_list(yourlist, ..., pch = 23, viocoll = 0, vioborder = 1,
-  bg = 0, col = "black", metod = "jitter", jitter = 0.1,
-  main = as.character(substitute(yourlist)), sub = NULL, ylab = "",
-  incrBottMarginBy = 0, savefile = unless.specified("b.save.wplots"),
+wviostripchart_list(yourlist, ..., pch = 20, viocoll = c(2:(length(yourlist)
+  + 1)), vioborder = 1, bg = 1, col = 1, metod = "jitter",
+  jitter = 0.25, main = as.character(substitute(yourlist)), sub = NULL,
+  xlab = names(yourlist), ylab = "", incrBottMarginBy = 0,
+  savefile = unless.specified("b.save.wplots"),
   w = unless.specified("b.defSize", 7), h = w, mdlink = ww.set.mdlink(),
   PNG = unless.specified("b.usepng"))
 }
@@ -36,6 +37,8 @@ data points (to avoid overlaps).}
 \item{main}{Title of the plot (main parameter) and also the name of the file.}
 
 \item{sub}{Subtitle below the plot.}
+
+\item{xlab}{X-axis label.}
 
 \item{ylab}{Y-axis label.}
 

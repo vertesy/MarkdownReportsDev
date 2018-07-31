@@ -4,7 +4,7 @@
 \alias{wplot_save_this}
 \title{wplot_save_this}
 \usage{
-wplot_save_this(plotname = ww.autoPlotName(), ...,
+wplot_save_this(plotname = ww.autoPlotName(), ..., OverwritePrevPDF = TRUE,
   w = unless.specified("b.defSize", 7), h = w, mdlink = FALSE,
   PNG = unless.specified("b.usepng"))
 }
@@ -13,6 +13,9 @@ wplot_save_this(plotname = ww.autoPlotName(), ...,
 
 \item{...}{Pass any other parameter of the corresponding plotting function (most of them should
 work).}
+
+\item{OverwritePrevPDF}{Overwrite previous PDF image (as name stored in plotnameLastPlot).
+If FALSE, it creates a name from the date.}
 
 \item{w}{Width of the saved pdf image, in inches.}
 
