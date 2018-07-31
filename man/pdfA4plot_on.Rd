@@ -4,7 +4,7 @@
 \alias{pdfA4plot_on}
 \title{pdfA4plot_on}
 \usage{
-pdfA4plot_on(pname = date(), ..., w = UnlessSpec("b.defSize.fullpage",
+pdfA4plot_on(pname = date(), ..., w = unless.specified("b.defSize.fullpage",
   8.27), h = 11.69, rows = 4, cols = rows - 1, one_file = TRUE,
   mdlink = ww.set.mdlink(), title = ww.ttl_field(pname))
 }

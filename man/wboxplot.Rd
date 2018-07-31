@@ -6,8 +6,9 @@
 \usage{
 wboxplot(yourlist, main = as.character(substitute(yourlist)), sub = FALSE,
   ylab = "", col = "gold1", incrBottMarginBy = 0, tilted_text = FALSE,
-  savefile = UnlessSpec("b.save.wplots"), w = UnlessSpec("b.defSize", 7),
-  h = w, mdlink = ww.set.mdlink(), PNG = UnlessSpec("b.usepng"), ...)
+  savefile = unless.specified("b.save.wplots"),
+  w = unless.specified("b.defSize", 7), h = w, mdlink = ww.set.mdlink(),
+  PNG = unless.specified("b.usepng"), ...)
 }
 \arguments{
 \item{yourlist}{The variable to plot.}

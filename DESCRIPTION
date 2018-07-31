@@ -14,7 +14,7 @@ License: GPL-3 + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Author: Abel Vertesy <a.vertesy@hubrecht.eu> [aut, cre]
-Packaged: 2018-07-31 14:05:15
+Packaged: 2018-07-31 15:13:04
 Repository: CRAN
 Imports: stats, methods, sm, graphics, grDevices, gplots, RColorBrewer, colorRamps, clipr, vioplot, VennDiagram
 BugReports: https://github.com/vertesy/MarkdownReports/issues

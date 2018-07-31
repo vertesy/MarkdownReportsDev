@@ -10,8 +10,9 @@ wplot(df2col, col = 1, pch = 18, ..., panel_first = grid(NULL),
   arrow_lwd = 1, col_errorbar = 1, ylim = FALSE, xlim = FALSE,
   abline = c(FALSE, "v", "h", "ab")[1], a = FALSE, b = FALSE, lty = 1,
   lwd = 1, col_abline = 1, equal.axes = FALSE,
-  savefile = UnlessSpec("b.save.wplots"), mdlink = ww.set.mdlink(),
-  w = UnlessSpec("b.defSize", 7), h = w, PNG = UnlessSpec("b.usepng"))
+  savefile = unless.specified("b.save.wplots"), mdlink = ww.set.mdlink(),
+  w = unless.specified("b.defSize", 7), h = w,
+  PNG = unless.specified("b.usepng"))
 }
 \arguments{
 \item{df2col}{Input data frame to be plotted_2columns}

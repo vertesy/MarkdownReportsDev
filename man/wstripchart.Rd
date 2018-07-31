@@ -9,8 +9,9 @@ wstripchart(yourlist, main = as.character(substitute(yourlist)), sub = NULL,
   tilted_text = FALSE, metod = "jitter", jitter = 0.3, pch = 18,
   pchlwd = 1, cex.lab = 1, pchcex = 1.5, bg = "seagreen2",
   colorbyColumn = TRUE, col = if (colorbyColumn) 1:length(yourlist) else 1,
-  savefile = UnlessSpec("b.save.wplots"), w = UnlessSpec("b.defSize", 7),
-  h = w, mdlink = ww.set.mdlink(), PNG = UnlessSpec("b.usepng"), ...)
+  savefile = unless.specified("b.save.wplots"),
+  w = unless.specified("b.defSize", 7), h = w, mdlink = ww.set.mdlink(),
+  PNG = unless.specified("b.usepng"), ...)
 }
 \arguments{
 \item{yourlist}{Input list to be plotted.}

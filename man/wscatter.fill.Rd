@@ -10,9 +10,9 @@ wscatter.fill(df2col = cbind(A = rnorm(100), B = rnorm(100)), ..., color,
   plotname = substitute(df2col), plot.title = plotname, plot.axes,
   key.title, key.axes, asp = NA, xaxs = "i", yaxs = "i", las = 1,
   axes = TRUE, frame.plot = axes, xlab, ylab,
-  savefile = UnlessSpec("b.save.wplots"), w = UnlessSpec("b.defSize", 7),
-  h = w, incrBottMarginBy = 0, mdlink = ww.set.mdlink(),
-  PNG = UnlessSpec("b.usepng"))
+  savefile = unless.specified("b.save.wplots"),
+  w = unless.specified("b.defSize", 7), h = w, incrBottMarginBy = 0,
+  mdlink = ww.set.mdlink(), PNG = unless.specified("b.usepng"))
 }
 \arguments{
 \item{df2col}{Input data, a 2 column dataframe}

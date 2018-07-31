@@ -94,10 +94,10 @@ setup_MarkdownReports <-
     if (!substrRight(OutDir, 1) == "/")
       OutDir = paste0(OutDir, "/") # add '/' if necessary
 
-    assign("OutDir", OutDir, envir = .GlobalEnv)
+    ww.assign_to_global("OutDir", OutDir, 1)
     iprint("All files will be saved under 'OutDir': ", OutDir)
     path_of_report <- paste0(OutDir, scriptname, ".log.md")
-    assign("path_of_report", path_of_report, envir = .GlobalEnv)
+    ww.assign_to_global("path_of_report", path_of_report, 1)
     iprint("MarkdownReport location is stored in 'path_of_report': ",
            path_of_report)
 
@@ -129,17 +129,17 @@ setup_MarkdownReports <-
     }
     if (!exists(BackupDir)) {
       dir.create(BackupDir, showWarnings = FALSE)
-      assign("BackupDir", BackupDir, envir = .GlobalEnv)
+      ww.assign_to_global("BackupDir", BackupDir, 1)
     }
-    assign("b.defSize", b.defSize, envir = .GlobalEnv)
-    assign("b.defSize.fullpage", b.defSize.fullpage, envir = .GlobalEnv)
-    assign("b.mdlink", b.mdlink, envir = .GlobalEnv)
-    assign("b.save.wplots", b.save.wplots, envir = .GlobalEnv)
-    assign("b.usepng", b.usepng, envir = .GlobalEnv)
-    assign("b.png4Github", b.png4Github, envir = .GlobalEnv)
-    assign("b.scriptname", scriptname, envir = .GlobalEnv)
-    assign("b.report.not.found",
-           "Path to the Markdown report file is not defined in path_of_report", envir = .GlobalEnv)
+    ww.assign_to_global("b.defSize", b.defSize, 1)
+    ww.assign_to_global("b.defSize.fullpage", b.defSize.fullpage, 1)
+    ww.assign_to_global("b.mdlink", b.mdlink, 1)
+    ww.assign_to_global("b.save.wplots", b.save.wplots, 1)
+    ww.assign_to_global("b.usepng", b.usepng, 1)
+    ww.assign_to_global("b.png4Github", b.png4Github, 1)
+    ww.assign_to_global("b.scriptname", scriptname, 1)
+    ww.assign_to_global("b.report.not.found",
+           "Path to the Markdown report file is not defined in path_of_report", 1)
   }
 
 # create_set_SubDir
@@ -176,12 +176,12 @@ create_set_SubDir <-
       if (exists("OutDirOrig"))
         iprint("OutDirOrig was defined as:", OutDirOrig)
       iprint("OutDirOrig will be:", OutDir)
-      assign("OutDirOrig", OutDir, envir = .GlobalEnv)
+      ww.assign_to_global("OutDirOrig", OutDir, 1)
     } #if
     iprint("Call *create_set_Original_OutDir()* when chaning back to the main dir.")
-    assign("OutDir", NewOutDir, envir = .GlobalEnv)
-    assign("b.Subdirname", b.Subdirname, envir = .GlobalEnv)
-    # Flag that ww.MarkDown_Img_Logger_PDF_and_PNG uses
+    ww.assign_to_global("OutDir", NewOutDir, 1)
+    ww.assign_to_global("b.Subdirname", b.Subdirname, 1)
+    # Flag that md.image.linker uses
   }
 
 # create_set_Original_OutDir
@@ -207,8 +207,8 @@ create_set_Original_OutDir <-
     if (setDir) {
       setwd(NewOutDir)
     }
-    assign("OutDir", NewOutDir, envir = .GlobalEnv)
-    assign("b.Subdirname", b.Subdirname, envir = .GlobalEnv)
+    ww.assign_to_global("OutDir", NewOutDir, 1)
+    ww.assign_to_global("b.Subdirname", b.Subdirname, 1)
   }
 
 
@@ -225,7 +225,7 @@ continue_logging_markdown <- function (b.scriptname) {
   path_of_report <-
     kollapse(path, b.scriptname, ".log.md", print = FALSE)
   iprint("Writing report in:", path_of_report)
-  assign("path_of_report", path_of_report, envir = .GlobalEnv)
+  ww.assign_to_global("path_of_report", path_of_report, 1)
 
   BackupDir = kollapse(path,
                        "/",
@@ -234,7 +234,7 @@ continue_logging_markdown <- function (b.scriptname) {
                        print = FALSE)
   if (!exists(BackupDir)) {
     dir.create(BackupDir, showWarnings = FALSE)
-    assign("BackupDir", BackupDir, envir = .GlobalEnv)
+    ww.assign_to_global("BackupDir", BackupDir, 1)
   }
 }
 
@@ -263,8 +263,10 @@ create_set_OutDir <- function (setDir = TRUE, ...) {
   if (setDir) {
     setwd(OutDir)
   }
-  assign("OutDir", OutDir, envir = .GlobalEnv)
+  ww.assign_to_global("OutDir", OutDir, 1)
 }
+
+
 
 
 # Plots ------------------------------------------------------------------------------------------
@@ -288,10 +290,10 @@ create_set_OutDir <- function (setDir = TRUE, ...) {
 wplot_save_this <-
   function (plotname = ww.autoPlotName(),
             ...,
-            w = UnlessSpec("b.defSize", 7),
+            w = unless.specified("b.defSize", 7),
             h = w,
             mdlink = FALSE,
-            PNG = UnlessSpec("b.usepng")) {
+            PNG = unless.specified("b.usepng")) {
     ww.dev.copy(
       PNG_ = PNG,
       fname_ = plotname,
@@ -300,7 +302,7 @@ wplot_save_this <-
     )
 
     if (mdlink) {
-      ww.MarkDown_Img_Logger_PDF_and_PNG(fname_wo_ext = plotname)
+      md.image.linker(fname_wo_ext = plotname)
     }
   }
 
@@ -381,11 +383,11 @@ wplot <-
             lwd = 1,
             col_abline = 1,
             equal.axes = FALSE,
-            savefile = UnlessSpec("b.save.wplots"),
+            savefile = unless.specified("b.save.wplots"),
             mdlink = ww.set.mdlink(),
-            w = UnlessSpec("b.defSize", 7),
+            w = unless.specified("b.defSize", 7),
             h = w,
-            PNG = UnlessSpec("b.usepng")) {
+            PNG = unless.specified("b.usepng")) {
     x = df2col[, 1]
     y = df2col[, 2]
     fname = kollapse(plotname, ".plot")
@@ -465,7 +467,7 @@ wplot <-
         col = col_abline
       )
     }
-    assign("plotnameLastPlot", fname, envir = .GlobalEnv)
+    ww.assign_to_global("plotnameLastPlot", fname, 1)
     if (savefile) {
       ww.dev.copy(
         PNG_ = PNG,
@@ -475,7 +477,7 @@ wplot <-
       )
     }
     if (mdlink & savefile) {
-      ww.MarkDown_Img_Logger_PDF_and_PNG(fname_wo_ext = fname)
+      md.image.linker(fname_wo_ext = fname)
     }
   }
 
@@ -549,12 +551,12 @@ wscatter.fill <-
             frame.plot = axes,
             xlab,
             ylab,
-            savefile = UnlessSpec("b.save.wplots"),
-            w = UnlessSpec("b.defSize", 7),
+            savefile = unless.specified("b.save.wplots"),
+            w = unless.specified("b.defSize", 7),
             h = w,
             incrBottMarginBy = 0,
             mdlink = ww.set.mdlink(),
-            PNG = UnlessSpec("b.usepng")) {
+            PNG = unless.specified("b.usepng")) {
     x = df2col[, 1]
     y = df2col[, 2]
     CNN = colnames(df2col)
@@ -662,9 +664,9 @@ wscatter.fill <-
     if (incrBottMarginBy) {
       par("mar" = .ParMarDefault)
     }
-    assign("plotnameLastPlot", fname, envir = .GlobalEnv)
+    ww.assign_to_global("plotnameLastPlot", fname, 1)
     if (mdlink & savefile) {
-      ww.MarkDown_Img_Logger_PDF_and_PNG(fname_wo_ext = fname)
+      md.image.linker(fname_wo_ext = fname)
     }
   }
 
@@ -732,12 +734,12 @@ wbarplot <-
             lower = upper,
             arrow_width = 0.1,
             arrow_lwd = 1,
-            savefile = UnlessSpec("b.save.wplots"),
-            w = UnlessSpec("b.defSize", 7),
+            savefile = unless.specified("b.save.wplots"),
+            w = unless.specified("b.defSize", 7),
             h = w,
             incrBottMarginBy = 0,
             mdlink = ww.set.mdlink(),
-            PNG = UnlessSpec("b.usepng")) {
+            PNG = unless.specified("b.usepng")) {
     isVec = is.vector(variable) | is.table(variable)
     isMat = is.matrix(variable) | is.data.frame(variable)
 
@@ -852,9 +854,9 @@ wbarplot <-
     if (incrBottMarginBy) {
       par("mar" = .ParMarDefault)
     }
-    assign("plotnameLastPlot", fname, envir = .GlobalEnv)
+    ww.assign_to_global("plotnameLastPlot", fname, 1)
     if (mdlink & savefile) {
-      ww.MarkDown_Img_Logger_PDF_and_PNG(fname_wo_ext = fname)
+      md.image.linker(fname_wo_ext = fname)
     }
   }
 
@@ -911,11 +913,11 @@ whist <-
             vline = FALSE,
             filter = c(FALSE, "HighPass", "LowPass", "MidPass")[1],
             passequal = TRUE,
-            savefile = UnlessSpec("b.save.wplots"),
-            w = UnlessSpec("b.defSize", 7),
+            savefile = unless.specified("b.save.wplots"),
+            w = unless.specified("b.defSize", 7),
             h = w,
             mdlink = ww.set.mdlink(),
-            PNG = UnlessSpec("b.usepng")) {
+            PNG = unless.specified("b.usepng")) {
     xtra = list(...)
     xlb <- xlab # to avoid circular reference in the inside function argument
     if (length(variable) > 0) {
@@ -996,9 +998,9 @@ whist <-
     } else {
       iprint(variable, " IS EMPTY")
     }
-    assign("plotnameLastPlot", fname, envir = .GlobalEnv)
+    ww.assign_to_global("plotnameLastPlot", fname, 1)
     if (mdlink & savefile) {
-      ww.MarkDown_Img_Logger_PDF_and_PNG(fname_wo_ext = fname)
+      md.image.linker(fname_wo_ext = fname)
     }
 
     if (!is.null(filter)) {
@@ -1065,11 +1067,11 @@ wboxplot <-
             col = "gold1",
             incrBottMarginBy = 0,
             tilted_text = FALSE,
-            savefile = UnlessSpec("b.save.wplots"),
-            w = UnlessSpec("b.defSize", 7),
+            savefile = unless.specified("b.save.wplots"),
+            w = unless.specified("b.defSize", 7),
             h = w,
             mdlink = ww.set.mdlink(),
-            PNG = UnlessSpec("b.usepng"),
+            PNG = unless.specified("b.usepng"),
             ...) {
     fname = kollapse(main, ".boxplot")
     if (incrBottMarginBy) {
@@ -1111,12 +1113,12 @@ wboxplot <-
         h_ = h
       )
     }
-    assign("plotnameLastPlot", fname, envir = .GlobalEnv)
+    ww.assign_to_global("plotnameLastPlot", fname, 1)
     if (incrBottMarginBy) {
       par("mar" = .ParMarDefault)
     }
     if (mdlink & savefile) {
-      ww.MarkDown_Img_Logger_PDF_and_PNG(fname_wo_ext = fname)
+      md.image.linker(fname_wo_ext = fname)
     }
   }
 
@@ -1150,11 +1152,11 @@ wpie <-
             both_pc_and_value = FALSE,
             plotname = substitute(NamedVector),
             col = gplots::rich.colors(length(NamedVector)),
-            savefile = UnlessSpec("b.save.wplots"),
-            w = UnlessSpec("b.defSize", 7),
+            savefile = unless.specified("b.save.wplots"),
+            w = unless.specified("b.defSize", 7),
             h = w,
             mdlink = ww.set.mdlink(),
-            PNG = UnlessSpec("b.usepng"),
+            PNG = unless.specified("b.usepng"),
             ...) {
     # if (!require("gplots")) {
     #   print("Please install gplots: install.packages('gplots')")
@@ -1203,7 +1205,7 @@ wpie <-
       )
     }
     if (mdlink & savefile) {
-      ww.MarkDown_Img_Logger_PDF_and_PNG(fname_wo_ext = fname)
+      md.image.linker(fname_wo_ext = fname)
     }
   }
 
@@ -1271,11 +1273,11 @@ wstripchart <-
               1:length(yourlist)
             else
               1,
-            savefile = UnlessSpec("b.save.wplots"),
-            w = UnlessSpec("b.defSize", 7),
+            savefile = unless.specified("b.save.wplots"),
+            w = unless.specified("b.defSize", 7),
             h = w,
             mdlink = ww.set.mdlink(),
-            PNG = UnlessSpec("b.usepng"),
+            PNG = unless.specified("b.usepng"),
             ...) {
 
     col_ <- col # to avoid circular reference in the inside function argument
@@ -1355,9 +1357,9 @@ wstripchart <-
     if (incrBottMarginBy) {
       par("mar" = .ParMarDefault)
     }
-    assign("plotnameLastPlot", fname, envir = .GlobalEnv)
+    ww.assign_to_global("plotnameLastPlot", fname, 1)
     if (mdlink & savefile) {
-      ww.MarkDown_Img_Logger_PDF_and_PNG(fname_wo_ext = fname)
+      md.image.linker(fname_wo_ext = fname)
     }
   }
 
@@ -1420,11 +1422,11 @@ wstripchart_list <- function (yourlist,
             col = "black",
             metod = "jitter",
             jitter = 0.2,
-            savefile = UnlessSpec("b.save.wplots"),
-            w = UnlessSpec("b.defSize"),
+            savefile = unless.specified("b.save.wplots"),
+            w = unless.specified("b.defSize"),
             h = w,
             mdlink = ww.set.mdlink(),
-            PNG = UnlessSpec("b.usepng")) {
+            PNG = unless.specified("b.usepng")) {
     fname = kollapse(main, ".stripchart")
     if (incrBottMarginBy) {
       .ParMarDefault <- par("mar")
@@ -1502,9 +1504,9 @@ wstripchart_list <- function (yourlist,
     if (incrBottMarginBy) {
       par("mar" = .ParMarDefault)
     }
-    assign("plotnameLastPlot", fname, envir = .GlobalEnv)
+    ww.assign_to_global("plotnameLastPlot", fname, 1)
     if (mdlink & savefile) {
-      ww.MarkDown_Img_Logger_PDF_and_PNG(fname_wo_ext = fname)
+      md.image.linker(fname_wo_ext = fname)
     }
   }
 
@@ -1558,11 +1560,11 @@ wvioplot_list <-
             incrBottMarginBy = 0,
             tilted_text = FALSE,
             yoffset = 0,
-            savefile = UnlessSpec("b.save.wplots"),
-            w = UnlessSpec("b.defSize", 7),
+            savefile = unless.specified("b.save.wplots"),
+            w = unless.specified("b.defSize", 7),
             h = w,
             mdlink = ww.set.mdlink(),
-            PNG = UnlessSpec("b.usepng")) {
+            PNG = unless.specified("b.usepng")) {
     stopifnot(is.list(yourlist))
     # if (!require("vioplot")) {
     #   print("Please install vioplot: install.packages('vioplot')")
@@ -1639,9 +1641,9 @@ wvioplot_list <-
     if (incrBottMarginBy) {
       par("mar" = .ParMarDefault)
     }
-    assign("plotnameLastPlot", fname, envir = .GlobalEnv)
+    ww.assign_to_global("plotnameLastPlot", fname, 1)
     if (mdlink & savefile) {
-      ww.MarkDown_Img_Logger_PDF_and_PNG(fname_wo_ext = fname)
+      md.image.linker(fname_wo_ext = fname)
     }
   }
 
@@ -1698,11 +1700,11 @@ wviostripchart_list <-
             sub = NULL,
             ylab = "",
             incrBottMarginBy = 0,
-            savefile = UnlessSpec("b.save.wplots"),
-            w = UnlessSpec("b.defSize", 7),
+            savefile = unless.specified("b.save.wplots"),
+            w = unless.specified("b.defSize", 7),
             h = w,
             mdlink = ww.set.mdlink(),
-            PNG = UnlessSpec("b.usepng")) {
+            PNG = unless.specified("b.usepng")) {
     fname = kollapse(main, ".VioStripchart")
     # if (!require("vioplot")) {
     #   print("Please install vioplot: install.packages('vioplot')")
@@ -1775,9 +1777,9 @@ wviostripchart_list <-
     if (incrBottMarginBy) {
       par("mar" = .ParMarDefault)
     }
-    assign("plotnameLastPlot", fname, envir = .GlobalEnv)
+    ww.assign_to_global("plotnameLastPlot", fname, 1)
     if (mdlink & savefile) {
-      ww.MarkDown_Img_Logger_PDF_and_PNG(fname_wo_ext = fname)
+      md.image.linker(fname_wo_ext = fname)
     }
   }
 
@@ -1813,7 +1815,7 @@ wvenn <-
             fill = 1:length(yourlist),
             subt,
             ...,
-            w = UnlessSpec("b.defSize", 7),
+            w = unless.specified("b.defSize", 7),
             h = w,
             mdlink = ww.set.mdlink(),
             plotname = substitute(yourlist)) {
@@ -1854,9 +1856,9 @@ wvenn <-
     # print(names(yourlist))
 
     if (mdlink) {
-      llogit(ww.MarkDown_ImgLink_formatter(fname))
+      llogit(ww.md.image.link.parser(fname))
       if (b.usepng == TRUE && b.png4Github == TRUE) {
-        llogit(ww.MarkDown_ImgLink_formatter(paste0("Reports/", fname)))
+        llogit(ww.md.image.link.parser(paste0("Reports/", fname)))
       }
     }
   }
@@ -1891,10 +1893,10 @@ wbarplot_dfCol <-
             ...,
             colName,
             col = "gold1",
-            savefile = UnlessSpec("b.save.wplots"),
-            w = UnlessSpec("b.defSize", 7),
+            savefile = unless.specified("b.save.wplots"),
+            w = unless.specified("b.defSize", 7),
             h = w,
-            PNG = UnlessSpec("b.usepng")) {
+            PNG = unless.specified("b.usepng")) {
     stopifnot(colName %in% colnames(df))
     variable = unlist(df[, colName])
     stopifnot(length(variable) > 1)
@@ -1949,10 +1951,10 @@ whist_dfCol <-
             colName,
             col = "gold",
             ...,
-            savefile = UnlessSpec("b.save.wplots"),
-            w = UnlessSpec("b.defSize", 7),
+            savefile = unless.specified("b.save.wplots"),
+            w = unless.specified("b.defSize", 7),
             h = w,
-            PNG = UnlessSpec("b.usepng")) {
+            PNG = unless.specified("b.usepng")) {
     stopifnot(colName %in% colnames(df))
     variable = as.vector(unlist(df[, colName]))
     stopifnot(length(variable) > 1)
@@ -2039,7 +2041,7 @@ whist_dfCol <-
 pdfA4plot_on <-
   function (pname = date(),
             ...,
-            w = UnlessSpec("b.defSize.fullpage", 8.27),
+            w = unless.specified("b.defSize.fullpage", 8.27),
             h = 11.69,
             rows = 4,
             cols = rows - 1,
@@ -2048,9 +2050,9 @@ pdfA4plot_on <-
             title = ww.ttl_field(pname)) {
     fname = ww.FnP_parser(pname, "pdf")
     try.dev.off()
-    assign("b.mfrow_def", par("mfrow"), fname, envir = .GlobalEnv)
-    assign("b.bg_def", par("bg"), fname, envir = .GlobalEnv)
-    assign("b.save.wplots", FALSE, envir = .GlobalEnv) # switch of "savefile" option
+    ww.assign_to_global("b.mfrow_def", par("mfrow"), 1)
+    ww.assign_to_global("b.bg_def", par("bg"), 1)
+    ww.assign_to_global("b.save.wplots", FALSE, 1) # switch of "savefile" option
     pdf(
       fname,
       width = w,
@@ -2064,7 +2066,7 @@ pdfA4plot_on <-
       plotting in the A4 pdf.: pdfA4plot_off ()"
     )
     if (mdlink) {
-      ww.MarkDown_Img_Logger_PDF_and_PNG(fname_wo_ext = pname)
+      md.image.linker(fname_wo_ext = pname)
     }
   }
 
@@ -2094,15 +2096,15 @@ pdfA4plot_on.layout <-
   function (pname = date(),
             ...,
             layout_mat = rbind(1, c(2, 3), 4:5),
-            w = UnlessSpec("b.defSize.fullpage", 8.27),
+            w = unless.specified("b.defSize.fullpage", 8.27),
             h = 11.69,
             one_file = TRUE,
             mdlink = ww.set.mdlink(),
             title = ww.ttl_field(pname)) {
     fname = ww.FnP_parser(pname, "pdf")
     try.dev.off()
-    assign("b.bg_def", par("bg"), fname, envir = .GlobalEnv)
-    assign("b.save.wplots", FALSE, envir = .GlobalEnv) # switch of "savefile" option
+    ww.assign_to_global("b.bg_def", par("bg"), 1)
+    ww.assign_to_global("b.save.wplots", FALSE, 1) # switch of "savefile" option
     pdf(
       fname,
       width = w,
@@ -2118,7 +2120,7 @@ pdfA4plot_on.layout <-
       plotting in the A4 pdf.: pdfA4plot_off ()"
     )
     if (mdlink) {
-      ww.MarkDown_Img_Logger_PDF_and_PNG(fname_wo_ext = pname)
+      md.image.linker(fname_wo_ext = pname)
     }
   }
 
@@ -2129,7 +2131,7 @@ pdfA4plot_on.layout <-
 #' @export
 #' @import graphics grDevices
 #' @importFrom clipr write_clip
-#' @examples pdfA4plot_on.layout();  hist(rnorm(100)); hist(-rnorm(100))
+#' @examples pdfA4plot_on.layout(pname = "MyA4_w_layout");  hist(rnorm(100)); hist(-rnorm(100))
 #' hist(10+rnorm(100)); pdfA4plot_off()
 
 pdfA4plot_off <- function () {
@@ -2142,7 +2144,7 @@ pdfA4plot_off <- function () {
   else
     "white"
   if (exists("b.save.wplots")) {
-    assign("b.save.wplots", TRUE, envir = .GlobalEnv) # switch back mdlink to its original value
+    ww.assign_to_global("b.save.wplots", TRUE, 1) # switch back mdlink to its original value
   }
   par(mfrow = x, bg = y)
   try.dev.off()
@@ -2242,7 +2244,7 @@ wlegend <-
            h = w,
            title = NULL,
            ttl.by.varname = FALSE,
-           OverwritePrevPDF = UnlessSpec("b.save.wplots"),
+           OverwritePrevPDF = unless.specified("b.save.wplots"),
            mdlink = FALSE) {
     w_ <- w # to avoid circular reference in the inside function argument
     h_ <- h
@@ -2323,7 +2325,7 @@ wlegend.label <-
            title = NULL,
            ttl.by.varname = FALSE
            ,
-           OverwritePrevPDF = UnlessSpec("b.save.wplots"),
+           OverwritePrevPDF = unless.specified("b.save.wplots"),
            mdlink = FALSE) {
     w_ <-
       w # to avoid circular reference in the inside function argument
@@ -2380,7 +2382,7 @@ barplot_label <-
             bottom = FALSE,
             TopOffset = .5,
             relpos_bottom = 0.1,
-            OverwritePrevPDF = UnlessSpec("b.save.wplots"),
+            OverwritePrevPDF = unless.specified("b.save.wplots"),
             filename = plotnameLastPlot,
             ...) {
     x = barplot(barplotted_variable, plot = FALSE)
@@ -2426,7 +2428,7 @@ wLinRegression <-
            coeff = c("pearson", "spearman", "r2")[3],
            textlocation = "topleft",
            cex = 1,
-           OverwritePrevPDF = UnlessSpec("b.save.wplots"),
+           OverwritePrevPDF = unless.specified("b.save.wplots"),
            ...) {
     regression <- lm(DF[, 2] ~ DF[, 1])
     abline(regression, ...)
@@ -2587,7 +2589,7 @@ wcolorize  <-
     names(COLZ) = vector
     CATEG = COLZ[!duplicated(COLZ)]
     if (show)
-      Color_Check(CATEG)
+      color_check(CATEG)
     if (ReturnCategoriesToo) {
       COLZ = list("vec" = COLZ, "categ" = CATEG)
     }
@@ -2596,42 +2598,32 @@ wcolorize  <-
 
 
 
-
-# Printing to the markdown file and to the screen --------------------------------------------------
-
-#' variable.and.path.exists
+#' color_check
 #'
-#' Check if a variable name is defined, and if so, does the path (to a file) stored in that
-#'  variable points to an existing directory?
-#' @param path A variable name that might not exist and might point to a non-existent direcotry.
-#' @param alt.message Alternative message if the variable + path does not exist. FALSE or string.
+#' Display the colors encoded by the numbers / color-ID-s you pass on to this function
+#' @param ... Additional parameters.
+#' @param incrBottMarginBy Increase the blank space at the bottom of the plot.
+#' @param savefile Save plot as pdf in OutDir, TRUE by default.
 #' @export
-#' @examples variable.and.path.exists(path = B, alt.message = "Hello, your path/var does not exist.")
+#'
+#' @examples color_check(1:3)
 
-variable.and.path.exists <- function(path = path_of_report, alt.message = NULL) {
-  Variable.Name = substitute(path)
-  if (exists(as.character(Variable.Name))) {
-    dn = dirname(path)
-    ExisingDir = (dn != "." & dir.exists(dn))
-    if (ExisingDir) {
-      TRUE
-    } else {
-      cat("Variable", Variable.Name," points to a non-existent directory: ",path)
-      FALSE
-    }
-  } else {
-    if (is.null(alt.message) ) {
-      iprint("Variable", Variable.Name, "does not exist.")
-    } else {
-      cat(alt.message)
-    }
-    FALSE
-  }
+color_check <- function(..., incrBottMarginBy = 0, savefile = FALSE ) {
+  if (incrBottMarginBy) {
+    .ParMarDefault <- par("mar")
+    par(mar = c(par("mar")[1]+incrBottMarginBy, par("mar")[2:4]) )
+  } 	# Tune the margin
+  Numbers = c(...)
+  if (length(names(Numbers)) == length(Numbers)) {labelz = names(Numbers)} else {labelz = Numbers}
+  barplot (rep(10, length(Numbers)), col = Numbers, names.arg = labelz, las = 2 )
+  if (incrBottMarginBy) { par("mar" = .ParMarDefault )}
+
+  fname = substitute(...)
+  if (savefile) { dev.copy2pdf(file = ww.FnP_parser(fname, "ColorCheck.pdf")) }
 }
 
 
-
-
+# Printing to the markdown file and to the screen --------------------------------------------------
 
 #' iprint
 #'
@@ -2659,7 +2651,7 @@ any_print = iprint # for compatibility
 llprint <- function (...) {
   argument_list <- c(...)
   LogEntry = print(paste(argument_list, collapse = " "))
-  if (variable.and.path.exists(path_of_report,
+  if (ww.variable.and.path.exists(path_of_report,
       alt.message = "NOT LOGGED: Log path and filename is not defined in path_of_report") ) {
     write(kollapse("\n", LogEntry, print = FALSE),
           path_of_report,
@@ -2681,7 +2673,7 @@ llogit <- function (...) {
   argument_list <- c(...)
   LogEntry = paste(argument_list, collapse = " ")
   LogEntry = gsub("^ +| +$", "", LogEntry)
-  if (variable.and.path.exists(path_of_report,
+  if (ww.variable.and.path.exists(path_of_report,
       alt.message = "NOT LOGGED: Log path and filename is not defined in path_of_report")) {
     write(kollapse("\n", LogEntry, print = FALSE),
           path_of_report,
@@ -2721,6 +2713,47 @@ md.write.as.list <-
   }
 
 
+#' md.image.linker
+#'
+#' Format a markdown image reference (link) to a .pdf and .png versions of graph,
+#' and insert both links to the markdown report, set by "path_of_report".
+#' If the "b.png4Github" variable is set, the .png-link is set up such,
+#' that you can upload the whole report with the .png image into your GitHub repo's wiki,
+#' under "Reports"/OutDir/ (Reports is a literal string, OutDir is the last/deepest
+#' directory name in the "OutDir" variable. See create_set_OutDir() function.).
+#' This function is called by the ~wplot functions.
+#' @param fname_wo_ext Name of the image file where markdown links going to point to.
+#' @param OutDir_ The output directory (absolute / full path).
+#' @export
+#' @examples md.image.linker (fname_wo_ext = "MyPlot"  )
+
+md.image.linker <-
+  function (fname_wo_ext, OutDir_ = ww.set.OutDir()) {
+    splt = strsplit(fname_wo_ext, "/")
+    fn = splt[[1]][length(splt[[1]])]
+    llogit(kollapse("![]", "(", fname_wo_ext, ".pdf)", print = FALSE))
+    if (unless.specified("b.usepng")) {
+      if (unless.specified("b.png4Github")) {
+        dirnm = strsplit(x = OutDir_, split = "/")[[1]]
+        dirnm = dirnm[length(dirnm)]
+        llogit(kollapse(
+          "![]",
+          "(Reports/",
+          dirnm,
+          "/",
+          fname_wo_ext,
+          ".png)",
+          print = FALSE
+        ))
+      }	else {
+        if (exists('b.Subdirname') && !b.Subdirname == FALSE) {
+          fname_wo_ext = paste0(b.Subdirname, "/", fname_wo_ext)
+        } # set only if b.Subdirname is defined, it is not FALSE.
+        llogit(kollapse("![", fn, "]", "(", fname_wo_ext, ".png)", print = FALSE))
+      }
+    } # if b.usepng
+  }
+
 #' llwrite_list
 #'
 #' Print a list object from R, one element per line, into your markdown report
@@ -2749,6 +2782,46 @@ llwrite_list <- function(yourlist, printName = "self") {
 }
 
 
+# Writing out tabular data / importing mdrkdown ---------------------------------------------------
+
+#' write.simple.tsv
+#'
+#' Write out a matrix-like R-object WITH ROW- AND COLUMN- NAMES to a file with as tab separated
+#' values (.tsv). Your output filename will be either the variable's name. The output file will be
+#' located in "OutDir" specified by you at the beginning of the script, or under your current
+#' working directory. You can pass the PATH and VARIABLE separately (in order), they will be
+#' concatenated to the filename.
+#' @param input_df Your Dataframe with row- and column-names
+#' @param extension e.g.: tsv
+#' @param ManualName Specify full filename if you do not want to name it by the variable name.
+#' @param o Open the file after saving? FALSE by default
+#' @param gzip Compress the file after saving? FALSE by default
+#' @param ... Pass any other argument to the kollapse() function used for file name.
+#' @export
+#' @examples YourDataFrameWithRowAndColumnNames = cbind("A" = rnorm(100), "B" = rpois(100, 8))
+#' rownames(YourDataFrameWithRowAndColumnNames) = letters[1:NROW(YourDataFrameWithRowAndColumnNames)]
+#' write.simple.tsv(YourDataFrameWithRowAndColumnNames)
+
+write.simple.tsv <- function(input_df, extension = 'tsv', ManualName = "", o = FALSE,
+                             gzip = FALSE , ...  ) {
+  fname = kollapse (..., print = FALSE); if (nchar (fname) < 2 ) { fname = substitute(input_df) }
+  if (nchar(ManualName)) {FnP = kollapse(ManualName)
+  } else { FnP = ww.FnP_parser (fname, extension) }
+  utils::write.table (input_df, file = FnP, sep = "\t", row.names = TRUE,
+                      col.names = NA, quote = FALSE  )
+  printme = if(length(dim(input_df))) {
+    paste0("Dim: ", dim(input_df) )
+  }else {
+    paste0("Length (of your vector): ", length(input_df) )
+  }
+  iprint (printme)
+  if (o) { system(paste0("open ", FnP), wait = FALSE) }
+  if (gzip) { system(paste0("gzip ", FnP), wait = FALSE) }
+} # fun
+# If col.names = NA and row.names = TRUE a blank column name is added, which is the convention used
+# for CSV files to be read by spreadsheets.
+
+
 #' md.import
 #'
 #' Import and concatenated an external markdown or text file to the report
@@ -2761,8 +2834,8 @@ llwrite_list <- function(yourlist, printName = "self") {
 
 md.import <- function(from.file, to.file = path_of_report) {
   linez = readLines(from.file)
-  if (variable.and.path.exists(path_of_report,
-                      alt.message = "Log path and filename is not defined in path_of_report")) {
+  if (ww.variable.and.path.exists(path_of_report,
+                               alt.message = "Log path and filename is not defined in path_of_report")) {
     iprint(length(linez),"lines from",basename(from.file) ,
            "are concatenated to:",basename(path_of_report))
   }
@@ -2770,6 +2843,7 @@ md.import <- function(from.file, to.file = path_of_report) {
     write(LogEntry, path_of_report, append = TRUE)
   }
 }
+
 
 # Writing markdown tables --------------------------------------------------------------------------
 
@@ -2962,7 +3036,6 @@ md.tableWriter.VEC.w.names <-
 #' md.import.table("~/x.tsv")
 
 
-
 md.import.table <-
   function(from.file.table,
            title_of_table,
@@ -2976,8 +3049,7 @@ md.import.table <-
     importedtable = if (has.rownames) {
       utils::read.table(
         from.file.table,
-        stringsAsFactors = FALSE
-        ,
+        stringsAsFactors = FALSE,
         sep = "\t",
         header = has.colnames,
         row.names = 1
@@ -2985,8 +3057,7 @@ md.import.table <-
     } else if (!has.rownames) {
       utils::read.table(
         from.file.table,
-        stringsAsFactors = FALSE
-        ,
+        stringsAsFactors = FALSE,
         sep = "\t",
         header = has.colnames
       )
@@ -3020,12 +3091,10 @@ filter_HP <-
   function(numeric_vector,
            threshold,
            passequal = FALSE,
-           prepend = ""
-           ,
+           prepend = "",
            return_survival_ratio = FALSE,
            na.rm = TRUE,
-           plot.hist = TRUE
-           ,
+           plot.hist = TRUE,
            saveplot = FALSE,
            ...) {
     survivors <-
@@ -3047,7 +3116,7 @@ filter_HP <-
       " fall above a threshold value of: ",
       iround(threshold)
     )
-    if (variable.and.path.exists(path_of_report)) {
+    if (ww.variable.and.path.exists(path_of_report)) {
       llogit (conclusion)
     } else {
       print  ("NOT LOGGED")
@@ -3090,12 +3159,10 @@ filter_LP <-
   function(numeric_vector,
            threshold,
            passequal = FALSE,
-           prepend = ""
-           ,
+           prepend = "",
            return_survival_ratio = FALSE,
            na.rm = TRUE,
-           plot.hist = TRUE
-           ,
+           plot.hist = TRUE,
            saveplot = FALSE,
            ...) {
     survivors <-
@@ -3110,7 +3177,7 @@ filter_LP <-
       length(numeric_vector), " entries in ", substitute (numeric_vector),
       " fall below a threshold value of: ", iround(threshold)
     )
-    if (variable.and.path.exists(path_of_report)) {
+    if (ww.variable.and.path.exists(path_of_report)) {
       llogit (conclusion)
     } else {
       print  ("NOT LOGGED")
@@ -3178,7 +3245,7 @@ filter_MidPass <-
                           length(numeric_vector), " entries in ", substitute (numeric_vector),
                           " fall ", keyword, " the thresholds: ", iround(HP_threshold), relation,
                           iround(LP_threshold))
-    if (variable.and.path.exists(path_of_report)) {
+    if (ww.variable.and.path.exists(path_of_report)) {
       llogit (conclusion)
     } else {
       print  ("NOT LOGGED")
@@ -3203,6 +3270,22 @@ filter_MidPass <-
 
 # Generic ------------------------------------------------------------------------------------------
 
+#' stopif
+#'
+#' Stop script if the condition is met, and print a message
+#' @param condition any condition check that gives TRUE or FALSE
+#' @param message print a message
+#' @export
+#' @examples a = 1; stopif (a!= 1, message = "A is 1")
+
+stopif <-
+  function(condition, message = "") {
+    if (condition) {
+      iprint (message)
+      stop()
+    }
+  }
+
 
 #' iround
 #'
@@ -3215,6 +3298,80 @@ filter_MidPass <-
 iround <- function (x, digitz = 3) {
   signif(x, digits = digitz)
 }
+
+
+#' cv
+#'
+#' Calculates the coefficient of variation (CV) for a numeric vector (it excludes NA-s by default)
+#' @param x A vector with numbers
+#' @param na.rm Remove NA-s? Default: TRUE
+#' @import stats
+#' @export
+#'
+#' @examples cv(rnorm(100, sd = 10))
+
+cv <- function(x, na.rm = TRUE) {
+  sd( x, na.rm = na.rm)/mean(x, na.rm = na.rm)
+}
+
+
+#' modus
+#'
+#' Calculates the modus of a numeric vector (it excludes NA-s by default)
+#' @param x A vector with numbers
+#' @import stats
+#' @export
+#' @examples modus(c(1, 1, 2, 3, 3, 3, 4, 5)); modus(1:4)
+
+modus <- function(x) {
+  x = unlist(na.exclude(x))
+  ux <- unique(x)
+  tab <- tabulate(match(x, ux));
+  ux[tab == max(tab)]
+}
+
+
+#' as.factor.numeric
+#'
+#' Turn any vector into numeric categories as.numeric(as.factor(vec))
+#' @param vec vector of factors or strings
+#' @param rename Rename the vector?
+#' @param ... Pass any other argument to as.factor()
+#' @export
+#'
+#' @examples as.factor.numeric(LETTERS[1:4])
+
+as.factor.numeric <- function (vec, rename = FALSE, ...) {
+  vec2 = as.numeric(as.factor(vec, ...)) ;
+  names (vec2) <- if ( !rename & !is.null(names(vec) ) ) { names (vec)
+  } else { vec }
+  return(vec2)
+}
+
+
+#' na.omit.strip
+#'
+#' Omit NA values from a vector and return a clean vector without any spam.
+#' @param object Values to filter for NA
+#' @param silent Silence the data structure coversion warning: anything ->vector
+#' @param ... Pass any other argument to na.omit()
+#' @importFrom stats na.omit
+#' @export
+#'
+#' @examples # na.omit.strip(c(1, 2, 3, NA, NaN, 2))
+
+na.omit.strip <- function(object, silent = FALSE, ...) {
+  if (is.data.frame(object)) {
+    if (min(dim(object)) > 1 & silent == FALSE) {
+      iprint(dim(object), "dimensional array is converted to a vector.")
+    }
+    object = unlist(object)
+  }
+  clean = stats::na.omit(object, ...)
+  attributes(clean)$na.action <- NULL
+  return(clean)
+}
+
 
 
 
@@ -3267,6 +3424,34 @@ percentage_formatter <- function (x, digitz = 3) {
   return(a)
 }
 
+#' translate
+#'
+#' Replaces a set of values in a vector with another set of values, it translates your vector.
+#' Oldvalues and newvalues have to be 1-to-1 corespoding vectors.
+#' @param vec set of values where you want to replace
+#' @param oldvalues oldvalues (from)
+#' @param newvalues newvalues (to)
+#' @export
+#' @examples A = 1:3; translate(vec = A, oldvalues = 2:3, newvalues = letters[1:2])
+
+translate = replace_values <- function(vec, oldvalues, newvalues) {
+  Nr = length(oldvalues)
+  if (Nr > length(newvalues)) {
+    if (length(newvalues) == 1) {
+      newvalues = rep(newvalues, length(oldvalues))
+    } else if (length(newvalues) > 1) {
+      iprint("PROVIDE ONE NEWVALUE, OR THE SAME NUMEBR OF NEWVALUES AS OLDVALUES.")
+    }
+  }
+  tmp = vec
+  for (i in 1:Nr) {
+    oldval = oldvalues[i]
+    tmp[vec == oldval] = newvalues[i]
+  }
+  return(tmp)
+}
+# 'chartr("a-cX", "D-Fw", x) does the same as above in theory,
+# but it did not seem very robust regarding your input...'
 
 # Annotation parse / create / manipulate -----------------------------------------------------------
 
@@ -3344,16 +3529,16 @@ parFlags2 <-
   }
 
 
-#' UnlessSpec
+#' unless.specified
 #'
 #' Return value X (TRUE by default) unless the variable is defined.
 #' If defined, it returns the variable.
 #' @param NameOfaVariable Name of a possibly defined variable to be tested.
 #' @param def Default return value
 #' @export
-#' @examples UnlessSpec("xsadasf32", 2); Num = 22; UnlessSpec("Num", 1); UnlessSpec("c", 333)
+#' @examples unless.specified("xsadasf32", 2); Num = 22; unless.specified("Num", 1); unless.specified("c", 333)
 
-UnlessSpec <- function(NameOfaVariable, def = TRUE) {
+unless.specified <- function(NameOfaVariable, def = TRUE) {
   if (exists(NameOfaVariable))
     get(NameOfaVariable)
   else
@@ -3362,6 +3547,38 @@ UnlessSpec <- function(NameOfaVariable, def = TRUE) {
 
 
 # Internal function --------------------------------------------------------------------------------
+
+#' ww.variable.and.path.exists
+#'
+#' Check if a variable name is defined, and if so, does the path (to a file) stored in that
+#'  variable points to an existing directory?
+#' @param path A variable name that might not exist and might point to a non-existent direcotry.
+#' @param alt.message Alternative message if the variable + path does not exist. FALSE or string.
+#' @export
+#' @examples ww.variable.and.path.exists(path = B, alt.message = "Hello, your path/var does not exist.")
+
+ww.variable.and.path.exists <- function(path = path_of_report, alt.message = NULL) {
+  Variable.Name = substitute(path)
+  if (exists(as.character(Variable.Name))) {
+    dn = dirname(path)
+    ExisingDir = (dn != "." & dir.exists(dn))
+    if (ExisingDir) {
+      TRUE
+    } else {
+      cat("Variable", Variable.Name," points to a non-existent directory: ",path)
+      FALSE
+    }
+  } else {
+    if (is.null(alt.message) ) {
+      iprint("Variable", Variable.Name, "does not exist.")
+    } else {
+      cat(alt.message)
+    }
+    FALSE
+  }
+}
+
+
 
 #' ww.set.OutDir
 #'
@@ -3396,7 +3613,7 @@ ww.set.OutDir <- function() {
 
 ww.set.path_of_report <- function() {
   new.path_of_report =
-    if (variable.and.path.exists(path_of_report)) {
+    if (ww.variable.and.path.exists(path_of_report)) {
       path_of_report
     } else {
       iprint("path_of_report is not defined! Setting it to Analysis.md in the working directory:",
@@ -3454,72 +3671,29 @@ ww.FnP_parser <- function(fname, ext_wo_dot) {
 
 ww.set.mdlink <- function(NameOfaVariable = "b.mdlink",
                           def = FALSE) {
-  if ( variable.and.path.exists(path_of_report) && exists(NameOfaVariable) )
+  if ( ww.variable.and.path.exists(path_of_report) && exists(NameOfaVariable) )
     get(NameOfaVariable)
   else
     def
 }
 
 
-#' ww.MarkDown_ImgLink_formatter
+#' ww.md.image.link.parser
 #'
 #' Format a markdown image reference (link) from the file path to the file.
 #' It can parse the file path, if you pass it in separate variables and strings.
-#' E.g. ww.MarkDown_ImgLink_formatter(Directory, "MyImage.png").
+#' E.g. ww.md.image.link.parser(Directory, "MyImage.png").
 #' @param ... Variables (strings, vectors) to be collapsed in consecutively.
 #' @export
-#' @examples ww.MarkDown_ImgLink_formatter ("/MyPlot.jpg"  )
-#' ww.MarkDown_ImgLink_formatter (getwd(),"/MyPlot.jpg"  )
+#' @examples ww.md.image.link.parser ("/MyPlot.jpg"  )
+#' ww.md.image.link.parser (getwd(),"/MyPlot.jpg"  )
 
-ww.MarkDown_ImgLink_formatter <- function (...) {
+ww.md.image.link.parser <- function (...) {
   FullPath = kollapse(..., print = FALSE)
   splt = strsplit(FullPath, "/")
   fn = splt[[1]][length(splt[[1]])]
   kollapse("![", fn, "]", "(", FullPath, ")", print = FALSE)
 }
-
-
-#' ww.MarkDown_Img_Logger_PDF_and_PNG
-#'
-#' Format a markdown image reference (link) to a .pdf and .png versions of graph,
-#' and insert both links to the markdown report, set by "path_of_report".
-#' If the "b.png4Github" variable is set, the .png-link is set up such,
-#' that you can upload the whole report with the .png image into your GitHub repo's wiki,
-#' under "Reports"/OutDir/ (Reports is a literal string, OutDir is the last/deepest
-#' directory name in the "OutDir" variable. See create_set_OutDir() function.).
-#' This function is called by the ~wplot functions.
-#' @param fname_wo_ext Name of the image file where markdown links going to point to.
-#' @param OutDir_ The output directory (absolute / full path).
-#' @export
-#' @examples ww.MarkDown_Img_Logger_PDF_and_PNG (fname_wo_ext = "MyPlot"  )
-
-ww.MarkDown_Img_Logger_PDF_and_PNG <-
-  function (fname_wo_ext, OutDir_ = ww.set.OutDir()) {
-    splt = strsplit(fname_wo_ext, "/")
-    fn = splt[[1]][length(splt[[1]])]
-    llogit(kollapse("![]", "(", fname_wo_ext, ".pdf)", print = FALSE))
-    if (UnlessSpec("b.usepng")) {
-      if (UnlessSpec("b.png4Github")) {
-        dirnm = strsplit(x = OutDir_, split = "/")[[1]]
-        dirnm = dirnm[length(dirnm)]
-        llogit(kollapse(
-          "![]",
-          "(Reports/",
-          dirnm,
-          "/",
-          fname_wo_ext,
-          ".png)",
-          print = FALSE
-        ))
-      }	else {
-        if (exists('b.Subdirname') && !b.Subdirname == FALSE) {
-          fname_wo_ext = paste0(b.Subdirname, "/", fname_wo_ext)
-        } # set only if b.Subdirname is defined, it is not FALSE.
-        llogit(kollapse("![", fn, "]", "(", fname_wo_ext, ".png)", print = FALSE))
-      }
-    } # if b.usepng
-  }
-
 
 #' ww.ttl_field
 #'
@@ -3589,6 +3763,22 @@ ww.dev.copy <- function(PNG_ = FALSE,
   }
 }
 
+
+#' ww.assign_to_global
+#'
+#' function loading results in global environment.
+#' Source: https://stackoverflow.com/questions/28180989/
+#' @param name Name of the global variabe to be assigned
+#' @param value Value of the global variabe to be assigned
+#' @param pos defaults to 1 which equals an assingment to global environment
+#'
+#' @export
+
+ww.assign_to_global <- function(name, value, pos=1){
+  assign(name, value, envir=as.environment(pos) )
+}
+
+
 # Legacy functions ---------------------------------------------------------------------------------
 
 #' setup_logging_markdown (deprecated, use with create_set_OutDir, will be removed from V3)
@@ -3635,10 +3825,10 @@ setup_logging_markdown <-
     )
     if (!exists(BackupDir)) {
       dir.create(BackupDir, showWarnings = FALSE)
-      assign("BackupDir", BackupDir, envir = .GlobalEnv)
+      ww.assign_to_global("BackupDir", BackupDir, 1)
     }
-    assign("path_of_report", path_of_report, envir = .GlobalEnv)
-    assign("b.png4Github", b.png4Github, envir = .GlobalEnv)
+    ww.assign_to_global("path_of_report", path_of_report, 1)
+    ww.assign_to_global("b.png4Github", b.png4Github, 1)
   }
 
 #' log_settings_MarkDown (OLD)
@@ -3659,189 +3849,3 @@ log_settings_MarkDown <- function (...) {
 
 
 
-#' stopif
-#'
-#' Stop script if the condition is met, and print a message
-#' @param condition any condition check that gives TRUE or FALSE
-#' @param message print a message
-#' @export
-#' @examples a = 1; stopif (a!= 1, message = "A is 1")
-
-stopif <-
-  function(condition, message = "") {
-    if (condition) {
-      iprint (message)
-      stop()
-    }
-  }
-
-#' translate
-#'
-#' Replaces a set of values in a vector with another set of values, it translates your vector.
-#' Oldvalues and newvalues have to be 1-to-1 corespoding vectors.
-#' @param vec set of values where you want to replace
-#' @param oldvalues oldvalues (from)
-#' @param newvalues newvalues (to)
-#' @export
-#' @examples A = 1:3; translate(vec = A, oldvalues = 2:3, newvalues = letters[1:2])
-
-translate = replace_values <- function(vec, oldvalues, newvalues) {
-  Nr = length(oldvalues)
-  if (Nr > length(newvalues)) {
-    if (length(newvalues) == 1) {
-      newvalues = rep(newvalues, length(oldvalues))
-    } else if (length(newvalues) > 1) {
-      iprint("PROVIDE ONE NEWVALUE, OR THE SAME NUMEBR OF NEWVALUES AS OLDVALUES.")
-    }
-  }
-  tmp = vec
-  for (i in 1:Nr) {
-    oldval = oldvalues[i]
-    tmp[vec == oldval] = newvalues[i]
-  }
-  return(tmp)
-}
-# 'chartr("a-cX", "D-Fw", x) does the same as above in theory,
-# but it did not seem very robust regarding your input...'
-
-
-
-
-
-#' write.simple.tsv
-#'
-#' Write out a matrix-like R-object WITH ROW- AND COLUMN- NAMES to a file with as tab separated
-#' values (.tsv). Your output filename will be either the variable's name. The output file will be
-#' located in "OutDir" specified by you at the beginning of the script, or under your current
-#' working directory. You can pass the PATH and VARIABLE separately (in order), they will be
-#' concatenated to the filename.
-#' @param input_df Your Dataframe with row- and column-names
-#' @param extension e.g.: tsv
-#' @param ManualName Specify full filename if you do not want to name it by the variable name.
-#' @param o Open the file after saving? FALSE by default
-#' @param gzip Compress the file after saving? FALSE by default
-#' @param ... Pass any other argument to the kollapse() function used for file name.
-#' @export
-#' @examples YourDataFrameWithRowAndColumnNames = cbind("A" = rnorm(100), "B" = rpois(100, 8))
-#' rownames(YourDataFrameWithRowAndColumnNames) = letters[1:NROW(YourDataFrameWithRowAndColumnNames)]
-#' write.simple.tsv(YourDataFrameWithRowAndColumnNames)
-
-write.simple.tsv <- function(input_df, extension = 'tsv', ManualName = "", o = FALSE,
-                             gzip = FALSE , ...  ) {
-  fname = kollapse (..., print = FALSE); if (nchar (fname) < 2 ) { fname = substitute(input_df) }
-  if (nchar(ManualName)) {FnP = kollapse(ManualName)
-  } else { FnP = ww.FnP_parser (fname, extension) }
-  utils::write.table (input_df, file = FnP, sep = "\t", row.names = TRUE,
-                      col.names = NA, quote = FALSE  )
-  printme = if(length(dim(input_df))) {
-    paste0("Dim: ", dim(input_df) )
-  }else {
-    paste0("Length (of your vector): ", length(input_df) )
-  }
-  iprint (printme)
-  if (o) { system(paste0("open ", FnP), wait = FALSE) }
-  if (gzip) { system(paste0("gzip ", FnP), wait = FALSE) }
-} # fun
-# If col.names = NA and row.names = TRUE a blank column name is added, which is the convention used
-# for CSV files to be read by spreadsheets.
-
-
-
-
-
-#' cv
-#'
-#' Calculates the coefficient of variation (CV) for a numeric vector (it excludes NA-s by default)
-#' @param x A vector with numbers
-#' @param na.rm Remove NA-s? Default: TRUE
-#' @import stats
-#' @export
-#'
-#' @examples cv(rnorm(100, sd = 10))
-
-cv <- function(x, na.rm = TRUE) {
-  sd( x, na.rm = na.rm)/mean(x, na.rm = na.rm)
-  }
-
-
-#' modus
-#'
-#' Calculates the modus of a numeric vector (it excludes NA-s by default)
-#' @param x A vector with numbers
-#' @import stats
-#' @export
-#' @examples modus(c(1, 1, 2, 3, 3, 3, 4, 5)); modus(1:4)
-
-modus <- function(x) {
-	x = unlist(na.exclude(x))
-	ux <- unique(x)
-	tab <- tabulate(match(x, ux));
-	ux[tab == max(tab)]
-}
-
-
-#' Color_Check
-#'
-#' Display the colors encoded by the numbers / color-ID-s you pass on to this function
-#' @param ... Additional parameters.
-#' @param incrBottMarginBy Increase the blank space at the bottom of the plot.
-#' @param savefile Save plot as pdf in OutDir, TRUE by default.
-#' @export
-#'
-#' @examples Color_Check(1:3)
-
-Color_Check <- function(..., incrBottMarginBy = 0, savefile = FALSE ) {
-  if (incrBottMarginBy) {
-    .ParMarDefault <- par("mar")
-    par(mar = c(par("mar")[1]+incrBottMarginBy, par("mar")[2:4]) )
-  } 	# Tune the margin
-  Numbers = c(...)
-  if (length(names(Numbers)) == length(Numbers)) {labelz = names(Numbers)} else {labelz = Numbers}
-  barplot (rep(10, length(Numbers)), col = Numbers, names.arg = labelz, las = 2 )
-  if (incrBottMarginBy) { par("mar" = .ParMarDefault )}
-
-  fname = substitute(...)
-  if (savefile) { dev.copy2pdf(file = ww.FnP_parser(fname, "ColorCheck.pdf")) }
-}
-
-
-#' as.factor.numeric
-#'
-#' Turn any vector into numeric categories as.numeric(as.factor(vec))
-#' @param vec vector of factors or strings
-#' @param rename Rename the vector?
-#' @param ... Pass any other argument to as.factor()
-#' @export
-#'
-#' @examples as.factor.numeric(LETTERS[1:4])
-
-as.factor.numeric <- function (vec, rename = FALSE, ...) {
-  vec2 = as.numeric(as.factor(vec, ...)) ;
-  names (vec2) <- if ( !rename & !is.null(names(vec) ) ) { names (vec)
-  } else { vec }
-  return(vec2)
-}
-
-
-#' na.omit.strip
-#'
-#' Omit NA values from a vector and return a clean vector without any spam.
-#' @param object Values to filter for NA
-#' @param silent Silence the data structure coversion warning: anything ->vector
-#' @param ... Pass any other argument to na.omit()
-#' @importFrom stats na.omit
-#' @export
-#'
-#' @examples # na.omit.strip(c(1, 2, 3, NA, NaN, 2))
-
-na.omit.strip <- function(object, silent = FALSE, ...) {
-  if (is.data.frame(object)) {
-    if (min(dim(object)) > 1 & silent == FALSE) {
-      iprint(dim(object), "dimensional array is converted to a vector.")
-    }
-    object = unlist(object)
-  }
-  clean = stats::na.omit(object, ...)
-  attributes(clean)$na.action <- NULL
-  return(clean)
-}

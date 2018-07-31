@@ -6,7 +6,7 @@
 \usage{
 wlegend.label(legend = "...", poz = 1, cex = 1, bty = "n", ..., w = 7,
   h = w, title = NULL, ttl.by.varname = FALSE,
-  OverwritePrevPDF = UnlessSpec("b.save.wplots"), mdlink = FALSE)
+  OverwritePrevPDF = unless.specified("b.save.wplots"), mdlink = FALSE)
 }
 \arguments{
 \item{legend}{Labels displayed (Text)}

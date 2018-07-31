@@ -5,7 +5,7 @@
 \title{wvenn}
 \usage{
 wvenn(yourlist, imagetype = "png", alpha = 0.5, fill = 1:length(yourlist),
-  subt, ..., w = UnlessSpec("b.defSize", 7), h = w,
+  subt, ..., w = unless.specified("b.defSize", 7), h = w,
   mdlink = ww.set.mdlink(), plotname = substitute(yourlist))
 }
 \arguments{

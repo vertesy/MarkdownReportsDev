@@ -6,7 +6,7 @@
 \usage{
 wlegend(NamedColorVec = NA, poz = 4, legend, cex = 0.75, bty = "n", ...,
   w = 7, h = w, title = NULL, ttl.by.varname = FALSE,
-  OverwritePrevPDF = UnlessSpec("b.save.wplots"), mdlink = FALSE)
+  OverwritePrevPDF = unless.specified("b.save.wplots"), mdlink = FALSE)
 }
 \arguments{
 \item{NamedColorVec}{Color of the boxes next to the text}

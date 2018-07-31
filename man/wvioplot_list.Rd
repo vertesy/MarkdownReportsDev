@@ -8,8 +8,9 @@ wvioplot_list(yourlist, ..., main = as.character(substitute(yourlist)),
   sub = NULL, xlab = names(yourlist), ylab = "", ylim = FALSE,
   col = c(2:(length(yourlist) + 1)), incrBottMarginBy = 0,
   tilted_text = FALSE, yoffset = 0,
-  savefile = UnlessSpec("b.save.wplots"), w = UnlessSpec("b.defSize", 7),
-  h = w, mdlink = ww.set.mdlink(), PNG = UnlessSpec("b.usepng"))
+  savefile = unless.specified("b.save.wplots"),
+  w = unless.specified("b.defSize", 7), h = w, mdlink = ww.set.mdlink(),
+  PNG = unless.specified("b.usepng"))
 }
 \arguments{
 \item{yourlist}{Input list to be plotted.}
