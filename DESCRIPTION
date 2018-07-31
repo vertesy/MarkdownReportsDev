@@ -10,12 +10,12 @@ Description: MarkdownReports is a set of R functions that allows you to generate
     4. Describe your figures & findings in the same report in a clear and nicely formatted way, parsed from your variables into english sentences.
     5. Share your report, by exporting your report to .pdf, .html or .docx, or via Github or a personal website.
 Depends: R (>= 3.3.2)
-License: GPL-3 file LICENSE
+License: GPL-3 + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Author: Abel Vertesy <a.vertesy@hubrecht.eu> [aut, cre]
-Packaged: 2018-07-27 19:03:46
+Packaged: 2018-07-31 14:05:15
 Repository: CRAN
-Imports: stats, methods, graphics, grDevices, gplots, RColorBrewer, colorRamps, vioplot, VennDiagram, clipr
+Imports: stats, methods, sm, graphics, grDevices, gplots, RColorBrewer, colorRamps, clipr, vioplot, VennDiagram
 BugReports: https://github.com/vertesy/MarkdownReports/issues
 RoxygenNote: 6.0.1

@@ -14,5 +14,5 @@ Continue writing to an existing report file.
 }
 \examples{
 OutDir = paste0(getwd(),"/", collapse = "")
-continue_logging_markdown (b.scriptname =  "Analysis")
+continue_logging_markdown (b.scriptname = "Analysis")
 }

@@ -65,14 +65,13 @@ overlaps).}
 }
 \description{
 Create and save stripcharts from a list as .pdf, in "OutDir". This version allows individual
-coloring of each data point, by a color-list of the same dimension. If mdlink =TRUE, it inserts a
+coloring of each data point, by a color-list of the same dimension. If mdlink = TRUE, it inserts a
 .pdf and a .png link in the markdown report, set by "path_of_report". The .png version is not
 created, only the link is put in place, not to overwrite previous versions.
 }
 \examples{
-wstripchart_list (yourlist = list(rnorm(10), rnorm(10), rnorm(10)),
-main = as.character(substitute(yourlist)), sub = NULL, ylab = NULL, xlab = NULL,
+try.dev.off(); my.ls = list(A = rnorm(10), B = rnorm(10), C = rnorm(10));
+wstripchart_list(yourlist = my.ls, sub = NULL, ylab = NULL, xlab = NULL,
 border = 1, bxpcol = 0, pch = 23, pchlwd = 1, pchcex = 1.5, bg = 'chartreuse2', col = 1,
-metod = jitter, jitter = 0.2, w = 7,
-incrBottMarginBy = 0, tilted_text = FALSE, mdlink = FALSE)
+metod = jitter, jitter = 0.2, w = 7, incrBottMarginBy = 0, tilted_text = FALSE, mdlink = FALSE)
 }

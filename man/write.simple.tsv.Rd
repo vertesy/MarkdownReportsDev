@@ -28,5 +28,7 @@ working directory. You can pass the PATH and VARIABLE separately (in order), the
 concatenated to the filename.
 }
 \examples{
+YourDataFrameWithRowAndColumnNames = cbind("A" = rnorm(100), "B" = rpois(100, 8))
+rownames(YourDataFrameWithRowAndColumnNames) = letters[1:NROW(YourDataFrameWithRowAndColumnNames)]
 write.simple.tsv(YourDataFrameWithRowAndColumnNames)
 }

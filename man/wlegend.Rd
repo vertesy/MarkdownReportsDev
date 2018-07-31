@@ -4,12 +4,12 @@
 \alias{wlegend}
 \title{wlegend}
 \usage{
-wlegend(fill_ = NA, poz = 4, legend, cex = 0.75, bty = "n", ...,
+wlegend(NamedColorVec = NA, poz = 4, legend, cex = 0.75, bty = "n", ...,
   w = 7, h = w, title = NULL, ttl.by.varname = FALSE,
   OverwritePrevPDF = UnlessSpec("b.save.wplots"), mdlink = FALSE)
 }
 \arguments{
-\item{fill_}{Color of the boxes next to the text}
+\item{NamedColorVec}{Color of the boxes next to the text}
 
 \item{poz}{Position of the legend (def: 4). Use numbers 1-4 to choose from
 "topleft", "topright", "bottomright", "bottomleft".}
@@ -29,7 +29,7 @@ The allowed values are "o" (the default) and "n".}
 
 \item{title}{What should be the title of the legend? NULL by default}
 
-\item{ttl.by.varname}{Should the title of the legend substituted from the fill_ variable's name?
+\item{ttl.by.varname}{Should the title of the legend substituted from the NamedColorVec variable's name?
 ALSE by default. Does not work if you pass on a list item like this: list$element}
 
 \item{OverwritePrevPDF}{Save the plot immediately with the same name
@@ -42,6 +42,7 @@ the last wplot* function made (It is stored in plotnameLastPlot variable).}
 Quickly add a legend to an existing plot, and save the plot immediately.
 }
 \examples{
-function(fill_ = NULL, poz=4, legend = names(fill_),
-w=7, h=w, bty = "n", OverwritePrevPDF =TRUE)
+try.dev.off(); x = cbind(a = rnorm(1:10), b = rnorm(10)); wplot(x)
+LegendCols = 2:5; names(LegendCols) = LETTERS[1:4]
+wlegend(NamedColorVec = LegendCols, poz = 1, w = 7, bty = "n", OverwritePrevPDF = TRUE)
 }

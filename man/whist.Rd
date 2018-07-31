@@ -56,16 +56,14 @@ Design the line by "lty", "lwd" & "lcol" parameters.}
 \item{PNG}{Set to true if you want to save the plot as PNG instead of the default PDF.}
 }
 \description{
-Create and save histograms as .pdf, in "OutDir". If mdlink =TRUE, it inserts a .pdf and a .png
+Create and save histograms as .pdf, in "OutDir". If mdlink = TRUE, it inserts a .pdf and a .png
 link in the markdown report, set by "path_of_report". The .png version is not created, only the
 link is put in place, not to overwrite previous versions. Name the file by naming the variable!
 Cannot be used with dynamically called variables [e.g. call vectors within a loop]. "filtercol"
 assumes  >= coloring!
 }
 \examples{
-MyGauss= rnorm(1000); whist (variable =MyGauss, col = "gold1", w = 7,
-#' breaks = 20,
-main = kollapse("Histogram of ", substitute(variable)), xlab = substitute(variable),
-mdlink = FALSE, hline = FALSE, vline = FALSE, lty = 2, lwd = 3,
+MyGauss = rnorm(1000); whist (variable = MyGauss, col = "gold1", w = 7,
+breaks = 20, mdlink = FALSE, hline = FALSE, vline = FALSE, lty = 2, lwd = 3,
 lcol = 2, filtercol = 0)
 }

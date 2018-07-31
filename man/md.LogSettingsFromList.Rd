@@ -16,5 +16,5 @@ Log the parameters & settings used in the script and stored in a list, in a tabl
  in the report.
 }
 \examples{
-md.LogSettingsFromList(parameterlist = list("min"=4, "method"="pearson", "max"=10))
+md.LogSettingsFromList(parameterlist = list("min" = 4, "method" = "pearson", "max" = 10))
 }

@@ -11,7 +11,7 @@ filter_MidPass(numeric_vector, HP_threshold, LP_threshold, prepend = "",
 \arguments{
 \item{numeric_vector}{Values to be filtered.}
 
-\item{HP_threshold}{Lower threshold value. (>=)}
+\item{HP_threshold}{Lower threshold value. (>= )}
 
 \item{LP_threshold}{Upper threshold value. (<)}
 
@@ -32,10 +32,10 @@ everything passes except between the two thresholds.}
 \item{...}{Additional arguments for the histogram}
 }
 \description{
-Filter values that fall above high-pass-threshold !(X >=)! and below
+Filter values that fall above high-pass-threshold !(X >= )! and below
 the low-pass threshold (X <).
 }
 \examples{
 filter_MidPass (numeric_vector = rnorm(1000, 6), HP_threshold = 4,
-LP_threshold =8, prepend = "From all values ", return_survival_ratio = FALSE, EdgePass = TRUE)
+LP_threshold = 8, prepend = "From all values ", return_survival_ratio = FALSE, EdgePass = TRUE)
 }

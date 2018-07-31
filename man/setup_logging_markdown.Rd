@@ -26,6 +26,6 @@ the script name and the modification time. Create the "path_of_report" variable 
 all log-writing and ~wplot functions.
 }
 \examples{
-setup_logging_markdown (fname ="Analysis.md", title = "My Analysis",
+setup_logging_markdown (fname = "Analysis.md", title = "My Analysis",
 append = TRUE, b.png4Github = TRUE)
 }

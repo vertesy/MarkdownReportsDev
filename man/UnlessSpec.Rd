@@ -16,5 +16,5 @@ Return value X (TRUE by default) unless the variable is defined.
 If defined, it returns the variable.
 }
 \examples{
-UnlessSpec("xsadasf32", 2); Num=22; UnlessSpec("Num", 1); UnlessSpec("c", 333)
+UnlessSpec("xsadasf32", 2); Num = 22; UnlessSpec("Num", 1); UnlessSpec("c", 333)
 }

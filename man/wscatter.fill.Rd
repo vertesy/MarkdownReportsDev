@@ -79,6 +79,7 @@ A scatterplot with color gradient and color legend. Modified from:
 http://stackoverflow.com/questions/20127282/r-color-scatterplot-points-by-col-value-with-legend
 }
 \examples{
-wscatter.fill(x=rnorm(100), y=rnorm(100), color=rnorm(100), nlevels=15, pch = 21
-, xlab="The X Dimension. Wooaaahh")
+try.dev.off(); mydf = cbind("A" = rnorm(100), "B" = rnorm(100))
+wscatter.fill( df2col = mydf, color = rnorm(100), nlevels = 15, pch = 21,
+xlab = "The X Dimension. Wooaaahh")
 }

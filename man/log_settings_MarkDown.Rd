@@ -13,5 +13,5 @@ log_settings_MarkDown(...)
 Log the parameters & settings used in the script in a table format.
 }
 \examples{
-a=1; b=2; log_settings_MarkDown (a,b)
+a = 1; b = 2; log_settings_MarkDown (a,b)
 }

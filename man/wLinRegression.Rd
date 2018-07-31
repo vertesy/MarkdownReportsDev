@@ -28,6 +28,6 @@ Add linear regression, and descriptors to line to your scatter plot.
 Provide the same dataframe as you provided to wplot() before you called this function
 }
 \examples{
-x = cbind(a=rnorm(1:10), b=rnorm(10)); wplot(x)
-wLinRegression(x, coeff = c("pearson", "spearman", "r2"))
+try.dev.off(); x = cbind(a = rnorm(1:10), b = rnorm(10)); wplot(x)
+# wLinRegression(x, coeff = c("pearson", "spearman", "r2")[3])
 }

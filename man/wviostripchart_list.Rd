@@ -55,13 +55,12 @@ set by "path_of_report".}
 }
 \description{
 Create and save violin plots as .pdf, in "OutDir". It requires (and calls) "vioplot" package.
-If mdlink =TRUE, it inserts a .pdf and a .png link in the markdown report,
+If mdlink = TRUE, it inserts a .pdf and a .png link in the markdown report,
 set by "path_of_report". The .png version is not created, only the link is put in place,
 not to overwrite previous versions.
 }
 \examples{
-my.ls = list(rnorm(10), rnorm(10), rnorm(10));
-wviostripchart_list (yourlist = my.ls, pch = 23, viocoll = 0, vioborder = 1,
-ylab = "", main = as.character(substitute(yourlist)), sub = FALSE, bg = 0, col = black,
- metod = jitter, jitter = 0.1, w = 7, incrBottMarginBy = 0, mdlink = FALSE)
+try.dev.off(); my.ls = list(A = rnorm(10), B = rnorm(10), C = rnorm(10));
+# wviostripchart_list (yourlist = my.ls, pch = 23, viocoll = 0, vioborder = 1, sub = FALSE,
+# bg = 0, col = "black", metod = "jitter", jitter = 0.1, w = 7, mdlink = FALSE)
 }

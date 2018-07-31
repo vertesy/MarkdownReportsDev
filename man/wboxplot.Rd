@@ -4,17 +4,13 @@
 \alias{wboxplot}
 \title{wboxplot}
 \usage{
-wboxplot(yourlist, ..., main = as.character(substitute(yourlist)),
-  sub = FALSE, ylab = "", col = "gold1", incrBottMarginBy = 0,
-  tilted_text = FALSE, savefile = UnlessSpec("b.save.wplots"),
-  w = UnlessSpec("b.defSize", 7), h = w, mdlink = ww.set.mdlink(),
-  PNG = UnlessSpec("b.usepng"))
+wboxplot(yourlist, main = as.character(substitute(yourlist)), sub = FALSE,
+  ylab = "", col = "gold1", incrBottMarginBy = 0, tilted_text = FALSE,
+  savefile = UnlessSpec("b.save.wplots"), w = UnlessSpec("b.defSize", 7),
+  h = w, mdlink = ww.set.mdlink(), PNG = UnlessSpec("b.usepng"), ...)
 }
 \arguments{
 \item{yourlist}{The variable to plot.}
-
-\item{...}{Pass any other parameter of the corresponding plotting function (most of them should
-work).}
 
 \item{main}{Title of the plot and also the name of the file.}
 
@@ -39,14 +35,17 @@ fit on the plot.}
 "path_of_report".}
 
 \item{PNG}{Set to true if you want to save the plot as PNG instead of the default PDF.}
+
+\item{...}{Pass any other parameter of the corresponding plotting function (most of them should
+work).}
 }
 \description{
-Create and save box plots as .pdf, in "OutDir". If mdlink =TRUE, it inserts a .pdf and a .png
+Create and save box plots as .pdf, in "OutDir". If mdlink = TRUE, it inserts a .pdf and a .png
 link in the markdown report, set by "path_of_report". The .png version is not created, only the
 link is put in place, not to overwrite previous versions.
 }
 \examples{
-MyList = list(rnorm(100),rnorm(100)); wboxplot (variable =MyList,col = "gold1",
-plotname = as.character(substitute(variable)), sub = FALSE, incrBottMarginBy = 0,
+MyList = list(rnorm(100),rnorm(100)); wboxplot (yourlist = MyList,col = "gold1",
+sub = FALSE, incrBottMarginBy = 0,
  tilted_text = FALSE, w = 7, mdlink = FALSE)
 }

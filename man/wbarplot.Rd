@@ -72,14 +72,13 @@ fit on the plot.}
 \item{PNG}{Set to true if you want to save the plot as PNG instead of the default PDF.}
 }
 \description{
-Create and save bar plots as .pdf, in "OutDir". If mdlink =TRUE, it inserts a .pdf and a .png
+Create and save bar plots as .pdf, in "OutDir". If mdlink = TRUE, it inserts a .pdf and a .png
 link in the markdown report, set by "path_of_report". The .png version is not created, only the
 link is put in place, not to overwrite previous versions.
 }
 \examples{
-MyVec= 1:3; wbarplot (variable =MyVec, col = "gold1", sub = FALSE
-, main = substitute(variable), w = 7, h = w
-, incrBottMarginBy = 0, mdlink = FALSE, tilted_text = FALSE, hline = FALSE, vline = FALSE
-, filtercol = 1, lty = 1, lwd = 2, lcol = 2, errorbar = FALSE, upper = 0, lower = upper
-, arrow_width = 0.1, arrow_lwd = 1)
+MyVec = 1:3; wbarplot (variable = MyVec, col = "gold1", sub = FALSE, w = 7, width = 1,
+incrBottMarginBy = 0, mdlink = FALSE, tilted_text = FALSE, hline = FALSE, vline = FALSE,
+filtercol = 1, lty = 1, lwd = 2, lcol = 2, errorbar = FALSE, upper = 0,
+arrow_width = 0.1, arrow_lwd = 1)
 }

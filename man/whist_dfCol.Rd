@@ -32,5 +32,6 @@ You can name the file by naming the variable.
 Cannot be used with dynamically called variables [e.g. call vectors within a loop]
 }
 \examples{
-whist_dfCol (df, colName, col = gold, w = 7, h = w)
+try.dev.off(); df = cbind(a = rnorm(1:10), b = rnorm(10))
+whist_dfCol (df, colName="a", col = "gold", w = 7)
 }

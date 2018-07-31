@@ -8,8 +8,8 @@ setup_MarkdownReports(OutDir = getwd(), scriptname = basename(OutDir),
   title = "", setDir = TRUE, append = FALSE, addTableOfContents = FALSE,
   b.defSize = c(def = 7, A4 = 8.27, `1col.nature` = 3.5, `2col.nature` = 7.2,
   `1col.cell` = 3.35, `1.5col.cell` = 4.49, `2col.cell` = 6.85)[1],
-  b.defSize.fullpage = 8.27, b.usepng = UnlessSpec("b.usepng"),
-  b.png4Github = FALSE, b.mdlink = TRUE, b.save.wplots = TRUE)
+  b.defSize.fullpage = 8.27, b.usepng = FALSE, b.png4Github = FALSE,
+  b.mdlink = TRUE, b.save.wplots = TRUE)
 }
 \arguments{
 \item{OutDir}{The output directory (absolute / full path).}
@@ -31,8 +31,8 @@ into the timestamped subfolder within the OutDir.}
 
 \item{addTableOfContents}{write '[TOC]' below the header of the file, This is compiled to a}
 
-\item{b.defSize}{Default width of plot EXCEPT in pdfA4plot_on(), assuming h=w by default.
-c("def"= 7, "A4" = 8.27, "1col.nature" = 3.50, "2col.nature" = 7.20, "1col.cell" = 3.35,
+\item{b.defSize}{Default width of plot EXCEPT in pdfA4plot_on(), assuming h = w by default.
+c("def" = 7, "A4" = 8.27, "1col.nature" = 3.50, "2col.nature" = 7.20, "1col.cell" = 3.35,
 "1.5col.cell" = 4.49, "2col.cell" = 6.85)}
 
 \item{b.defSize.fullpage}{Default width of plot in pdfA4plot_on()A global background variable
@@ -58,6 +58,6 @@ Its name is stamped with the script name and the modification time. Create the "
 variable used by all log-writing and ~wplot functions.
 }
 \examples{
-setup_logging_markdown (scriptname ="MyRscript.R", title ="Awesome Ananlysis",
+setup_MarkdownReports( scriptname = "MyRscript.R", title = "Awesome Ananlysis",
 append = TRUE, b.png4Github = TRUE)
 }

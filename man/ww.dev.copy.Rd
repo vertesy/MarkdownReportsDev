@@ -19,5 +19,5 @@ ww.dev.copy(PNG_ = FALSE, w_, h_, fname_)
 Parser for dev.copy to save as PDF or PNG
 }
 \examples{
-ww.dev.copy(PNG=FALSE, w_=7, h_=7, fname_ = "fname")
+try.dev.off(); plot(1); # ww.dev.copy(PNG = FALSE, w_ = 7, h_ = 7, fname_ = "myNewplot")
 }

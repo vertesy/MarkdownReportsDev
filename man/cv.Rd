@@ -15,5 +15,5 @@ cv(x, na.rm = TRUE)
 Calculates the coefficient of variation (CV) for a numeric vector (it excludes NA-s by default)
 }
 \examples{
-cv(rnorm(100, sd=10))
+cv(rnorm(100, sd = 10))
 }

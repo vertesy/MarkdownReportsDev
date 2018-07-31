@@ -17,5 +17,5 @@
 Omit NA values from a vector and return a clean vector without any spam.
 }
 \examples{
-na.omit.strip(c(1, 2, 3, NA, NaN, 2))
+# na.omit.strip(c(1, 2, 3, NA, NaN, 2))
 }

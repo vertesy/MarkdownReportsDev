@@ -41,8 +41,8 @@ utils::globalVariables(c('OutDirOrig', 'OutDir', 'path_of_report', 'plotnameLast
 #' Use continue_logging_markdown() if you return logging into an existing report.
 #' FALSE by default: rerunning the script overwrites the previous report. Archive reports manually
 #' into the timestamped subfolder within the OutDir.
-#' @param b.defSize Default width of plot EXCEPT in pdfA4plot_on(), assuming h=w by default.
-#' c("def"= 7, "A4" = 8.27, "1col.nature" = 3.50, "2col.nature" = 7.20, "1col.cell" = 3.35,
+#' @param b.defSize Default width of plot EXCEPT in pdfA4plot_on(), assuming h = w by default.
+#' c("def" = 7, "A4" = 8.27, "1col.nature" = 3.50, "2col.nature" = 7.20, "1col.cell" = 3.35,
 #' "1.5col.cell" = 4.49, "2col.cell" = 6.85)
 #' @param b.defSize.fullpage Default width of plot in pdfA4plot_on()A global background variable
 #' used by pdfA4plot_on.
@@ -64,7 +64,7 @@ utils::globalVariables(c('OutDirOrig', 'OutDir', 'path_of_report', 'plotnameLast
 #' @param setDir Set the working directory to OutDir? Default: TRUE
 #' proper Table Of Contents by, e.g. Typora.
 #' @export
-#' @examples setup_logging_markdown (scriptname ="MyRscript.R", title ="Awesome Ananlysis",
+#' @examples setup_MarkdownReports( scriptname = "MyRscript.R", title = "Awesome Ananlysis",
 #' append = TRUE, b.png4Github = TRUE)
 
 setup_MarkdownReports <-
@@ -84,7 +84,7 @@ setup_MarkdownReports <-
               "2col.cell" = 6.85
             )[1],
             b.defSize.fullpage = 8.27,
-            b.usepng = UnlessSpec("b.usepng"),
+            b.usepng = FALSE,
             b.png4Github = FALSE,
             b.mdlink = TRUE,
             b.save.wplots = TRUE) {
@@ -218,7 +218,7 @@ create_set_Original_OutDir <-
 #' @param b.scriptname Name of the report file.
 #' @export
 #' @examples OutDir = paste0(getwd(),"/", collapse = "")
-#' continue_logging_markdown (b.scriptname =  "Analysis")
+#' continue_logging_markdown (b.scriptname = "Analysis")
 
 continue_logging_markdown <- function (b.scriptname) {
   path = ww.set.OutDir()
@@ -247,7 +247,7 @@ continue_logging_markdown <- function (b.scriptname) {
 #' @param ... Variables (strings, vectors) to be collapsed in consecutively.
 #'
 #' @export
-#' @examples create_set_OutDir (setDir=TRUE, getwd(),"/"   )
+#' @examples create_set_OutDir (setDir = TRUE, getwd(),"/"   )
 
 create_set_OutDir <- function (setDir = TRUE, ...) {
   OutDir = kollapse(..., print = FALSE)
@@ -282,7 +282,7 @@ create_set_OutDir <- function (setDir = TRUE, ...) {
 #'   "path_of_report".
 #' @param PNG Set to true if you want to save the plot as PNG instead of the default PDF.
 #' @export
-#' @examples wplot_save_this (plotname = date(), col = "gold1", w = 7, h = w
+#' @examples wplot_save_this (plotname = date(), col = "gold1", w = 7
 #' , mdlink = FALSE, ManualName = FALSE)
 
 wplot_save_this <-
@@ -307,7 +307,7 @@ wplot_save_this <-
 
 #' wplot
 #'
-#' Create and save scatter plots as .pdf, in "OutDir". If mdlink =TRUE, it inserts a .pdf and a .png
+#' Create and save scatter plots as .pdf, in "OutDir". If mdlink = TRUE, it inserts a .pdf and a .png
 #' link in the markdown report, set by "path_of_report". The .png version is not created, only the
 #' link is put in place, not to overwrite previous versions. The .png version is not created, only
 #' the link is put in place. You can add 2D error bars around the dots, or add lines (ablines) to
@@ -332,7 +332,7 @@ wplot_save_this <-
 #' @param arrow_lwd Line width for the error bar arrow. Line width for the error bar arrow.
 #' @param col_errorbar Color of the error bar arrow.
 #' @param abline Draw a line on the plot. Any value from: c( 'v', 'h', 'ab') for vertical,
-#'   horizontal, and line with any slope. In each case you need to specify "a=", specifying the
+#'   horizontal, and line with any slope. In each case you need to specify "a = ", specifying the
 #'   X-position for vertical (v); the Y-position for horizontal (yh) lines and the intercept for
 #'   lines with a slope (ab). In the latter case, 'b' specifes the slope.
 #' @param a X-offset for vertical lines, Y-offset for horizontal, and inclined lines.
@@ -351,10 +351,11 @@ wplot_save_this <-
 #' @param PNG Set to true if you want to save the plot as PNG instead of the default PDF.
 #'
 #' @export
-#' @examples wplot (df2col = cbind(rnorm(100), rpois(100, 8)), col = 1, pch = 18, w = 7, h = w
-#' , plotname = substitute(df2col), mdlink = FALSE, errorbar = FALSE, upper = 0
-#' , lower = upper, left = 0, right = left, width.whisker = 0.1, arrow_lwd = 1, abline = FALSE
-#' , a = FALSE, b = FALSE, lty = 1, lwd = 1, col_abline = 1)
+#' @examples try.dev.off(); mydf = cbind("A" = rnorm(100), "B" = rpois(100, 8))
+#' wplot (df2col = mydf, col = 1, pch = 18, w = 7,
+#' mdlink = FALSE, errorbar = FALSE, upper = 0,
+#' left = 0, right = left, width.whisker = 0.1, arrow_lwd = 1, abline = FALSE,
+#' a = FALSE, b = FALSE, lty = 1, lwd = 1, col_abline = 1)
 
 wplot <-
   function (df2col,
@@ -519,8 +520,11 @@ wplot <-
 #'
 #' @export
 #' @import stats
-#' @examples wscatter.fill(x=rnorm(100), y=rnorm(100), color=rnorm(100), nlevels=15, pch = 21
-#' , xlab="The X Dimension. Wooaaahh")
+#' @examples try.dev.off(); mydf = cbind("A" = rnorm(100), "B" = rnorm(100))
+#' wscatter.fill( df2col = mydf, color = rnorm(100), nlevels = 15, pch = 21,
+#' xlab = "The X Dimension. Wooaaahh")
+
+
 
 wscatter.fill <-
   function (df2col = cbind("A" = rnorm(100), "B" = rnorm(100)),
@@ -604,8 +608,7 @@ wscatter.fill <-
     par(mar = mar)
 
     # points
-    xlb <-
-      xlab # to avoid circular reference in the inside function argument
+    xlb <- xlab # to avoid circular reference in the inside function argument
     ylb <- ylab
     plot(
       x,
@@ -668,7 +671,7 @@ wscatter.fill <-
 
 #' wbarplot
 #'
-#' Create and save bar plots as .pdf, in "OutDir". If mdlink =TRUE, it inserts a .pdf and a .png
+#' Create and save bar plots as .pdf, in "OutDir". If mdlink = TRUE, it inserts a .pdf and a .png
 #' link in the markdown report, set by "path_of_report". The .png version is not created, only the
 #' link is put in place, not to overwrite previous versions.
 #' @param variable The variable to plot.
@@ -704,11 +707,10 @@ wscatter.fill <-
 #'   "path_of_report".
 #' @param PNG Set to true if you want to save the plot as PNG instead of the default PDF.
 #' @export
-#' @examples MyVec= 1:3; wbarplot (variable =MyVec, col = "gold1", sub = FALSE
-#' , main = substitute(variable), w = 7, h = w
-#' , incrBottMarginBy = 0, mdlink = FALSE, tilted_text = FALSE, hline = FALSE, vline = FALSE
-#' , filtercol = 1, lty = 1, lwd = 2, lcol = 2, errorbar = FALSE, upper = 0, lower = upper
-#' , arrow_width = 0.1, arrow_lwd = 1)
+#' @examples MyVec = 1:3; wbarplot (variable = MyVec, col = "gold1", sub = FALSE, w = 7, width = 1,
+#' incrBottMarginBy = 0, mdlink = FALSE, tilted_text = FALSE, hline = FALSE, vline = FALSE,
+#' filtercol = 1, lty = 1, lwd = 2, lcol = 2, errorbar = FALSE, upper = 0,
+#' arrow_width = 0.1, arrow_lwd = 1)
 
 wbarplot <-
   function (variable,
@@ -738,12 +740,14 @@ wbarplot <-
             PNG = UnlessSpec("b.usepng")) {
     isVec = is.vector(variable) | is.table(variable)
     isMat = is.matrix(variable) | is.data.frame(variable)
+
     NrBars = if (isVec)
       length(variable)
     else if (isMat)
       ncol(variable)
     else
       length(variable)
+
     BarNames = if (isVec)
       names(variable)
     else if (isMat)
@@ -858,7 +862,7 @@ wbarplot <-
 
 #' whist
 #'
-#' Create and save histograms as .pdf, in "OutDir". If mdlink =TRUE, it inserts a .pdf and a .png
+#' Create and save histograms as .pdf, in "OutDir". If mdlink = TRUE, it inserts a .pdf and a .png
 #' link in the markdown report, set by "path_of_report". The .png version is not created, only the
 #' link is put in place, not to overwrite previous versions. Name the file by naming the variable!
 #' Cannot be used with dynamically called variables [e.g. call vectors within a loop]. "filtercol"
@@ -887,10 +891,8 @@ wbarplot <-
 #'   "path_of_report".
 #' @param PNG Set to true if you want to save the plot as PNG instead of the default PDF.
 #' @export
-#' @examples MyGauss= rnorm(1000); whist (variable =MyGauss, col = "gold1", w = 7,
-#' #' breaks = 20,
-#' main = kollapse("Histogram of ", substitute(variable)), xlab = substitute(variable),
-#' mdlink = FALSE, hline = FALSE, vline = FALSE, lty = 2, lwd = 3,
+#' @examples MyGauss = rnorm(1000); whist (variable = MyGauss, col = "gold1", w = 7,
+#' breaks = 20, mdlink = FALSE, hline = FALSE, vline = FALSE, lty = 2, lwd = 3,
 #' lcol = 2, filtercol = 0)
 
 whist <-
@@ -915,8 +917,7 @@ whist <-
             mdlink = ww.set.mdlink(),
             PNG = UnlessSpec("b.usepng")) {
     xtra = list(...)
-    xlb <-
-      xlab # to avoid circular reference in the inside function argument
+    xlb <- xlab # to avoid circular reference in the inside function argument
     if (length(variable) > 0) {
       fname = kollapse(plotname, ".hist")
       if (!is.numeric(variable)) {
@@ -1029,119 +1030,10 @@ whist <-
 
 
 
-#' whist.back2back
-#'
-#' Two back-to-back histograms from a list. The X-axis is only correct if  breaks1 ==breaks2.
-#' Undeveloped function, contains graphical bugs, no support for this function.
-#' @param ListOf2 List of 2 numeric vectors
-#' @param breaks1 break parameter for histogram function for the 2st list element.
-#' @param breaks2 break parameter for histogram function for the 2st list element.
-#' @param ... Pass any other parameter of the corresponding
-#' plotting function (most of them should work).
-#' @param plotname The name of the file saved.
-#' @param main The title of the plot.
-#' @param ylab Y-axis label
-#' @param col  Color of the 2 histograms
-#' @param incrBottMarginBy Increase the blank space at the bottom of the plot. Use if labels do not
-#'   fit on the plot.
-#' @param savefile Save plot as pdf in OutDir, TRUE by default.
-#' @param w Width of the saved pdf image, in inches.
-#' @param h Height of the saved pdf image, in inches.
-#' @param mdlink Insert a .pdf and a .png image link in the markdown report,
-#' set by "path_of_report".
-#' @param PNG Set to true if you want to save the plot as PNG instead of the default PDF.
-#' @export
-#' @examples ls_of_hists = whist.back2back(ListOf2 = list("A"  = rnorm(100), "B"=rnorm(100)))
-
-whist.back2back <-
-  function(ListOf2 = list("A"  = rnorm(10000), "B" = rnorm(10000)),
-           ...,
-           breaks1 = 20,
-           breaks2 = breaks1,
-           col = c("green", "blue"),
-           plotname = substitute(variable),
-           main = plotname,
-           ylab = "Frequency",
-           savefile = UnlessSpec("b.save.wplots"),
-           incrBottMarginBy = 0,
-           w = UnlessSpec("b.defSize", 7),
-           h = w,
-           mdlink = ww.set.mdlink(),
-           PNG = UnlessSpec("b.usepng")) {
-    print("Does not always work - experimental. Problem is the separate binning.")
-    fname = kollapse(plotname, ".hist.btb")
-    if (incrBottMarginBy) {
-      .ParMarDefault <- par("mar")
-      par(mar = c(par("mar")[1] + incrBottMarginBy, par("mar")[2:4]))
-    } 	# Tune the margin
-    lsNm = if (!is.null(names(ListOf2)))
-      names(ListOf2)
-    else
-      1:2
-
-    lng = length(ListOf2)
-    if (lng != 2) {
-      iprint("length(List): ", lng, " First two elements used")
-    } #if
-    x = NULL
-    x[[1]] = h1 = hist(ListOf2[[1]], plot = FALSE, breaks = breaks1)
-    x[[2]] = h2 = hist(ListOf2[[2]], plot = FALSE, breaks = breaks2)
-    names(h2$counts) = h2$breaks[-1]
-    names(h1$counts) = h1$breaks[-1]
-    h2$counts =  -h2$counts
-
-    AllBreaks = sort(union(h1$breaks, h2$breaks))[-1]
-    ct1 = h1$counts[as.character(AllBreaks)]
-    ct2 = h2$counts[as.character(AllBreaks)]
-
-    hmax = max(h1$counts, na.rm = TRUE)
-    hmin = min(h2$counts, na.rm = TRUE)
-    xlimm = range(unlist(ListOf2), na.rm = TRUE)
-    xlimm = c(1, max(length(h2$counts), length(h1$counts)) + 3)
-
-    colorz = col # to avoid circular reference in the inside function argument
-    main_ = main
-    barplot(
-      ct1,
-      ylim = c(hmin, hmax),
-      xlim = xlimm,
-      col = colorz[1],
-      names.arg = AllBreaks,
-      las = 3,
-      main = main_,
-      ylab = ylab,
-      ...
-    )
-    barplot(ct2,
-            col = colorz[2],
-            add = TRUE,
-            names.arg = "")
-    legend("topright", lsNm[1], bty = "n")
-    legend("bottomright", lsNm[2], bty = "n")
-
-    if (savefile) {
-      ww.dev.copy(
-        PNG_ = PNG,
-        fname_ = fname,
-        w_ = w,
-        h_ = h
-      )
-    }
-    if (incrBottMarginBy) {
-      par("mar" = .ParMarDefault)
-    }
-    assign("plotnameLastPlot", fname, envir = .GlobalEnv)
-    if (mdlink & savefile) {
-      ww.MarkDown_Img_Logger_PDF_and_PNG(fname_wo_ext = fname)
-    }
-    x
-  }
-
-
 
 #' wboxplot
 #'
-#' Create and save box plots as .pdf, in "OutDir". If mdlink =TRUE, it inserts a .pdf and a .png
+#' Create and save box plots as .pdf, in "OutDir". If mdlink = TRUE, it inserts a .pdf and a .png
 #' link in the markdown report, set by "path_of_report". The .png version is not created, only the
 #' link is put in place, not to overwrite previous versions.
 #' @param yourlist The variable to plot.
@@ -1161,13 +1053,12 @@ whist.back2back <-
 #'   "path_of_report".
 #' @param PNG Set to true if you want to save the plot as PNG instead of the default PDF.
 #' @export
-#' @examples MyList = list(rnorm(100),rnorm(100)); wboxplot (variable =MyList,col = "gold1",
-#' plotname = as.character(substitute(variable)), sub = FALSE, incrBottMarginBy = 0,
+#' @examples MyList = list(rnorm(100),rnorm(100)); wboxplot (yourlist = MyList,col = "gold1",
+#' sub = FALSE, incrBottMarginBy = 0,
 #'  tilted_text = FALSE, w = 7, mdlink = FALSE)
 
 wboxplot <-
   function (yourlist,
-            ...,
             main = as.character(substitute(yourlist)),
             sub = FALSE,
             ylab = "",
@@ -1178,7 +1069,8 @@ wboxplot <-
             w = UnlessSpec("b.defSize", 7),
             h = w,
             mdlink = ww.set.mdlink(),
-            PNG = UnlessSpec("b.usepng")) {
+            PNG = UnlessSpec("b.usepng"),
+            ...) {
     fname = kollapse(main, ".boxplot")
     if (incrBottMarginBy) {
       .ParMarDefault <- par("mar")
@@ -1232,15 +1124,15 @@ wboxplot <-
 
 #' wpie
 #'
-#' Create and save pie charts as .pdf, in "OutDir". If mdlink =TRUE, it inserts a .pdf and a .png
+#' Create and save pie charts as .pdf, in "OutDir". If mdlink = TRUE, it inserts a .pdf and a .png
 #' link in the markdown report, set by "path_of_report". The .png version is not created, only the
 #' link is put in place, not to overwrite previous versions.
-#' @param variable The variable to plot.
+#' @param NamedVector The variable to plot.
+#' @param plotname Title of the plot (main parameter) and also the name of the file.
 #' @param ... Pass any other parameter of the corresponding plotting function (most of them should
 #'   work).
 #' @param percentage Display percentage instead of counts. TRUE by default.
 #' @param both_pc_and_value Report both percentage AND number.
-#' @param plotname Title of the plot (main parameter) and also the name of the file.
 #' @param col Fill color. Defined by rich colours by default
 #' @param w Width of the saved pdf image, in inches.
 #' @param h Height of the saved pdf image, in inches.
@@ -1249,52 +1141,52 @@ wboxplot <-
 #'   "path_of_report".
 #' @param PNG Set to true if you want to save the plot as PNG instead of the default PDF.
 #' @export
-#' @examples Cake =1:3; names(Cake) = letters[1:3]; wpie (Cake, percentage = TRUE,
+#' @examples Cake = 1:3; names(Cake) = letters[1:3]; wpie (Cake, percentage = TRUE,
 #' w = 7, mdlink = FALSE)
 
 wpie <-
-  function (variable,
-            ...,
+  function (NamedVector,
             percentage = TRUE,
             both_pc_and_value = FALSE,
-            plotname = substitute(variable),
-            col = gplots::rich.colors(length(variable)),
+            plotname = substitute(NamedVector),
+            col = gplots::rich.colors(length(NamedVector)),
             savefile = UnlessSpec("b.save.wplots"),
             w = UnlessSpec("b.defSize", 7),
             h = w,
             mdlink = ww.set.mdlink(),
-            PNG = UnlessSpec("b.usepng")) {
+            PNG = UnlessSpec("b.usepng"),
+            ...) {
     # if (!require("gplots")) {
     #   print("Please install gplots: install.packages('gplots')")
     # }
     fname = kollapse(plotname, ".pie")
-    subt = kollapse("Total = ", sum(variable), print = FALSE)
+    subt = kollapse("Total = ", sum(NamedVector), print = FALSE)
     if (percentage) {
       labs <-
         paste("(",
-              names(variable),
+              names(NamedVector),
               ")",
               "\n",
-              percentage_formatter(variable / sum(variable)),
+              percentage_formatter(NamedVector / sum(NamedVector)),
               sep = "")
       if (both_pc_and_value) {
         labs <-
           paste(
             "(",
-            names(variable),
+            names(NamedVector),
             ")",
             "\n",
-            percentage_formatter(variable / sum(variable)),
+            percentage_formatter(NamedVector / sum(NamedVector)),
             "\n",
-            variable,
+            NamedVector,
             sep = ""
           )
       }
     } else {
-      labs <- paste("(", names(variable), ")", "\n", variable, sep = "")
+      labs <- paste("(", names(NamedVector), ")", "\n", NamedVector, sep = "")
     }
     pie(
-      variable,
+      NamedVector,
       ...,
       main = plotname,
       sub = subt,
@@ -1319,7 +1211,7 @@ wpie <-
 
 #' wstripchart
 #'
-#' Create and save strip charts as .pdf, in "OutDir". If mdlink =TRUE, it inserts a .pdf and a .png
+#' Create and save strip charts as .pdf, in "OutDir". If mdlink = TRUE, it inserts a .pdf and a .png
 #' link in the markdown report, set by "path_of_report". The .png version is not created, only the
 #' link is put in place, not to overwrite previous versions.
 #'
@@ -1355,15 +1247,11 @@ wpie <-
 #' @param PNG Set to true if you want to save the plot as PNG instead of the default PDF.
 #'
 #' @export
-#' @examples my.ls = list(rnorm(10), rnorm(10), rnorm(10)); wstripchart (yourlist = my.ls,
-#' main = as.character(substitute(yourlist)),#' sub = FALSE, border = 1,
-#' BoxPlotWithMean = FALSE, pch = 23, pchlwd = 1, pchcex = 1.5,
-#' bg = chartreuse2, col = black, metod = jitter, jitter = 0.2, colorbyColumn = FALSE,
-#' w = 7, incrBottMarginBy = 0, tilted_text = FALSE, mdlink = FALSE)
+#' @examples try.dev.off(); my.ls = list(A = rnorm(10), B = rnorm(10), C = rnorm(10));
+#' wstripchart (yourlist = my.ls)
 
 wstripchart <-
   function (yourlist,
-            ...,
             main = as.character(substitute(yourlist)),
             sub = NULL,
             ylab = "",
@@ -1387,7 +1275,12 @@ wstripchart <-
             w = UnlessSpec("b.defSize", 7),
             h = w,
             mdlink = ww.set.mdlink(),
-            PNG = UnlessSpec("b.usepng")) {
+            PNG = UnlessSpec("b.usepng"),
+            ...) {
+
+    col_ <- col # to avoid circular reference in the inside function argument
+    bg_ <- bg
+
     if (incrBottMarginBy) {
       .ParMarDefault <-
         par("mar")
@@ -1431,8 +1324,8 @@ wstripchart <-
       method = metod,
       jitter = jitter,
       pch = pch,
-      bg = bg,
-      col = col,
+      bg = bg_,
+      col = col_,
       lwd = pchlwd,
       cex = pchcex
     )
@@ -1472,7 +1365,7 @@ wstripchart <-
 #' wstripchart_list
 #'
 #' Create and save stripcharts from a list as .pdf, in "OutDir". This version allows individual
-#' coloring of each data point, by a color-list of the same dimension. If mdlink =TRUE, it inserts a
+#' coloring of each data point, by a color-list of the same dimension. If mdlink = TRUE, it inserts a
 #' .pdf and a .png link in the markdown report, set by "path_of_report". The .png version is not
 #' created, only the link is put in place, not to overwrite previous versions.
 #' @param yourlist Input list to be plotted.
@@ -1504,15 +1397,13 @@ wstripchart <-
 #'   "path_of_report".
 #' @param PNG Set to true if you want to save the plot as PNG instead of the default PDF.
 #' @export
-#' @examples wstripchart_list (yourlist = list(rnorm(10), rnorm(10), rnorm(10)),
-#' main = as.character(substitute(yourlist)), sub = NULL, ylab = NULL, xlab = NULL,
+#' @examples try.dev.off(); my.ls = list(A = rnorm(10), B = rnorm(10), C = rnorm(10));
+#' wstripchart_list(yourlist = my.ls, sub = NULL, ylab = NULL, xlab = NULL,
 #' border = 1, bxpcol = 0, pch = 23, pchlwd = 1, pchcex = 1.5, bg = 'chartreuse2', col = 1,
-#' metod = jitter, jitter = 0.2, w = 7,
-#' incrBottMarginBy = 0, tilted_text = FALSE, mdlink = FALSE)
+#' metod = jitter, jitter = 0.2, w = 7, incrBottMarginBy = 0, tilted_text = FALSE, mdlink = FALSE)
 
 
-wstripchart_list <-
-  function (yourlist,
+wstripchart_list <- function (yourlist,
             ...,
             main = as.character(substitute(yourlist)),
             sub = NULL,
@@ -1623,7 +1514,7 @@ wstripchart_list <-
 #' wvioplot_list
 #'
 #' Create and save violin plots as .pdf, in "OutDir". It requires (and calls) "vioplot" package.
-#' If mdlink =TRUE, it inserts a .pdf and a .png link in the markdown report,
+#' If mdlink = TRUE, it inserts a .pdf and a .png link in the markdown report,
 #' set by "path_of_report". The .png version is not created, only the link is put in place,
 #' not to overwrite previous versions.
 #'
@@ -1646,23 +1537,24 @@ wstripchart_list <-
 #' set by "path_of_report".
 #' @param yoffset Offset for X axis labels (in vertical / Y dimension).
 #' @param PNG Set to true if you want to save the plot as PNG instead of the default PDF.
+#' @importFrom vioplot vioplot
+#' @importFrom sm sm.density
 #'
 #' @export
-#' @examples my.ls = list(rnorm(10), rnorm(10), rnorm(10));
-#' wvioplot_list (yourlist =my.ls, xlab = names(yourlist), ylab = "",
-#' col = c(1:length(yourlist)), incrBottMarginBy = 0, w = 7,
-#' main = as.character(substitute(yourlist)), tilted_text = FALSE, mdlink = FALSE)
+#' @examples try.dev.off(); my.ls = list(A = rnorm(10), B = rnorm(10), C = rnorm(10));
+#' # wvioplot_list (yourlist = my.ls, xlab = names(yourlist), ylab = "", incrBottMarginBy = 0,
+#' # w = 7, tilted_text = FALSE, mdlink = FALSE)
 
 
 wvioplot_list <-
   function (yourlist,
             ...,
-            col = c(2:(length(yourlist) + 1)),
             main = as.character(substitute(yourlist)),
             sub = NULL,
             xlab = names(yourlist),
             ylab = "",
             ylim = FALSE,
+            col = c(2:(length(yourlist) + 1)),
             incrBottMarginBy = 0,
             tilted_text = FALSE,
             yoffset = 0,
@@ -1711,7 +1603,7 @@ wvioplot_list <-
     )
     for (i in 1:l_list) {
       if (length(na.omit.strip(yourlist[[i]]))) {
-        vioplot::vioplot(
+        vioplot(
           na.omit.strip(yourlist[[i]]),
           ...,
           at = i,
@@ -1758,7 +1650,7 @@ wvioplot_list <-
 #' wviostripchart_list
 #'
 #' Create and save violin plots as .pdf, in "OutDir". It requires (and calls) "vioplot" package.
-#' If mdlink =TRUE, it inserts a .pdf and a .png link in the markdown report,
+#' If mdlink = TRUE, it inserts a .pdf and a .png link in the markdown report,
 #' set by "path_of_report". The .png version is not created, only the link is put in place,
 #' not to overwrite previous versions.
 #' @param yourlist Input list to be plotted.
@@ -1785,11 +1677,12 @@ wvioplot_list <-
 #' set by "path_of_report".
 #' @param PNG Set to true if you want to save the plot as PNG instead of the default PDF.
 #'
+#' @importFrom vioplot vioplot
+#' @import sm
 #' @export
-#' @examples my.ls = list(rnorm(10), rnorm(10), rnorm(10));
-#' wviostripchart_list (yourlist = my.ls, pch = 23, viocoll = 0, vioborder = 1,
-#' ylab = "", main = as.character(substitute(yourlist)), sub = FALSE, bg = 0, col = black,
-#'  metod = jitter, jitter = 0.1, w = 7, incrBottMarginBy = 0, mdlink = FALSE)
+#' @examples try.dev.off(); my.ls = list(A = rnorm(10), B = rnorm(10), C = rnorm(10));
+#' # wviostripchart_list (yourlist = my.ls, pch = 23, viocoll = 0, vioborder = 1, sub = FALSE,
+#' # bg = 0, col = "black", metod = "jitter", jitter = 0.1, w = 7, mdlink = FALSE)
 
 wviostripchart_list <-
   function (yourlist,
@@ -1820,8 +1713,7 @@ wviostripchart_list <-
     } 	# Tune the margin
     l_list = length(yourlist)
 
-    plotname <-
-      main # to avoid circular reference in the inside function argument
+    plotname <- main # to avoid circular reference in the inside function argument
     ylb <- ylab
     plot(
       0,
@@ -1838,7 +1730,7 @@ wviostripchart_list <-
     for (i in 1:l_list) {
       print(i)
       if (length(na.omit.strip(yourlist[[i]]))) {
-        vioplot::vioplot(
+        vioplot(
           na.omit.strip(yourlist[[i]]),
           ...,
           at = i
@@ -1892,7 +1784,6 @@ wviostripchart_list <-
 
 
 
-
 #' wvenn
 #'
 #' Save venn diagrams. Unlike other ~vplot funcitons, this saves directly into a .png,
@@ -1909,10 +1800,12 @@ wviostripchart_list <-
 #' @param mdlink Insert a .pdf and a .png image link in the markdown report,
 #'  set by "path_of_report".
 #' @param plotname Manual plotname parameter
+#'
 #' @export
-#' @examples TwoSets = list(LETTERS[1:6], LETTERS[3:9], )
-#' wvenn (yourlist =TwoSets, imagetype = png, alpha = 0.5, w = 7, mdlink = FALSE)
+#' @examples TwoSets = list("set1" = LETTERS[1:6], "set2" = LETTERS[3:9] )
+#' wvenn (yourlist = TwoSets, imagetype = "png", alpha = 0.5, w = 7, mdlink = FALSE)
 
+# @importFrom VennDiagram venn.diagram
 wvenn <-
   function (yourlist,
             imagetype = "png",
@@ -1924,34 +1817,42 @@ wvenn <-
             h = w,
             mdlink = ww.set.mdlink(),
             plotname = substitute(yourlist)) {
+
     # if (!require("VennDiagram")) {
     #   print("Please install VennDiagram: install.packages('VennDiagram')")
     # }
+
+    print(plotname)
     fname = kollapse(plotname, ".", imagetype, print = FALSE)
+
     LsLen = length(yourlist)
     if (length(names(yourlist)) < LsLen) {
       names(yourlist) = 1:LsLen
       print("List elements had no names.")
     }
-    print(names(yourlist))
 
-    filename = kollapse(OutDir, "/", fname, print = FALSE)
+    filename = kollapse(ww.set.OutDir(), fname, print = FALSE)
+
     if (missing(subt)) {
       subt = kollapse("Total = ", length(unique(unlist(yourlist)))
                       , " elements in total.", print = FALSE)
     } #if
+    # print(filename)
+
     VennDiagram::venn.diagram(
       x = yourlist,
       imagetype = imagetype,
       filename = filename,
       main = plotname,
-      ... ,
+      ...,
       sub = subt,
       fill = fill,
       alpha = alpha,
       sub.cex = .75,
       main.cex = 2
     )
+    # print(names(yourlist))
+
     if (mdlink) {
       llogit(ww.MarkDown_ImgLink_formatter(fname))
       if (b.usepng == TRUE && b.png4Github == TRUE) {
@@ -1959,6 +1860,8 @@ wvenn <-
       }
     }
   }
+
+
 
 
 # Plots for cycling over data frame columns or rows ------------------------------------------------
@@ -1978,7 +1881,10 @@ wvenn <-
 #' @param PNG Set to true if you want to save the plot as PNG instead of the default PDF.
 #'
 #' @export
-#' @examples wbarplot_dfCol (df, colName,  col = "gold1", w = 7, h = w)
+#' @examples try.dev.off(); df = cbind(a = rnorm(1:10), b = rnorm(10))
+#' wbarplot_dfCol (df, colName = "a",  col = "gold1", w = 7)
+
+
 
 wbarplot_dfCol <-
   function (df,
@@ -2035,7 +1941,8 @@ wbarplot_dfCol <-
 #' @export
 #' @import stats
 #'
-#' @examples whist_dfCol (df, colName, col = gold, w = 7, h = w)
+#' @examples try.dev.off(); df = cbind(a = rnorm(1:10), b = rnorm(10))
+#' whist_dfCol (df, colName="a", col = "gold", w = 7)
 
 whist_dfCol <-
   function (df,
@@ -2125,9 +2032,9 @@ whist_dfCol <-
 #' @param title Manually set the title field of the PDF file
 #' @export
 #' @import graphics grDevices
-
-#' @examples pdfA4plot_on();  hist(rnorm(100)); hist(-rnorm(100))
+#' @examples pdfA4plot_on(pname = "MyA4plots");  hist(rnorm(100)); hist(-rnorm(100))
 #'  hist(10+rnorm(100)); pdfA4plot_off()
+
 
 pdfA4plot_on <-
   function (pname = date(),
@@ -2178,7 +2085,8 @@ pdfA4plot_on <-
 #' @param title Manually set the title field of the PDF file
 #' @export
 #' @import graphics grDevices
-#' @examples pdfA4plot_on.layout();  hist(rnorm(100)); hist(-rnorm(100))
+#'
+#' @examples pdfA4plot_on.layout(pname = "MyA4_w_layout");  hist(rnorm(100)); hist(-rnorm(100))
 #' hist(10+rnorm(100)); pdfA4plot_off()
 
 
@@ -2225,11 +2133,11 @@ pdfA4plot_on.layout <-
 #' hist(10+rnorm(100)); pdfA4plot_off()
 
 pdfA4plot_off <- function () {
-  x =  if (exists("b.mfrow_def"))
+  x = if (exists("b.mfrow_def"))
     b.mfrow_def
   else
     c(1, 1)
-  y =  if (exists("b.bg_def"))
+  y = if (exists("b.bg_def"))
     b.bg_def
   else
     "white"
@@ -2237,7 +2145,7 @@ pdfA4plot_off <- function () {
     assign("b.save.wplots", TRUE, envir = .GlobalEnv) # switch back mdlink to its original value
   }
   par(mfrow = x, bg = y)
-  try(dev.off())
+  try.dev.off()
   # close pdf
   if (exists("OutDir")) { try(write_clip(OutDir), silent = TRUE) }
 }
@@ -2258,14 +2166,14 @@ pdfA4plot_off <- function () {
 #' @param ... Pass any other argument to the arrows function.
 #' arrows function (most of them should work).
 #' @export
-#' @examples plot (1); error_bar (x =1, y =1, upper =.1, width.whisker  = 0.1)
+#' @examples plot (1); error_bar (x = 1, y = 1, upper = .1, width.whisker = 0.1)
 
 error_bar <-
   function (x,
             y,
             upper,
             lower = upper,
-            width.whisker  = 0.1,
+            width.whisker = 0.1,
             ...) {
     stopifnot(length(x) == length(y) &  length(y) == length(lower) & length(lower) == length(upper))
     if (length(dim(y)) > 1) {
@@ -2301,7 +2209,7 @@ error_bar <-
 #' wlegend
 #'
 #' Quickly add a legend to an existing plot, and save the plot immediately.
-#' @param fill_ Color of the boxes next to the text
+#' @param NamedColorVec Color of the boxes next to the text
 #' @param poz Position of the legend (def: 4). Use numbers 1-4 to choose from
 #' "topleft", "topright", "bottomright", "bottomleft".
 #' @param legend Labels displayed (Text)
@@ -2312,44 +2220,41 @@ error_bar <-
 #' @param bty The type of box to be drawn around the legend.
 #' The allowed values are "o" (the default) and "n".
 #' @param title What should be the title of the legend? NULL by default
-#' @param ttl.by.varname Should the title of the legend substituted from the fill_ variable's name?
+#' @param ttl.by.varname Should the title of the legend substituted from the NamedColorVec variable's name?
 #' ALSE by default. Does not work if you pass on a list item like this: list$element
 #' @param OverwritePrevPDF Save the plot immediately with the same name
 #' the last wplot* function made (It is stored in plotnameLastPlot variable).
 #' @param mdlink Insert a .pdf and a .png image link in the markdown report
 #', set by "path_of_report".
 #' @export
-#' @examples function(fill_ = NULL, poz=4, legend = names(fill_),
-#' w=7, h=w, bty = "n", OverwritePrevPDF =TRUE)
+#' @examples try.dev.off(); x = cbind(a = rnorm(1:10), b = rnorm(10)); wplot(x)
+#' LegendCols = 2:5; names(LegendCols) = LETTERS[1:4]
+#' wlegend(NamedColorVec = LegendCols, poz = 1, w = 7, bty = "n", OverwritePrevPDF = TRUE)
 
 wlegend <-
-  function(fill_ = NA,
+  function(NamedColorVec = NA,
            poz = 4,
            legend,
            cex = .75,
            bty = "n",
            ...,
            w = 7,
-           h = w
-           ,
+           h = w,
            title = NULL,
-           ttl.by.varname = FALSE
-           ,
+           ttl.by.varname = FALSE,
            OverwritePrevPDF = UnlessSpec("b.save.wplots"),
            mdlink = FALSE) {
-    w_ <-
-      w # to avoid circular reference in the inside function argument
+    w_ <- w # to avoid circular reference in the inside function argument
     h_ <- h
     cex_ <- cex
 
-    fNames = names(fill_)
-    LF = length(fill_)
+    fNames = names(NamedColorVec)
+    LF = length(NamedColorVec)
     LN = length(fNames)
     if (ttl.by.varname & is.null(title))
-      title = substitute(fill_)
-    stopif((LN != LF & missing(legend))
-           ,
-           message = "The color vector (fill_) has less names than entries /
+      title = substitute(NamedColorVec)
+    stopif((LN != LF & missing(legend)),
+           message = "The color vector (NamedColorVec) has less names than entries /
            the variable 'legend' is not provided.")
     # stopif( ( LF  != length(legend)), message = "Fill and legend are not equally long.")
     legend = if (LN == LF & missing(legend))
@@ -2364,7 +2269,7 @@ wlegend <-
     legend(
       x = pozz,
       legend = legend,
-      fill = fill_,
+      fill = NamedColorVec,
       title = title,
       ...,
       bty = bty,
@@ -2372,7 +2277,7 @@ wlegend <-
     )
     if (OverwritePrevPDF) {
       wplot_save_this(
-        plotname = plotnameLastPlot,
+        plotname = ww.set.PlotName(),
         w = w_,
         h = h_,
         mdlink = mdlink,
@@ -2396,14 +2301,15 @@ wlegend <-
 #' @param bty The type of box to be drawn around the legend.
 #' The allowed values are "o" (the default) and "n".
 #' @param title What should be the title of the legend? NULL by default
-#' @param ttl.by.varname Should the title of the legend substituted from the fill_ variable's name?
+#' @param ttl.by.varname Should the title of the legend substituted from the NamedColorVec variable's name?
 #' FALSE by default. Does not work if you pass on a list item like this: list$element
 #' @param OverwritePrevPDF Save the plot immediately with the same name
 #' the last wplot* function made (It is stored in plotnameLastPlot variable).
 #' @param mdlink Insert a .pdf and a .png image link in the markdown report,
 #' set by "path_of_report".
 #' @export
-#' @examples function(legend = "Hey", poz=4,  w=7, h=w, bty = "n", OverwritePrevPDF =TRUE)
+#' @examples x = cbind(a = rnorm(1:10), b = rnorm(10)); wplot(x);
+#' wlegend.label(legend = "Hey", poz = 2,  w = 7, bty = "n", OverwritePrevPDF = TRUE)
 
 wlegend.label <-
   function(legend = "...",
@@ -2465,7 +2371,7 @@ wlegend.label <-
 #' @export
 #'
 #' @examples barplot (1:10);
-#' barplot_label (barplotted_variable = 1:10, labels =11:2, filename = "myBarplot.pdf")
+#' barplot_label (barplotted_variable = 1:10, labels = 11:2, filename = "myBarplot.pdf")
 
 
 barplot_label <-
@@ -2512,14 +2418,13 @@ barplot_label <-
 #' @param ...  Additional parameters for the line to display.
 #' @export
 #' @import stats
-#' @examples x = cbind(a=rnorm(1:10), b=rnorm(10)); wplot(x)
-#' wLinRegression(x, coeff = c("pearson", "spearman", "r2"))
+#' @examples try.dev.off(); x = cbind(a = rnorm(1:10), b = rnorm(10)); wplot(x)
+#' # wLinRegression(x, coeff = c("pearson", "spearman", "r2")[3])
 
 wLinRegression <-
   function(DF,
            coeff = c("pearson", "spearman", "r2")[3],
-           textlocation = "topleft"
-           ,
+           textlocation = "topleft",
            cex = 1,
            OverwritePrevPDF = UnlessSpec("b.save.wplots"),
            ...) {
@@ -2530,7 +2435,7 @@ wLinRegression <-
       coeff = c("pearson", "spearman", "r2")
     if ("pearson" %in% coeff) {
       dispCoeff = iround(cor(DF[, 2], DF[, 1], method = "pearson"))
-      legendText  =  c(legendText, paste0("Pears.: ", dispCoeff))
+      legendText = c(legendText, paste0("Pears.: ", dispCoeff))
     }
     if ("spearman" %in% coeff) {
       dispCoeff = iround(cor(DF[, 2], DF[, 1], method = "spearman"))
@@ -2590,8 +2495,8 @@ try.dev.off <- function () {
 #' @param subscr Subscripted text.
 #' @param quantity String in brackets after the subscript, eg.: log2(read count).
 #' @export
-#' @examples plot (1, 1, xlab =subscript_in_plots(subscr = 10, quantity = "read count"),
-#'  ylab =subscript_in_plots())
+#' @examples plot (1, 1, xlab = subscript_in_plots(subscr = 10, quantity = "read count"),
+#'  ylab = subscript_in_plots())
 
 subscript_in_plots <-
   function(prefix = "log",
@@ -2610,7 +2515,7 @@ subscript_in_plots <-
 #' @param sup Superscripted text.
 #' @param suffix String after the subscript.
 #' @export
-#' @examples plot (1, 1, main =superscript_in_plots())
+#' @examples plot (1, 1, main = superscript_in_plots())
 
 superscript_in_plots <- function(prefix = 'n',
                                  sup = 'k',
@@ -2640,7 +2545,7 @@ superscript_in_plots <- function(prefix = 'n',
 #' @param randomize Randomize colors
 #'
 #' @export
-#' @examples wcolorize (vector=c(1, 1, 1:6), ReturnCategoriesToo=TRUE, show=TRUE)
+#' @examples wcolorize (vector = c(1, 1, 1:6), ReturnCategoriesToo = TRUE, show = TRUE)
 
 wcolorize  <-
   function(vector = c(1, 1, 1:6),
@@ -2680,7 +2585,7 @@ wcolorize  <-
     }#if
     COLZ = as.vector(COLZ)
     names(COLZ) = vector
-    CATEG = unique.wNames(COLZ)
+    CATEG = COLZ[!duplicated(COLZ)]
     if (show)
       Color_Check(CATEG)
     if (ReturnCategoriesToo) {
@@ -2690,57 +2595,6 @@ wcolorize  <-
   }
 
 
-#' val2col
-#'
-#' This function converts a vector of values("yourdata") to a vector of color levels.
-#' One must define the number of colors. The limits of the color scale("zlim") or
-#' the break points for the color changes("breaks") can also be defined.
-#' When breaks and zlim are defined, breaks overrides zlim.
-#' Source: http://menugget.blogspot.nl/2011/09/converting-values-to-color-levels.html
-#' @param yourdata The data, to what the colors will be scaled to.
-#' @param zlim Limits.
-#' @param col Color of the plot.
-#' @param breaks Number of bins.
-#' @param rename The returned color vector will be named with its previous values
-#' @export
-#' @examples val2col (yourdata =rpois(200, 12), zlim =c(0,20),
-#' col = rev(heat.colors(12)), breaks =10  )
-
-
-### CONTAINS A QUICK FIX FOR THE NUMBER OF COLOR LEVELS. See #59 on GitHub ###
-val2col <-
-  function (yourdata,
-            zlim,
-            col = rev(heat.colors(max(12, 3 * length(unique(
-              yourdata
-            ))))),
-            breaks,
-            rename = FALSE) {
-    if (!missing(breaks)) {
-      if (length(breaks) != (length(col) + 1)) {
-        stop("must have one more break than color")
-      }
-    }
-    if (missing(breaks) & !missing(zlim)) {
-      breaks <- seq(zlim[1], zlim[2], length.out = (length(col) + 1))
-    }
-    if (missing(breaks) & missing(zlim)) {
-      zlim <- range(yourdata, na.rm = TRUE)
-      zlim[2] <- zlim[2] + c(zlim[2] - zlim[1]) * (0.001)
-      zlim[1] <- zlim[1] - c(zlim[2] - zlim[1]) * (0.001)
-      breaks <- seq(zlim[1], zlim[2], length.out = (length(col) + 1))
-    }
-    colorlevels <- col[((as.vector(yourdata) - breaks[1]) /
-                          (range(breaks)[2] - range(breaks)[1])) * (length(breaks) - 1) + 1]
-    if (length(names(yourdata))) {
-      names(colorlevels) = yourdata
-    }
-
-    if (rename) {
-      names(colorlevels) = yourdata
-    } # works on vectors only
-    colorlevels
-  }
 
 
 # Printing to the markdown file and to the screen --------------------------------------------------
@@ -2754,7 +2608,7 @@ val2col <-
 #' @export
 #' @examples variable.and.path.exists(path = B, alt.message = "Hello, your path/var does not exist.")
 
-variable.and.path.exists <- function(path = path_of_report, alt.message=NULL) {
+variable.and.path.exists <- function(path = path_of_report, alt.message = NULL) {
   Variable.Name = substitute(path)
   if (exists(as.character(Variable.Name))) {
     dn = dirname(path)
@@ -2902,7 +2756,8 @@ llwrite_list <- function(yourlist, printName = "self") {
 #' @param to.file The report file. Defined as "path_of_report" by default,
 #' which is set by the "setup_MarkdownReports" function.
 #' @export
-#' @examples file.create("~/yourfile.txt"); md.import("~/yourfile.txt")
+#' @examples path_of_report = ww.set.path_of_report(); llprint ("Hello"); # md.import(path_of_report)
+
 
 md.import <- function(from.file, to.file = path_of_report) {
   linez = readLines(from.file)
@@ -2925,7 +2780,7 @@ md.import <- function(from.file, to.file = path_of_report) {
 #' @param parameterlist List of Paramters
 #' @param maxlen Maximum length of entries in a parameter list element
 #' @export
-#' @examples md.LogSettingsFromList(parameterlist = list("min"=4, "method"="pearson", "max"=10))
+#' @examples md.LogSettingsFromList(parameterlist = list("min" = 4, "method" = "pearson", "max" = 10))
 
 md.LogSettingsFromList <- function (parameterlist,
                                     maxlen = 20) {
@@ -2953,7 +2808,7 @@ md.LogSettingsFromList <- function (parameterlist,
 #' @param print2screen Print the markdown formatted table to the sceen.
 #' @param WriteOut Write the table into a TSV file.
 #' @export
-#' @examples # df=matrix(1:9,3);
+#' @examples df = matrix(1:9,3); rownames(df) = 6:8;rownames(df) = 9:11;
 #' md.tableWriter.DF.w.dimnames (df, percentify = FALSE, title_of_table = NA)
 
 
@@ -3031,13 +2886,12 @@ md.tableWriter.DF.w.dimnames <-
 #' @param print2screen Print the markdown formatted table to the sceen.
 #' @param WriteOut Write the table into a TSV file.
 #' @export
-#' @examples x= -1:2; names(x)=LETTERS[1:4]
-#' md.tableWriter.VEC.w.names (NamedVector =x, FullPath = path_of_report,
-#' percentify = FALSE, title_of_table = NA)
+#' @examples x = -1:2; names(x) = LETTERS[1:4]
+#' md.tableWriter.VEC.w.names (NamedVector = x, percentify = FALSE, title_of_table = NA)
 
 md.tableWriter.VEC.w.names <-
   function (NamedVector,
-            FullPath = path_of_report,
+            FullPath = ww.set.path_of_report(),
             percentify = FALSE,
             title_of_table = NA,
             print2screen = FALSE,
@@ -3081,16 +2935,13 @@ md.tableWriter.VEC.w.names <-
       print("NOT LOGGED: Log path and filename is not defined in FullPath")
     }
     if (WriteOut) {
-      write.simple.tsv(NamedVector, ManualName = paste0(substitute(NamedVector), ".tsv"), )
+      write.simple.tsv(NamedVector, ManualName = paste0(substitute(NamedVector), ".tsv") )
     }
     if (print2screen) {
       cat(b, "\n")
     }
   }
 
-
-# ALIAS
-MarkDown_Table_writer_NamedVector = md.tableWriter.VEC.w.names
 
 
 #' md.import.table
@@ -3107,7 +2958,8 @@ MarkDown_Table_writer_NamedVector = md.tableWriter.VEC.w.names
 #'  which is set by the "setup_MarkdownReports" function.
 #' @export
 #'
-#' @examples x=matrix(1:9,3); utils::write.table(x, sep = "\t", file = "~/x.tsv"); md.import.table("~/x.tsv")
+#' @examples x = matrix(1:9,3); utils::write.table(x, sep = "\t", file = "~/x.tsv");
+#' md.import.table("~/x.tsv")
 
 
 
@@ -3282,10 +3134,10 @@ filter_LP <-
 
 #' filter_MidPass
 #'
-#' Filter values that fall above high-pass-threshold !(X >=)! and below
+#' Filter values that fall above high-pass-threshold !(X >= )! and below
 #' the low-pass threshold (X <).
 #' @param numeric_vector Values to be filtered.
-#' @param HP_threshold Lower threshold value. (>=)
+#' @param HP_threshold Lower threshold value. (>= )
 #' @param LP_threshold Upper threshold value. (<)
 #' @param prepend Text prepended to the results.
 #' @param return_survival_ratio Return a number with the survival ratio (TRUE),
@@ -3298,7 +3150,7 @@ filter_LP <-
 #' @param ... Additional arguments for the histogram
 #' @export
 #' @examples filter_MidPass (numeric_vector = rnorm(1000, 6), HP_threshold = 4,
-#' LP_threshold =8, prepend = "From all values ", return_survival_ratio = FALSE, EdgePass = TRUE)
+#' LP_threshold = 8, prepend = "From all values ", return_survival_ratio = FALSE, EdgePass = TRUE)
 
 filter_MidPass <-
   function(numeric_vector,
@@ -3358,7 +3210,7 @@ filter_MidPass <-
 #' @param x Unrounded number.
 #' @param digitz Number of digits to keep. 3 by default.
 #' @export
-#' @examples iround (x =2.3232, digitz = 3)
+#' @examples iround (x = 2.3232, digitz = 3)
 
 iround <- function (x, digitz = 3) {
   signif(x, digits = digitz)
@@ -3394,7 +3246,7 @@ kollapse <- function (...,
 #' @param x a character vector.
 #' @param n integer. The number of elements on the right to be kept.
 #' @export
-#' @examples substrRight  ("Not cool", n=4)
+#' @examples substrRight  ("Not cool", n = 4)
 
 substrRight <- function (x, n) {
   substr(x, nchar(x) - n + 1, nchar(x))
@@ -3424,12 +3276,14 @@ percentage_formatter <- function (x, digitz = 3) {
 #' @param named_categ_vec A vector of categories with names.
 #' "Uniqueness" in the vector and its name should be the same!!!
 #' @export
-#' @examples getCategories(c("A"=1,"B"=1, "C"=2, 3))
+#' @examples getCategories(c("A" = 1,"B" = 1, "C" = 2, 3))
 
 getCategories <-
   function(named_categ_vec) {
     named_categ_vec[unique(names(named_categ_vec))]
   }
+
+
 
 
 #' parFlags
@@ -3441,9 +3295,8 @@ getCategories <-
 #' @param pasteflg Boolean: paste the parameters-flags together?
 #' @param collapsechar Separating character between each parameters-flag
 #' @export
-#' @examples pearson = TRUE; filtered =TRUE; normalized = FALSE
-#' MyPlotname = parFlags(prefix = "MyPlot", pearson, filtered, normalized )
-#' MyPlotname
+#' @examples pearson = TRUE; filtered = TRUE; normalized = FALSE
+#' MyPlotname = parFlags(prefix = "MyPlot", pearson, filtered, normalized ); MyPlotname
 
 parFlags <-
   function(prefix = "",
@@ -3453,7 +3306,9 @@ parFlags <-
     namez = as.character(as.list(match.call())[-(1:2)])
     val = c(...)
     names(val) = namez
-    flg = names(which(as.logical.wNames(val))) # which_names()
+    # flg = names(which(as.logical.wNames(val))) # which_names()
+    flg = names(val)[val]
+    print(flg)
     flg = if (pasteflg) {paste0(prefix, collapsechar, paste0(flg, collapse = collapsechar))}
     return(flg)
   }
@@ -3468,7 +3323,7 @@ parFlags <-
 #' @param coll.char Separating character between each parameters-flag
 #' @param coll.char.intra Separating character between parameters and its value
 #' @export
-#' @examples pearson = TRUE; filtered =3; normalized = FALSE;
+#' @examples pearson = TRUE; filtered = 3; normalized = FALSE;
 #' MyPlotname = parFlags2(prefix = "MyPlot", pearson, filtered, normalized ); MyPlotname
 
 parFlags2 <-
@@ -3496,7 +3351,7 @@ parFlags2 <-
 #' @param NameOfaVariable Name of a possibly defined variable to be tested.
 #' @param def Default return value
 #' @export
-#' @examples UnlessSpec("xsadasf32", 2); Num=22; UnlessSpec("Num", 1); UnlessSpec("c", 333)
+#' @examples UnlessSpec("xsadasf32", 2); Num = 22; UnlessSpec("Num", 1); UnlessSpec("c", 333)
 
 UnlessSpec <- function(NameOfaVariable, def = TRUE) {
   if (exists(NameOfaVariable))
@@ -3544,9 +3399,29 @@ ww.set.path_of_report <- function() {
     if (variable.and.path.exists(path_of_report)) {
       path_of_report
     } else {
-      iprint("path_of_report is not defined! Setting it to Analysis.md in the working directory.")
+      iprint("path_of_report is not defined! Setting it to Analysis.md in the working directory:",
+             getwd(),"/Analysis.md")
       paste0(getwd(),"/Analysis.md", collapse = "")
     }
+}
+
+
+#' ww.set.PlotName
+#'
+#' Generates a plotname (use if none is specified)
+#' @export
+#'
+#' @examples ww.set.PlotName()
+
+ww.set.PlotName <- function() {
+  NewPlotname =
+    if (exists("plotnameLastPlot")) {
+      plotnameLastPlot
+    } else {
+      iprint("plotnameLastPlot not defined! Naming file after the date and time.")
+      paste0(ww.autoPlotName(), ".pdf", collapse = "")
+    }
+  print(NewPlotname)
 }
 
 
@@ -3563,7 +3438,7 @@ ww.FnP_parser <- function(fname, ext_wo_dot) {
   FnP = if (methods::hasArg(ext_wo_dot)) {
     kollapse (path, fname, ".", ext_wo_dot)
   } else {
-    FnP = kollapse (path, "/", fname)
+    FnP = kollapse (path, fname)
   }
 }
 
@@ -3614,18 +3489,18 @@ ww.MarkDown_ImgLink_formatter <- function (...) {
 #' directory name in the "OutDir" variable. See create_set_OutDir() function.).
 #' This function is called by the ~wplot functions.
 #' @param fname_wo_ext Name of the image file where markdown links going to point to.
-#' @param OutDir The output directory (absolute / full path).
+#' @param OutDir_ The output directory (absolute / full path).
 #' @export
 #' @examples ww.MarkDown_Img_Logger_PDF_and_PNG (fname_wo_ext = "MyPlot"  )
 
 ww.MarkDown_Img_Logger_PDF_and_PNG <-
-  function (fname_wo_ext, OutDir = OutDir) {
+  function (fname_wo_ext, OutDir_ = ww.set.OutDir()) {
     splt = strsplit(fname_wo_ext, "/")
     fn = splt[[1]][length(splt[[1]])]
     llogit(kollapse("![]", "(", fname_wo_ext, ".pdf)", print = FALSE))
     if (UnlessSpec("b.usepng")) {
       if (UnlessSpec("b.png4Github")) {
-        dirnm = strsplit(x = OutDir, split = "/")[[1]]
+        dirnm = strsplit(x = OutDir_, split = "/")[[1]]
         dirnm = dirnm[length(dirnm)]
         llogit(kollapse(
           "![]",
@@ -3644,6 +3519,7 @@ ww.MarkDown_Img_Logger_PDF_and_PNG <-
       }
     } # if b.usepng
   }
+
 
 #' ww.ttl_field
 #'
@@ -3689,8 +3565,7 @@ ww.autoPlotName <- function (name = NULL) {
 #' @param h_ Height of the saved pdf image, in inches.
 #' @param fname_ File name
 #' @export
-#'
-#' @examples ww.dev.copy(PNG=FALSE, w_=7, h_=7, fname_ = "fname")
+#' @examples try.dev.off(); plot(1); # ww.dev.copy(PNG = FALSE, w_ = 7, h_ = 7, fname_ = "myNewplot")
 
 ww.dev.copy <- function(PNG_ = FALSE,
                         w_,
@@ -3730,7 +3605,7 @@ ww.dev.copy <- function(PNG_ = FALSE,
 #' GitHub compatible format. That means, when you upload your markdown report and the .png images
 #'  to your GitHub wiki under "Reports/" the links will correctly display the images online.
 #' @export
-#' @examples setup_logging_markdown (fname ="Analysis.md", title = "My Analysis",
+#' @examples setup_logging_markdown (fname = "Analysis.md", title = "My Analysis",
 #' append = TRUE, b.png4Github = TRUE)
 
 setup_logging_markdown <-
@@ -3771,7 +3646,7 @@ setup_logging_markdown <-
 #' Log the parameters & settings used in the script in a table format.
 #' @param ... Variables (strings, vectors) to be collapsed in consecutively.
 #' @export
-#' @examples a=1; b=2; log_settings_MarkDown (a,b)
+#' @examples a = 1; b = 2; log_settings_MarkDown (a,b)
 
 log_settings_MarkDown <- function (...) {
   call <- match.call()
@@ -3790,7 +3665,7 @@ log_settings_MarkDown <- function (...) {
 #' @param condition any condition check that gives TRUE or FALSE
 #' @param message print a message
 #' @export
-#' @examples a=1; stopif (a==1, message ="A is 1")
+#' @examples a = 1; stopif (a!= 1, message = "A is 1")
 
 stopif <-
   function(condition, message = "") {
@@ -3808,13 +3683,13 @@ stopif <-
 #' @param oldvalues oldvalues (from)
 #' @param newvalues newvalues (to)
 #' @export
-#' @examples A=1:3; translate(vec = A, oldvalues =2:3, newvalues = letters[1:2])
+#' @examples A = 1:3; translate(vec = A, oldvalues = 2:3, newvalues = letters[1:2])
 
 translate = replace_values <- function(vec, oldvalues, newvalues) {
   Nr = length(oldvalues)
   if (Nr > length(newvalues)) {
     if (length(newvalues) == 1) {
-      newvalues =  rep(newvalues, length(oldvalues))
+      newvalues = rep(newvalues, length(oldvalues))
     } else if (length(newvalues) > 1) {
       iprint("PROVIDE ONE NEWVALUE, OR THE SAME NUMEBR OF NEWVALUES AS OLDVALUES.")
     }
@@ -3847,15 +3722,17 @@ translate = replace_values <- function(vec, oldvalues, newvalues) {
 #' @param gzip Compress the file after saving? FALSE by default
 #' @param ... Pass any other argument to the kollapse() function used for file name.
 #' @export
-#' @examples write.simple.tsv(YourDataFrameWithRowAndColumnNames)
+#' @examples YourDataFrameWithRowAndColumnNames = cbind("A" = rnorm(100), "B" = rpois(100, 8))
+#' rownames(YourDataFrameWithRowAndColumnNames) = letters[1:NROW(YourDataFrameWithRowAndColumnNames)]
+#' write.simple.tsv(YourDataFrameWithRowAndColumnNames)
 
-write.simple.tsv <- function(input_df, extension='tsv', ManualName ="", o = FALSE,
+write.simple.tsv <- function(input_df, extension = 'tsv', ManualName = "", o = FALSE,
                              gzip = FALSE , ...  ) {
   fname = kollapse (..., print = FALSE); if (nchar (fname) < 2 ) { fname = substitute(input_df) }
   if (nchar(ManualName)) {FnP = kollapse(ManualName)
   } else { FnP = ww.FnP_parser (fname, extension) }
   utils::write.table (input_df, file = FnP, sep = "\t", row.names = TRUE,
-                      col.names = NA, quote=FALSE  )
+                      col.names = NA, quote = FALSE  )
   printme = if(length(dim(input_df))) {
     paste0("Dim: ", dim(input_df) )
   }else {
@@ -3870,22 +3747,6 @@ write.simple.tsv <- function(input_df, extension='tsv', ManualName ="", o = FALS
 
 
 
-#' as.logical.wNames
-#'
-#' Converts your input vector into a logical vector, and puts the original character values
-#' into the names of the new vector, unless it already has names.
-#' @param x A vector with names that will be converted to a logical vector
-#' @param ... Pass any other argument.
-#' @export
-#' @examples # x= -1:2; names(x)=LETTERS[1:4]; as.logical.wNames(x)
-
-as.logical.wNames <- function(x, ...) {
-  numerified_vec = as.logical(x, ...)
-  if (!is.null(names(x))) {names (numerified_vec) = names (x)}
-  return(numerified_vec)
-}
-
-
 
 
 #' cv
@@ -3896,10 +3757,10 @@ as.logical.wNames <- function(x, ...) {
 #' @import stats
 #' @export
 #'
-#' @examples cv(rnorm(100, sd=10))
+#' @examples cv(rnorm(100, sd = 10))
 
-cv <- function(x, na.rm=TRUE) {
-  sd( x, na.rm=na.rm)/mean(x, na.rm=na.rm)
+cv <- function(x, na.rm = TRUE) {
+  sd( x, na.rm = na.rm)/mean(x, na.rm = na.rm)
   }
 
 
@@ -3912,25 +3773,11 @@ cv <- function(x, na.rm=TRUE) {
 #' @examples modus(c(1, 1, 2, 3, 3, 3, 4, 5)); modus(1:4)
 
 modus <- function(x) {
-	x= unlist(na.exclude(x))
+	x = unlist(na.exclude(x))
 	ux <- unique(x)
 	tab <- tabulate(match(x, ux));
 	ux[tab == max(tab)]
 }
-
-#' unique.wNames
-#'
-#' Get the unique elements from a vector keeping names (of the first elements of each category).
-#' @param x A vector with values and names
-#' @param ... Pass any other argument to
-#' @export
-#'
-#' @examples x <- c(1:4, 1:2);  names(x) = 6:1; unique.wNames (x)
-
-unique.wNames <- function(x, ...) {
-  x[!duplicated(x)]
-  }
-
 
 
 #' Color_Check
@@ -3943,14 +3790,14 @@ unique.wNames <- function(x, ...) {
 #'
 #' @examples Color_Check(1:3)
 
-Color_Check <- function(..., incrBottMarginBy=0, savefile = FALSE ) {
+Color_Check <- function(..., incrBottMarginBy = 0, savefile = FALSE ) {
   if (incrBottMarginBy) {
     .ParMarDefault <- par("mar")
-    par(mar=c(par("mar")[1]+incrBottMarginBy, par("mar")[2:4]) )
+    par(mar = c(par("mar")[1]+incrBottMarginBy, par("mar")[2:4]) )
   } 	# Tune the margin
-  Numbers  = c(...)
+  Numbers = c(...)
   if (length(names(Numbers)) == length(Numbers)) {labelz = names(Numbers)} else {labelz = Numbers}
-  barplot (rep(10, length(Numbers)), col = Numbers, names.arg = labelz, las=2 )
+  barplot (rep(10, length(Numbers)), col = Numbers, names.arg = labelz, las = 2 )
   if (incrBottMarginBy) { par("mar" = .ParMarDefault )}
 
   fname = substitute(...)
@@ -3968,12 +3815,13 @@ Color_Check <- function(..., incrBottMarginBy=0, savefile = FALSE ) {
 #'
 #' @examples as.factor.numeric(LETTERS[1:4])
 
-as.factor.numeric <- function (vec, rename=FALSE, ...) {
+as.factor.numeric <- function (vec, rename = FALSE, ...) {
   vec2 = as.numeric(as.factor(vec, ...)) ;
   names (vec2) <- if ( !rename & !is.null(names(vec) ) ) { names (vec)
   } else { vec }
   return(vec2)
 }
+
 
 #' na.omit.strip
 #'
@@ -3984,7 +3832,7 @@ as.factor.numeric <- function (vec, rename=FALSE, ...) {
 #' @importFrom stats na.omit
 #' @export
 #'
-#' @examples na.omit.strip(c(1, 2, 3, NA, NaN, 2))
+#' @examples # na.omit.strip(c(1, 2, 3, NA, NaN, 2))
 
 na.omit.strip <- function(object, silent = FALSE, ...) {
   if (is.data.frame(object)) {

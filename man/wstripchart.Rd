@@ -4,20 +4,16 @@
 \alias{wstripchart}
 \title{wstripchart}
 \usage{
-wstripchart(yourlist, ..., main = as.character(substitute(yourlist)),
-  sub = NULL, ylab = "", BoxPlotWithMean = FALSE, border = 1,
-  incrBottMarginBy = 0, tilted_text = FALSE, metod = "jitter",
-  jitter = 0.3, pch = 18, pchlwd = 1, cex.lab = 1, pchcex = 1.5,
-  bg = "seagreen2", colorbyColumn = TRUE, col = if (colorbyColumn)
-  1:length(yourlist) else 1, savefile = UnlessSpec("b.save.wplots"),
-  w = UnlessSpec("b.defSize", 7), h = w, mdlink = ww.set.mdlink(),
-  PNG = UnlessSpec("b.usepng"))
+wstripchart(yourlist, main = as.character(substitute(yourlist)), sub = NULL,
+  ylab = "", BoxPlotWithMean = FALSE, border = 1, incrBottMarginBy = 0,
+  tilted_text = FALSE, metod = "jitter", jitter = 0.3, pch = 18,
+  pchlwd = 1, cex.lab = 1, pchcex = 1.5, bg = "seagreen2",
+  colorbyColumn = TRUE, col = if (colorbyColumn) 1:length(yourlist) else 1,
+  savefile = UnlessSpec("b.save.wplots"), w = UnlessSpec("b.defSize", 7),
+  h = w, mdlink = ww.set.mdlink(), PNG = UnlessSpec("b.usepng"), ...)
 }
 \arguments{
 \item{yourlist}{Input list to be plotted.}
-
-\item{...}{Pass any other parameter of the corresponding plotting function (most of them should
-work).}
 
 \item{main}{Title of the plot (main parameter) and also the name of the file.}
 
@@ -66,16 +62,16 @@ overlaps).}
 "path_of_report".}
 
 \item{PNG}{Set to true if you want to save the plot as PNG instead of the default PDF.}
+
+\item{...}{Pass any other parameter of the corresponding plotting function (most of them should
+work).}
 }
 \description{
-Create and save strip charts as .pdf, in "OutDir". If mdlink =TRUE, it inserts a .pdf and a .png
+Create and save strip charts as .pdf, in "OutDir". If mdlink = TRUE, it inserts a .pdf and a .png
 link in the markdown report, set by "path_of_report". The .png version is not created, only the
 link is put in place, not to overwrite previous versions.
 }
 \examples{
-my.ls = list(rnorm(10), rnorm(10), rnorm(10)); wstripchart (yourlist = my.ls,
-main = as.character(substitute(yourlist)),#' sub = FALSE, border = 1,
-BoxPlotWithMean = FALSE, pch = 23, pchlwd = 1, pchcex = 1.5,
-bg = chartreuse2, col = black, metod = jitter, jitter = 0.2, colorbyColumn = FALSE,
-w = 7, incrBottMarginBy = 0, tilted_text = FALSE, mdlink = FALSE)
+try.dev.off(); my.ls = list(A = rnorm(10), B = rnorm(10), C = rnorm(10));
+wstripchart (yourlist = my.ls)
 }

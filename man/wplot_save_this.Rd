@@ -28,6 +28,6 @@ Save the currently active graphic device (for complicated plots).  Insert links 
 report, set by "path_of_report". Name the file by naming the variable!
 }
 \examples{
-wplot_save_this (plotname = date(), col = "gold1", w = 7, h = w
+wplot_save_this (plotname = date(), col = "gold1", w = 7
 , mdlink = FALSE, ManualName = FALSE)
 }

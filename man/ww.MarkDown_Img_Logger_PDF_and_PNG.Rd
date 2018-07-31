@@ -4,12 +4,12 @@
 \alias{ww.MarkDown_Img_Logger_PDF_and_PNG}
 \title{ww.MarkDown_Img_Logger_PDF_and_PNG}
 \usage{
-ww.MarkDown_Img_Logger_PDF_and_PNG(fname_wo_ext, OutDir = OutDir)
+ww.MarkDown_Img_Logger_PDF_and_PNG(fname_wo_ext, OutDir_ = ww.set.OutDir())
 }
 \arguments{
 \item{fname_wo_ext}{Name of the image file where markdown links going to point to.}
 
-\item{OutDir}{The output directory (absolute / full path).}
+\item{OutDir_}{The output directory (absolute / full path).}
 }
 \description{
 Format a markdown image reference (link) to a .pdf and .png versions of graph,

@@ -4,17 +4,14 @@
 \alias{wpie}
 \title{wpie}
 \usage{
-wpie(variable, ..., percentage = TRUE, both_pc_and_value = FALSE,
-  plotname = substitute(variable),
-  col = gplots::rich.colors(length(variable)),
+wpie(NamedVector, percentage = TRUE, both_pc_and_value = FALSE,
+  plotname = substitute(NamedVector),
+  col = gplots::rich.colors(length(NamedVector)),
   savefile = UnlessSpec("b.save.wplots"), w = UnlessSpec("b.defSize", 7),
-  h = w, mdlink = ww.set.mdlink(), PNG = UnlessSpec("b.usepng"))
+  h = w, mdlink = ww.set.mdlink(), PNG = UnlessSpec("b.usepng"), ...)
 }
 \arguments{
-\item{variable}{The variable to plot.}
-
-\item{...}{Pass any other parameter of the corresponding plotting function (most of them should
-work).}
+\item{NamedVector}{The variable to plot.}
 
 \item{percentage}{Display percentage instead of counts. TRUE by default.}
 
@@ -34,13 +31,16 @@ work).}
 "path_of_report".}
 
 \item{PNG}{Set to true if you want to save the plot as PNG instead of the default PDF.}
+
+\item{...}{Pass any other parameter of the corresponding plotting function (most of them should
+work).}
 }
 \description{
-Create and save pie charts as .pdf, in "OutDir". If mdlink =TRUE, it inserts a .pdf and a .png
+Create and save pie charts as .pdf, in "OutDir". If mdlink = TRUE, it inserts a .pdf and a .png
 link in the markdown report, set by "path_of_report". The .png version is not created, only the
 link is put in place, not to overwrite previous versions.
 }
 \examples{
-Cake =1:3; names(Cake) = letters[1:3]; wpie (Cake, percentage = TRUE,
+Cake = 1:3; names(Cake) = letters[1:3]; wpie (Cake, percentage = TRUE,
 w = 7, mdlink = FALSE)
 }

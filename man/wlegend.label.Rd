@@ -27,7 +27,7 @@ The allowed values are "o" (the default) and "n".}
 
 \item{title}{What should be the title of the legend? NULL by default}
 
-\item{ttl.by.varname}{Should the title of the legend substituted from the fill_ variable's name?
+\item{ttl.by.varname}{Should the title of the legend substituted from the NamedColorVec variable's name?
 FALSE by default. Does not work if you pass on a list item like this: list$element}
 
 \item{OverwritePrevPDF}{Save the plot immediately with the same name
@@ -41,5 +41,6 @@ Quickly add a "text only" legend without a filled color box. to an existing plot
 and save the plot immediately. Never inserts an mdlink.
 }
 \examples{
-function(legend = "Hey", poz=4,  w=7, h=w, bty = "n", OverwritePrevPDF =TRUE)
+x = cbind(a = rnorm(1:10), b = rnorm(10)); wplot(x);
+wlegend.label(legend = "Hey", poz = 2,  w = 7, bty = "n", OverwritePrevPDF = TRUE)
 }

@@ -23,6 +23,6 @@ Create a string from the names of the (boolean) parameters (TRUE or FALSE) of tr
 Use it for Suffixing plot names with the parameters that were used for that plot.
 }
 \examples{
-pearson = TRUE; filtered =3; normalized = FALSE;
+pearson = TRUE; filtered = 3; normalized = FALSE;
 MyPlotname = parFlags2(prefix = "MyPlot", pearson, filtered, normalized ); MyPlotname
 }

@@ -35,6 +35,6 @@ set by "path_of_report".}
 Create A4 PDFs to plot multiple subplots in one file
 }
 \examples{
-pdfA4plot_on();  hist(rnorm(100)); hist(-rnorm(100))
+pdfA4plot_on(pname = "MyA4plots");  hist(rnorm(100)); hist(-rnorm(100))
  hist(10+rnorm(100)); pdfA4plot_off()
 }
