@@ -6,7 +6,7 @@
 
 utils::globalVariables(c('OutDirOrig', 'OutDir', 'path_of_report', 'plotnameLastPlot',
                          'b.scriptname', 'b.usepng', 'b.png4Github', 'b.mfrow_def',
-                         'b.bg_def', 'b.Subdirname', 'b.report.not.found'))
+                         'b.bg_def', 'b.Subdirname', 'b.report.not.found', 'b.def.color'))
 
 # Table of Contents ------------------------------------
 # - Setup
@@ -87,7 +87,8 @@ setup_MarkdownReports <-
             b.usepng = FALSE,
             b.png4Github = FALSE,
             b.mdlink = TRUE,
-            b.save.wplots = TRUE) {
+            b.save.wplots = TRUE,
+            b.def.color = "gold1") {
     if (!exists(OutDir)) {
       dir.create(OutDir, showWarnings = FALSE)
     }
@@ -138,6 +139,7 @@ setup_MarkdownReports <-
     ww.assign_to_global("b.usepng", b.usepng, 1)
     ww.assign_to_global("b.png4Github", b.png4Github, 1)
     ww.assign_to_global("b.scriptname", scriptname, 1)
+    ww.assign_to_global("b.def.color", b.def.color, 1)
     ww.assign_to_global("b.report.not.found",
            "Path to the Markdown report file is not defined in path_of_report", 1)
   }
@@ -723,7 +725,7 @@ wscatter.fill <-
 wbarplot <-
   function (variable,
             ...,
-            col = "gold1",
+            col = unless.specified("b.def.colors", "gold1"),
             sub = FALSE,
             plotname = substitute(variable),
             main = plotname,
@@ -907,7 +909,7 @@ whist <-
   function (variable,
             ...,
             breaks = 20,
-            col = "gold1",
+            col = b.def.color,
             plotname = substitute(variable),
             main = kollapse("Histogram of ", substitute(variable)),
             xlab = substitute(variable),
@@ -941,10 +943,8 @@ whist <-
           las = 2,
           cex.names = cexNsize,
           sub = paste(
-            "mean:",
-            iround(mean(variable, na.rm = TRUE)),
-            "CV:",
-            percentage_formatter(cv(variable))
+            "mean:", iround(mean(variable, na.rm = TRUE)),
+            "CV:", percentage_formatter(cv(variable))
           )
         )
       } else {
@@ -1011,21 +1011,21 @@ whist <-
 
     if (!is.null(filter)) {
       passequal_ = passequal
-      if (filter == "HighPass" & vline) {
+      if (filter == "HighPass" & any(vline) ) {
         filter_HP(
           numeric_vector = variable,
           threshold = vline,
           passequal = passequal_,
           plot.hist = FALSE
         )
-      } else if (filter == "LowPass" & vline) {
+      } else if (filter == "LowPass" & any(vline) ) {
         filter_LP(
           numeric_vector = variable,
           threshold = vline,
           passequal = passequal_,
           plot.hist = FALSE
         )
-      } else if (filter == "MidPass" & vline & (length(vline) == 2)) {
+      } else if (filter == "MidPass" & any(vline)  & (length(vline) == 2)) {
         filter_MidPass(
           numeric_vector = variable,
           HP_threshold = vline[1],
@@ -1070,7 +1070,7 @@ wboxplot <-
             main = as.character(substitute(yourlist)),
             sub = FALSE,
             ylab = "",
-            col = "gold1",
+            col = unless.specified("b.def.colors", "gold1"),
             incrBottMarginBy = 0,
             tilted_text = FALSE,
             savefile = unless.specified("b.save.wplots"),
@@ -1905,7 +1905,7 @@ wbarplot_dfCol <-
   function (df,
             ...,
             colName,
-            col = "gold1",
+            col = unless.specified("b.def.colors", "gold1"),
             savefile = unless.specified("b.save.wplots"),
             w = unless.specified("b.defSize", 7),
             h = w,
@@ -1962,7 +1962,7 @@ wbarplot_dfCol <-
 whist_dfCol <-
   function (df,
             colName,
-            col = "gold",
+            col = unless.specified("b.def.colors", "gold1"),
             ...,
             savefile = unless.specified("b.save.wplots"),
             w = unless.specified("b.defSize", 7),
@@ -1985,16 +1985,10 @@ whist_dfCol <-
         las = 2,
         cex.names = cexNsize,
         sub = paste(
-          "mean:",
-          iround(mean(table_of_var, na.rm = TRUE)),
-          "| median:",
-          iround(median(table_of_var, na.rm = TRUE)),
-          "| mode:",
-          iround(modus(table_of_var)),
-          "| CV:",
-          percentage_formatter(cv(table_of_var))
-        )
-      )
+          "mean:",iround(mean(table_of_var, na.rm = TRUE)),
+          "| median:",iround(median(table_of_var, na.rm = TRUE)),
+          "| mode:",iround(modus(table_of_var)),
+          "| CV:",percentage_formatter(cv(table_of_var))))
     }
     else {
       zz = hist(variable, ..., plot = FALSE)
@@ -2003,19 +1997,11 @@ whist_dfCol <-
         ...,
         main = plotname,
         col = col,
-        las = 2
-        ,
+        las = 2,
         sub = paste(
-          "mean:",
-          iround(mean(variable))
-          ,
-          "| median:",
-          iround(median(variable))
-          ,
-          "| modus:",
-          iround(modus(variable))
-        )
-      )
+          "mean:",iround(mean(variable)),
+          "| median:",iround(median(variable)),
+          "| modus:",iround(modus(variable))))
     }
     if (savefile) {
       ww.dev.copy(
@@ -2196,8 +2182,7 @@ error_bar <-
         as.vector(x),
         as.vector(y + upper),
         as.vector(x),
-        as.vector(y - lower)
-        ,
+        as.vector(y - lower),
         angle = 90,
         code = 3,
         length = width.whisker,
@@ -2333,8 +2318,7 @@ wlegend.label <-
            bty = "n",
            ...,
            w = 7,
-           h = w
-           ,
+           h = w,
            title = NULL,
            ttl.by.varname = FALSE
            ,
@@ -2464,14 +2448,12 @@ wLinRegression <-
 
     if (length(coeff) == 1 & "r2" == coeff[1]) {
       legend(
-        textlocation
-        ,
+        textlocation,
         legend = superscript_in_plots(
           prefix = "R",
           sup = "2",
           suffix = paste0(": ", r2)
-        )
-        ,
+        ),
         bty = "n",
         cex = cexx
       )
@@ -3479,8 +3461,6 @@ getCategories <-
   }
 
 
-
-
 #' parFlags
 #'
 #' Create a string from the names of the (boolean) parameters (TRUE or FALSE) of true values.
@@ -3507,6 +3487,7 @@ parFlags <-
     flg = if (pasteflg) {paste0(prefix, collapsechar, paste0(flg, collapse = collapsechar))}
     return(flg)
   }
+
 
 #' parFlags2
 #'
@@ -3825,13 +3806,8 @@ setup_logging_markdown <-
     write(kollapse("		Modified: ", format(Sys.time(), "%d/%m/%Y | %H:%M | by: "), fname),
           path_of_report,
           append = TRUE)
-    BackupDir = kollapse(
-      OutDir,
-      "/",
-      substr(fname, 1, nchar(fname)),
-      "_",
-      format(Sys.time(), "%Y_%m_%d-%Hh"),
-      print = FALSE
+    BackupDir = kollapse( OutDir, "/", substr(fname, 1, nchar(fname)), "_",
+      format(Sys.time(), "%Y_%m_%d-%Hh"), print = FALSE
     )
     if (!exists(BackupDir)) {
       dir.create(BackupDir, showWarnings = FALSE)
@@ -3841,7 +3817,7 @@ setup_logging_markdown <-
     ww.assign_to_global("b.png4Github", b.png4Github, 1)
   }
 
-#' log_settings_MarkDown (OLD)
+#' log_settings_MarkDown (Legacy)
 #'
 #' Log the parameters & settings used in the script in a table format.
 #' @param ... Variables (strings, vectors) to be collapsed in consecutively.
