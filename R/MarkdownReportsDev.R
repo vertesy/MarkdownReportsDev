@@ -299,7 +299,6 @@ wplot_save_this <-
             h = w,
             mdlink = FALSE,
             PNG = unless.specified("b.usepng")) {
-    condition = F
     if (!OverwritePrevPDF) {plotname = make.names(date())}
 
     ww.dev.copy(
@@ -3726,6 +3725,7 @@ ww.autoPlotName <- function (name = NULL) {
 #'
 #' Parser for dev.copy to save as PDF or PNG
 #' @param PNG_ Set to true if you want to save the plot as PNG instead of the default PDF.
+#' @param PNG_res deafult 450
 #' @param w_ Width of the saved pdf image, in inches.
 #' @param h_ Height of the saved pdf image, in inches.
 #' @param fname_ File name
@@ -3733,6 +3733,7 @@ ww.autoPlotName <- function (name = NULL) {
 #' @examples try.dev.off(); plot(1); # ww.dev.copy(PNG = FALSE, w_ = 7, h_ = 7, fname_ = "myNewplot")
 
 ww.dev.copy <- function(PNG_ = FALSE,
+                        PNG_res = 450,
                         w_,
                         h_,
                         fname_) {
@@ -3740,6 +3741,7 @@ ww.dev.copy <- function(PNG_ = FALSE,
     dev.copy(
       png,
       filename = ww.FnP_parser(fname_, "png"),
+      res = PNG_res, 
       width = w_ * 100,
       height = h_ * 100
     )
