@@ -156,8 +156,8 @@ setup_MarkdownReports <-
 #' @examples create_set_SubDir (makeOutDirOrig = TRUE, setDir = TRUE, "MySubFolder")
 
 create_set_SubDir <-
-  function (makeOutDirOrig = TRUE,
-            setDir = TRUE, ...) {
+  function (..., makeOutDirOrig = TRUE,
+            setDir = TRUE) {
     b.Subdirname = kollapse(...)
     OutDir = ww.set.OutDir()
 
@@ -245,13 +245,13 @@ continue_logging_markdown <- function (b.scriptname) {
 #' Create or set the output directory of the script, and set the "OutDir" variable that is used by
 #' all ~wplot functions.
 #'
-#' @param setDir Set the working directory to OutDir? Default: TRUE
 #' @param ... Variables (strings, vectors) to be collapsed in consecutively.
+#' @param setDir Set the working directory to OutDir? Default: TRUE
 #'
 #' @export
 #' @examples create_set_OutDir (setDir = TRUE, getwd(),"/"   )
 
-create_set_OutDir <- function (setDir = TRUE, ...) {
+create_set_OutDir <- function (..., setDir = TRUE) {
   OutDir = kollapse(..., print = FALSE)
   if (!substrRight(OutDir, 1) == "/")
     OutDir = paste0(OutDir, "/") # add '/' if necessary
@@ -2912,7 +2912,6 @@ md.tableWriter.DF.w.dimnames <-
             b = percentage_formatter(b)
           }
         } else {
-          print(11)
           b = df[r, ]
         }
         b = paste(b, collapse = " \t| ")
