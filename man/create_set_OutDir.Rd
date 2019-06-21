@@ -4,12 +4,12 @@
 \alias{create_set_OutDir}
 \title{create_set_OutDir}
 \usage{
-create_set_OutDir(setDir = TRUE, ...)
+create_set_OutDir(..., setDir = TRUE)
 }
 \arguments{
-\item{setDir}{Set the working directory to OutDir? Default: TRUE}
-
 \item{...}{Variables (strings, vectors) to be collapsed in consecutively.}
+
+\item{setDir}{Set the working directory to OutDir? Default: TRUE}
 }
 \description{
 Create or set the output directory of the script, and set the "OutDir" variable that is used by

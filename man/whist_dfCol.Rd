@@ -4,8 +4,8 @@
 \alias{whist_dfCol}
 \title{whist_dfCol}
 \usage{
-whist_dfCol(df, colName, col = "gold", ...,
-  savefile = unless.specified("b.save.wplots"),
+whist_dfCol(df, colName, col = unless.specified("b.def.colors", "gold1"),
+  ..., savefile = unless.specified("b.save.wplots"),
   w = unless.specified("b.defSize", 7), h = w,
   PNG = unless.specified("b.usepng"))
 }

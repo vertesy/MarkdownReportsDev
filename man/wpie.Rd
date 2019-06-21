@@ -8,8 +8,8 @@ wpie(NamedVector, percentage = TRUE, both_pc_and_value = FALSE,
   plotname = substitute(NamedVector),
   col = gplots::rich.colors(length(NamedVector)),
   savefile = unless.specified("b.save.wplots"),
-  w = unless.specified("b.defSize", 7), h = w, mdlink = ww.set.mdlink(),
-  PNG = unless.specified("b.usepng"), ...)
+  w = unless.specified("b.defSize", 7), h = w,
+  mdlink = ww.set.mdlink(), PNG = unless.specified("b.usepng"), ...)
 }
 \arguments{
 \item{NamedVector}{The variable to plot.}

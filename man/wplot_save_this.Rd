@@ -4,9 +4,9 @@
 \alias{wplot_save_this}
 \title{wplot_save_this}
 \usage{
-wplot_save_this(plotname = ww.autoPlotName(), ..., OverwritePrevPDF = TRUE,
-  w = unless.specified("b.defSize", 7), h = w, mdlink = FALSE,
-  PNG = unless.specified("b.usepng"))
+wplot_save_this(plotname = ww.autoPlotName(), ...,
+  OverwritePrevPDF = TRUE, w = unless.specified("b.defSize", 7),
+  h = w, mdlink = FALSE, PNG = unless.specified("b.usepng"))
 }
 \arguments{
 \item{plotname}{Title of the plot (main parameter) and also the name of the file.}

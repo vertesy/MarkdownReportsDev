@@ -4,13 +4,14 @@
 \alias{wviostripchart_list}
 \title{wviostripchart_list}
 \usage{
-wviostripchart_list(yourlist, ..., pch = 20, viocoll = c(2:(length(yourlist)
-  + 1)), vioborder = 1, bg = 1, col = 1, metod = "jitter",
-  jitter = 0.25, main = as.character(substitute(yourlist)), sub = NULL,
+wviostripchart_list(yourlist, ..., pch = 20,
+  viocoll = c(2:(length(yourlist) + 1)), vioborder = 1, bg = 1,
+  col = 1, metod = "jitter", jitter = 0.25,
+  main = as.character(substitute(yourlist)), sub = NULL,
   xlab = names(yourlist), ylab = "", incrBottMarginBy = 0,
   savefile = unless.specified("b.save.wplots"),
-  w = unless.specified("b.defSize", 7), h = w, mdlink = ww.set.mdlink(),
-  PNG = unless.specified("b.usepng"))
+  w = unless.specified("b.defSize", 7), h = w,
+  mdlink = ww.set.mdlink(), PNG = unless.specified("b.usepng"))
 }
 \arguments{
 \item{yourlist}{Input list to be plotted.}

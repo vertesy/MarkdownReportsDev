@@ -5,11 +5,12 @@
 \title{setup_MarkdownReports}
 \usage{
 setup_MarkdownReports(OutDir = getwd(), scriptname = basename(OutDir),
-  title = "", setDir = TRUE, append = FALSE, addTableOfContents = FALSE,
-  b.defSize = c(def = 7, A4 = 8.27, `1col.nature` = 3.5, `2col.nature` = 7.2,
-  `1col.cell` = 3.35, `1.5col.cell` = 4.49, `2col.cell` = 6.85)[1],
+  title = "", setDir = TRUE, append = FALSE,
+  addTableOfContents = FALSE, b.defSize = c(def = 7, A4 = 8.27,
+  `1col.nature` = 3.5, `2col.nature` = 7.2, `1col.cell` = 3.35,
+  `1.5col.cell` = 4.49, `2col.cell` = 6.85)[1],
   b.defSize.fullpage = 8.27, b.usepng = FALSE, b.png4Github = FALSE,
-  b.mdlink = TRUE, b.save.wplots = TRUE)
+  b.mdlink = TRUE, b.save.wplots = TRUE, b.def.color = "gold1")
 }
 \arguments{
 \item{OutDir}{The output directory (absolute / full path).}

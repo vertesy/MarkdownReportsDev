@@ -4,11 +4,11 @@
 \alias{wbarplot}
 \title{wbarplot}
 \usage{
-wbarplot(variable, ..., col = "gold1", sub = FALSE,
-  plotname = substitute(variable), main = plotname, tilted_text = FALSE,
-  ylim = NULL, hline = FALSE, vline = FALSE, filtercol = 1, lty = 1,
-  lwd = 2, lcol = 2, errorbar = FALSE, upper = 0, lower = upper,
-  arrow_width = 0.1, arrow_lwd = 1,
+wbarplot(variable, ..., col = unless.specified("b.def.colors", "gold1"),
+  sub = FALSE, plotname = substitute(variable), main = plotname,
+  tilted_text = FALSE, ylim = NULL, hline = FALSE, vline = FALSE,
+  filtercol = 1, lty = 1, lwd = 2, lcol = 2, errorbar = FALSE,
+  upper = 0, lower = upper, arrow_width = 0.1, arrow_lwd = 1,
   savefile = unless.specified("b.save.wplots"),
   w = unless.specified("b.defSize", 7), h = w, incrBottMarginBy = 0,
   mdlink = ww.set.mdlink(), PNG = unless.specified("b.usepng"))

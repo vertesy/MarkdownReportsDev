@@ -4,11 +4,12 @@
 \alias{wboxplot}
 \title{wboxplot}
 \usage{
-wboxplot(yourlist, main = as.character(substitute(yourlist)), sub = FALSE,
-  ylab = "", col = "gold1", incrBottMarginBy = 0, tilted_text = FALSE,
+wboxplot(yourlist, main = as.character(substitute(yourlist)),
+  sub = FALSE, ylab = "", col = unless.specified("b.def.colors",
+  "gold1"), incrBottMarginBy = 0, tilted_text = FALSE,
   savefile = unless.specified("b.save.wplots"),
-  w = unless.specified("b.defSize", 7), h = w, mdlink = ww.set.mdlink(),
-  PNG = unless.specified("b.usepng"), ...)
+  w = unless.specified("b.defSize", 7), h = w,
+  mdlink = ww.set.mdlink(), PNG = unless.specified("b.usepng"), ...)
 }
 \arguments{
 \item{yourlist}{The variable to plot.}

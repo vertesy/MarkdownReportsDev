@@ -4,9 +4,11 @@
 \alias{wvenn}
 \title{wvenn}
 \usage{
-wvenn(yourlist, imagetype = "png", alpha = 0.5, fill = 1:length(yourlist),
-  subt, ..., w = unless.specified("b.defSize", 7), h = w,
-  mdlink = ww.set.mdlink(), plotname = substitute(yourlist))
+wvenn(yourlist, imagetype = "png", alpha = 0.5,
+  fill = 1:length(yourlist), subt, ...,
+  w = unless.specified("b.defSize", 7), h = w,
+  mdlink = ww.set.mdlink(), plotname = substitute(yourlist),
+  openFolder = T)
 }
 \arguments{
 \item{yourlist}{The variable to plot.}
@@ -30,6 +32,8 @@ function (most of them should work).}
 set by "path_of_report".}
 
 \item{plotname}{Manual plotname parameter}
+
+\item{openFolder}{open current directory (=working if setup_MarkdownReports('setDir=T'))}
 }
 \description{
 Save venn diagrams. Unlike other ~vplot funcitons, this saves directly into a .png,

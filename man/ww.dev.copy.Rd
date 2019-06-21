@@ -4,10 +4,12 @@
 \alias{ww.dev.copy}
 \title{ww.dev.copy}
 \usage{
-ww.dev.copy(PNG_ = FALSE, w_, h_, fname_)
+ww.dev.copy(PNG_ = FALSE, PNG_res = 450, w_, h_, fname_)
 }
 \arguments{
 \item{PNG_}{Set to true if you want to save the plot as PNG instead of the default PDF.}
+
+\item{PNG_res}{deafult 450}
 
 \item{w_}{Width of the saved pdf image, in inches.}
 

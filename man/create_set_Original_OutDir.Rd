@@ -6,8 +6,8 @@
 Set the output directory of the script, and set the "NewOutDir" variable that is
  used by all ~wplot functions.}
 \usage{
-create_set_Original_OutDir(NewOutDir = OutDirOrig, b.Subdirname = FALSE,
-  setDir = TRUE)
+create_set_Original_OutDir(NewOutDir = OutDirOrig,
+  b.Subdirname = FALSE, setDir = TRUE)
 }
 \arguments{
 \item{NewOutDir}{The new OutDir}

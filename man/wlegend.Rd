@@ -4,8 +4,8 @@
 \alias{wlegend}
 \title{wlegend}
 \usage{
-wlegend(NamedColorVec = NA, poz = 4, legend, cex = 0.75, bty = "n", ...,
-  w = 7, h = w, title = NULL, ttl.by.varname = FALSE,
+wlegend(NamedColorVec = NA, poz = 4, legend, cex = 0.75, bty = "n",
+  ..., w = 7, h = w, title = NULL, ttl.by.varname = FALSE,
   OverwritePrevPDF = unless.specified("b.save.wplots"), mdlink = FALSE)
 }
 \arguments{

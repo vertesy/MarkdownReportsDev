@@ -4,8 +4,8 @@
 \alias{write.simple.tsv}
 \title{write.simple.tsv}
 \usage{
-write.simple.tsv(input_df, extension = "tsv", ManualName = "", o = FALSE,
-  gzip = FALSE, ...)
+write.simple.tsv(input_df, extension = "tsv", ManualName = "",
+  o = FALSE, gzip = FALSE, ...)
 }
 \arguments{
 \item{input_df}{Your Dataframe with row- and column-names}

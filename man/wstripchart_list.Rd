@@ -4,12 +4,12 @@
 \alias{wstripchart_list}
 \title{wstripchart_list}
 \usage{
-wstripchart_list(yourlist, ..., main = as.character(substitute(yourlist)),
-  sub = NULL, ylab = "", xlab = "", border = 1, bxpcol = 0,
-  pch = 18, pchlwd = 1, pchcex = 1.5, incrBottMarginBy = 0,
-  tilted_text = FALSE, bg = "chartreuse2", col = "black",
-  metod = "jitter", jitter = 0.2,
-  savefile = unless.specified("b.save.wplots"),
+wstripchart_list(yourlist, ...,
+  main = as.character(substitute(yourlist)), sub = NULL, ylab = "",
+  xlab = "", border = 1, bxpcol = 0, pch = 18, pchlwd = 1,
+  pchcex = 1.5, incrBottMarginBy = 0, tilted_text = FALSE,
+  bg = "chartreuse2", col = "black", metod = "jitter",
+  jitter = 0.2, savefile = unless.specified("b.save.wplots"),
   w = unless.specified("b.defSize"), h = w, mdlink = ww.set.mdlink(),
   PNG = unless.specified("b.usepng"))
 }

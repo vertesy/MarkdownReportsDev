@@ -4,14 +4,14 @@
 \alias{whist}
 \title{whist}
 \usage{
-whist(variable, ..., breaks = 20, col = "gold1",
+whist(variable, ..., breaks = 20, col = b.def.color,
   plotname = substitute(variable), main = kollapse("Histogram of ",
-  substitute(variable)), xlab = substitute(variable), lty = 2, lwd = 3,
-  lcol = 1, filtercol = 0, vline = FALSE, filter = c(FALSE, "HighPass",
-  "LowPass", "MidPass")[1], passequal = TRUE,
-  savefile = unless.specified("b.save.wplots"),
-  w = unless.specified("b.defSize", 7), h = w, mdlink = ww.set.mdlink(),
-  PNG = unless.specified("b.usepng"))
+  substitute(variable)), xlab = substitute(variable), lty = 2,
+  lwd = 3, lcol = 1, filtercol = 0, vline = FALSE,
+  filter = c(FALSE, "HighPass", "LowPass", "MidPass")[1],
+  passequal = TRUE, savefile = unless.specified("b.save.wplots"),
+  w = unless.specified("b.defSize", 7), h = w,
+  mdlink = ww.set.mdlink(), PNG = unless.specified("b.usepng"))
 }
 \arguments{
 \item{variable}{The variable to plot.}
