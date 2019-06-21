@@ -1,12 +1,12 @@
 ## MarkdownReports.R
 # author: Abel Vertesy
 # date: # 14 September 2017 (Monday) 12:38
-# source("~/Github_repos/MarkdownReports/MarkdownReports/R/MarkdownReports.R")
+# source("~/GitHub/MarkdownReports/MarkdownReports/R/MarkdownReports.R")
 
 
 utils::globalVariables(c('OutDirOrig', 'OutDir', 'path_of_report', 'plotnameLastPlot',
                          'b.scriptname', 'b.usepng', 'b.png4Github', 'b.mfrow_def',
-                         'b.bg_def', 'b.Subdirname', 'b.report.not.found', 'b.def.color'))
+                         'b.bg_def', 'b.Subdirname', 'b.report.not.found'))
 
 # Table of Contents ------------------------------------
 # - Setup
@@ -87,8 +87,7 @@ setup_MarkdownReports <-
             b.usepng = FALSE,
             b.png4Github = FALSE,
             b.mdlink = TRUE,
-            b.save.wplots = TRUE,
-            b.def.color = "gold1") {
+            b.save.wplots = TRUE) {
     if (!exists(OutDir)) {
       dir.create(OutDir, showWarnings = FALSE)
     }
@@ -139,7 +138,6 @@ setup_MarkdownReports <-
     ww.assign_to_global("b.usepng", b.usepng, 1)
     ww.assign_to_global("b.png4Github", b.png4Github, 1)
     ww.assign_to_global("b.scriptname", scriptname, 1)
-    ww.assign_to_global("b.def.color", b.def.color, 1)
     ww.assign_to_global("b.report.not.found",
            "Path to the Markdown report file is not defined in path_of_report", 1)
   }
@@ -156,8 +154,8 @@ setup_MarkdownReports <-
 #' @examples create_set_SubDir (makeOutDirOrig = TRUE, setDir = TRUE, "MySubFolder")
 
 create_set_SubDir <-
-  function (..., makeOutDirOrig = TRUE,
-            setDir = TRUE) {
+  function (makeOutDirOrig = TRUE,
+            setDir = TRUE, ...) {
     b.Subdirname = kollapse(...)
     OutDir = ww.set.OutDir()
 
@@ -245,13 +243,13 @@ continue_logging_markdown <- function (b.scriptname) {
 #' Create or set the output directory of the script, and set the "OutDir" variable that is used by
 #' all ~wplot functions.
 #'
-#' @param ... Variables (strings, vectors) to be collapsed in consecutively.
 #' @param setDir Set the working directory to OutDir? Default: TRUE
+#' @param ... Variables (strings, vectors) to be collapsed in consecutively.
 #'
 #' @export
 #' @examples create_set_OutDir (setDir = TRUE, getwd(),"/"   )
 
-create_set_OutDir <- function (..., setDir = TRUE) {
+create_set_OutDir <- function (setDir = TRUE, ...) {
   OutDir = kollapse(..., print = FALSE)
   if (!substrRight(OutDir, 1) == "/")
     OutDir = paste0(OutDir, "/") # add '/' if necessary
@@ -299,6 +297,7 @@ wplot_save_this <-
             h = w,
             mdlink = FALSE,
             PNG = unless.specified("b.usepng")) {
+    condition = F
     if (!OverwritePrevPDF) {plotname = make.names(date())}
 
     ww.dev.copy(
@@ -724,7 +723,7 @@ wscatter.fill <-
 wbarplot <-
   function (variable,
             ...,
-            col = unless.specified("b.def.colors", "gold1"),
+            col = "gold1",
             sub = FALSE,
             plotname = substitute(variable),
             main = plotname,
@@ -908,7 +907,7 @@ whist <-
   function (variable,
             ...,
             breaks = 20,
-            col = b.def.color,
+            col = "gold1",
             plotname = substitute(variable),
             main = kollapse("Histogram of ", substitute(variable)),
             xlab = substitute(variable),
@@ -942,8 +941,10 @@ whist <-
           las = 2,
           cex.names = cexNsize,
           sub = paste(
-            "mean:", iround(mean(variable, na.rm = TRUE)),
-            "CV:", percentage_formatter(cv(variable))
+            "mean:",
+            iround(mean(variable, na.rm = TRUE)),
+            "CV:",
+            percentage_formatter(cv(variable))
           )
         )
       } else {
@@ -1010,21 +1011,21 @@ whist <-
 
     if (!is.null(filter)) {
       passequal_ = passequal
-      if (filter == "HighPass" & any(vline) ) {
+      if (filter == "HighPass" & vline) {
         filter_HP(
           numeric_vector = variable,
           threshold = vline,
           passequal = passequal_,
           plot.hist = FALSE
         )
-      } else if (filter == "LowPass" & any(vline) ) {
+      } else if (filter == "LowPass" & vline) {
         filter_LP(
           numeric_vector = variable,
           threshold = vline,
           passequal = passequal_,
           plot.hist = FALSE
         )
-      } else if (filter == "MidPass" & any(vline)  & (length(vline) == 2)) {
+      } else if (filter == "MidPass" & vline & (length(vline) == 2)) {
         filter_MidPass(
           numeric_vector = variable,
           HP_threshold = vline[1],
@@ -1069,7 +1070,7 @@ wboxplot <-
             main = as.character(substitute(yourlist)),
             sub = FALSE,
             ylab = "",
-            col = unless.specified("b.def.colors", "gold1"),
+            col = "gold1",
             incrBottMarginBy = 0,
             tilted_text = FALSE,
             savefile = unless.specified("b.save.wplots"),
@@ -1814,7 +1815,6 @@ wviostripchart_list <-
 #' @param mdlink Insert a .pdf and a .png image link in the markdown report,
 #'  set by "path_of_report".
 #' @param plotname Manual plotname parameter
-#' @param openFolder open current directory (=working if setup_MarkdownReports('setDir=T')) 
 #'
 #' @export
 #' @examples TwoSets = list("set1" = LETTERS[1:6], "set2" = LETTERS[3:9] )
@@ -1831,8 +1831,7 @@ wvenn <-
             w = unless.specified("b.defSize", 7),
             h = w,
             mdlink = ww.set.mdlink(),
-            plotname = substitute(yourlist),
-            openFolder = T) {
+            plotname = substitute(yourlist)) {
 
     # if (!require("VennDiagram")) {
     #   print("Please install VennDiagram: install.packages('VennDiagram')")
@@ -1875,7 +1874,6 @@ wvenn <-
         llogit(ww.md.image.link.parser(paste0("Reports/", fname)))
       }
     }
-    if (openFolder) system("open .")
   }
 
 
@@ -1907,7 +1905,7 @@ wbarplot_dfCol <-
   function (df,
             ...,
             colName,
-            col = unless.specified("b.def.colors", "gold1"),
+            col = "gold1",
             savefile = unless.specified("b.save.wplots"),
             w = unless.specified("b.defSize", 7),
             h = w,
@@ -1964,7 +1962,7 @@ wbarplot_dfCol <-
 whist_dfCol <-
   function (df,
             colName,
-            col = unless.specified("b.def.colors", "gold1"),
+            col = "gold",
             ...,
             savefile = unless.specified("b.save.wplots"),
             w = unless.specified("b.defSize", 7),
@@ -1987,10 +1985,16 @@ whist_dfCol <-
         las = 2,
         cex.names = cexNsize,
         sub = paste(
-          "mean:",iround(mean(table_of_var, na.rm = TRUE)),
-          "| median:",iround(median(table_of_var, na.rm = TRUE)),
-          "| mode:",iround(modus(table_of_var)),
-          "| CV:",percentage_formatter(cv(table_of_var))))
+          "mean:",
+          iround(mean(table_of_var, na.rm = TRUE)),
+          "| median:",
+          iround(median(table_of_var, na.rm = TRUE)),
+          "| mode:",
+          iround(modus(table_of_var)),
+          "| CV:",
+          percentage_formatter(cv(table_of_var))
+        )
+      )
     }
     else {
       zz = hist(variable, ..., plot = FALSE)
@@ -1999,11 +2003,19 @@ whist_dfCol <-
         ...,
         main = plotname,
         col = col,
-        las = 2,
+        las = 2
+        ,
         sub = paste(
-          "mean:",iround(mean(variable)),
-          "| median:",iround(median(variable)),
-          "| modus:",iround(modus(variable))))
+          "mean:",
+          iround(mean(variable))
+          ,
+          "| median:",
+          iround(median(variable))
+          ,
+          "| modus:",
+          iround(modus(variable))
+        )
+      )
     }
     if (savefile) {
       ww.dev.copy(
@@ -2184,7 +2196,8 @@ error_bar <-
         as.vector(x),
         as.vector(y + upper),
         as.vector(x),
-        as.vector(y - lower),
+        as.vector(y - lower)
+        ,
         angle = 90,
         code = 3,
         length = width.whisker,
@@ -2320,7 +2333,8 @@ wlegend.label <-
            bty = "n",
            ...,
            w = 7,
-           h = w,
+           h = w
+           ,
            title = NULL,
            ttl.by.varname = FALSE
            ,
@@ -2450,12 +2464,14 @@ wLinRegression <-
 
     if (length(coeff) == 1 & "r2" == coeff[1]) {
       legend(
-        textlocation,
+        textlocation
+        ,
         legend = superscript_in_plots(
           prefix = "R",
           sup = "2",
           suffix = paste0(": ", r2)
-        ),
+        )
+        ,
         bty = "n",
         cex = cexx
       )
@@ -2915,6 +2931,7 @@ md.tableWriter.DF.w.dimnames <-
             b = percentage_formatter(b)
           }
         } else {
+          print(11)
           b = df[r, ]
         }
         b = paste(b, collapse = " \t| ")
@@ -3462,6 +3479,8 @@ getCategories <-
   }
 
 
+
+
 #' parFlags
 #'
 #' Create a string from the names of the (boolean) parameters (TRUE or FALSE) of true values.
@@ -3488,7 +3507,6 @@ parFlags <-
     flg = if (pasteflg) {paste0(prefix, collapsechar, paste0(flg, collapse = collapsechar))}
     return(flg)
   }
-
 
 #' parFlags2
 #'
@@ -3727,7 +3745,6 @@ ww.autoPlotName <- function (name = NULL) {
 #'
 #' Parser for dev.copy to save as PDF or PNG
 #' @param PNG_ Set to true if you want to save the plot as PNG instead of the default PDF.
-#' @param PNG_res deafult 450
 #' @param w_ Width of the saved pdf image, in inches.
 #' @param h_ Height of the saved pdf image, in inches.
 #' @param fname_ File name
@@ -3735,7 +3752,6 @@ ww.autoPlotName <- function (name = NULL) {
 #' @examples try.dev.off(); plot(1); # ww.dev.copy(PNG = FALSE, w_ = 7, h_ = 7, fname_ = "myNewplot")
 
 ww.dev.copy <- function(PNG_ = FALSE,
-                        PNG_res = 450,
                         w_,
                         h_,
                         fname_) {
@@ -3743,7 +3759,6 @@ ww.dev.copy <- function(PNG_ = FALSE,
     dev.copy(
       png,
       filename = ww.FnP_parser(fname_, "png"),
-      res = PNG_res, 
       width = w_ * 100,
       height = h_ * 100
     )
@@ -3810,8 +3825,13 @@ setup_logging_markdown <-
     write(kollapse("		Modified: ", format(Sys.time(), "%d/%m/%Y | %H:%M | by: "), fname),
           path_of_report,
           append = TRUE)
-    BackupDir = kollapse( OutDir, "/", substr(fname, 1, nchar(fname)), "_",
-      format(Sys.time(), "%Y_%m_%d-%Hh"), print = FALSE
+    BackupDir = kollapse(
+      OutDir,
+      "/",
+      substr(fname, 1, nchar(fname)),
+      "_",
+      format(Sys.time(), "%Y_%m_%d-%Hh"),
+      print = FALSE
     )
     if (!exists(BackupDir)) {
       dir.create(BackupDir, showWarnings = FALSE)
@@ -3821,7 +3841,7 @@ setup_logging_markdown <-
     ww.assign_to_global("b.png4Github", b.png4Github, 1)
   }
 
-#' log_settings_MarkDown (Legacy)
+#' log_settings_MarkDown (OLD)
 #'
 #' Log the parameters & settings used in the script in a table format.
 #' @param ... Variables (strings, vectors) to be collapsed in consecutively.
