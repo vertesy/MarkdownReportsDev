@@ -149,14 +149,14 @@ setup_MarkdownReports <-
 #' Create or set the output directory of the script, and set the "NewOutDir" variable that is
 #' used by all ~wplot functions. Opening pair of the create_set_Original_OutDir function.
 #' @param ... Variables (strings, vectors) to be collapsed in consecutively.
-#' @param makeOutDirOrig Change the "OutDirOrig" variable to the
+#' @param ParentDir Change the "OutDirOrig" variable to the
 #' current OutDir (before setting it to a subdir).
 #' @param setDir Change working directory to the newly defined subdirectory
 #' @export
 #' @examples create_set_SubDir (makeOutDirOrig = TRUE, setDir = TRUE, "MySubFolder")
 
 create_set_SubDir <-
-  function (..., makeOutDirOrig = TRUE,
+  function (..., define.ParentDir = TRUE,
             setDir = TRUE) {
     b.Subdirname = kollapse(...)
     OutDir = ww.set.OutDir()
@@ -174,11 +174,11 @@ create_set_SubDir <-
     if (setDir) {
       setwd(NewOutDir)
     }
-    if (makeOutDirOrig) {
-      if (exists("OutDirOrig"))
-        iprint("OutDirOrig was defined as:", OutDirOrig)
-      iprint("OutDirOrig will be:", OutDir)
-      ww.assign_to_global("OutDirOrig", OutDir, 1)
+    if (define.ParentDir) {
+      if (exists("ParentDir"))
+        iprint("ParentDir was defined as:", ParentDir)
+      iprint("ParentDir will be:", OutDir)
+      ww.assign_to_global("ParentDir", OutDir, 1)
     } #if
     iprint("Call *create_set_Original_OutDir()* when chaning back to the main dir.")
     ww.assign_to_global("OutDir", NewOutDir, 1)
@@ -1814,7 +1814,7 @@ wviostripchart_list <-
 #' @param mdlink Insert a .pdf and a .png image link in the markdown report,
 #'  set by "path_of_report".
 #' @param plotname Manual plotname parameter
-#' @param openFolder open current directory (=working if setup_MarkdownReports('setDir=T')) 
+#' @param openFolder open current directory (=working if setup_MarkdownReports('setDir=T'))
 #'
 #' @export
 #' @examples TwoSets = list("set1" = LETTERS[1:6], "set2" = LETTERS[3:9] )
@@ -3743,7 +3743,7 @@ ww.dev.copy <- function(PNG_ = FALSE,
     dev.copy(
       png,
       filename = ww.FnP_parser(fname_, "png"),
-      res = PNG_res, 
+      res = PNG_res,
       width = w_ * 100,
       height = h_ * 100
     )

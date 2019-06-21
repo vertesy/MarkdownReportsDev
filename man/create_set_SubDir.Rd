@@ -5,15 +5,15 @@
 \title{Create or set the output directory of the script, and set the "NewOutDir" variable that is
 used by all ~wplot functions. Opening pair of the create_set_Original_OutDir function.}
 \usage{
-create_set_SubDir(..., makeOutDirOrig = TRUE, setDir = TRUE)
+create_set_SubDir(..., define.ParentDir = TRUE, setDir = TRUE)
 }
 \arguments{
 \item{...}{Variables (strings, vectors) to be collapsed in consecutively.}
 
-\item{makeOutDirOrig}{Change the "OutDirOrig" variable to the
-current OutDir (before setting it to a subdir).}
-
 \item{setDir}{Change working directory to the newly defined subdirectory}
+
+\item{ParentDir}{Change the "OutDirOrig" variable to the
+current OutDir (before setting it to a subdir).}
 }
 \description{
 Create or set the output directory of the script, and set the "NewOutDir" variable that is
