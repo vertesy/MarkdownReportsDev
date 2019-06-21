@@ -1,2 +1,3 @@
-^.*\.Rproj$
+^MarkdownReportsDev\.Rproj$
 ^\.Rproj\.user$
+^.*\.Rproj$
