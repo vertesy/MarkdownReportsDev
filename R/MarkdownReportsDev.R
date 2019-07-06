@@ -908,7 +908,7 @@ whist <-
   function (variable,
             ...,
             breaks = 20,
-            col = b.def.color,
+            col = unless.specified("b.def.color", "gold1"),
             plotname = substitute(variable),
             main = kollapse("Histogram of ", substitute(variable)),
             xlab = substitute(variable),
