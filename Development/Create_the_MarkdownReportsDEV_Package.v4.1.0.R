@@ -84,7 +84,7 @@ document()
 # Install your package ------------------------------------------------
 # # setwd(RepositoryDir)
 install(RepositoryDir)
-# require("MarkdownReportsDev")
+A# require("MarkdownReportsDev")
 # # remove.packages("MarkdownReports")
 # # Test your package ------------------------------------------------
 # help("wplot")

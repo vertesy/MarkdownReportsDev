@@ -63,6 +63,7 @@ utils::globalVariables(c('OutDirOrig', 'OutDir', 'path_of_report', 'plotnameLast
 #' This filename is written in the title field of .pdf files,
 #' so that you know which script generated that file.
 #' Example: "GeneFilt.hist by MyFilteringScript".
+#' @param b.def.color Set the default color for all wplot* functions.
 #' @param setDir Set the working directory to OutDir? Default: TRUE
 #' proper Table Of Contents by, e.g. Typora.
 #' @export
@@ -154,6 +155,7 @@ setup_MarkdownReports <-
 #' used by all ~wplot functions. Opening pair of the create_set_Original_OutDir function.
 #' @param ... Variables (strings, vectors) to be collapsed in consecutively.
 #' @param ParentDir Change the "OutDirOrig" variable to the
+#' @param define.ParentDir Report on what was the parent directory of the new subdir.
 #' current OutDir (before setting it to a subdir).
 #' @param setDir Change working directory to the newly defined subdirectory
 #' @export
@@ -179,7 +181,7 @@ create_set_SubDir <-
       setwd(NewOutDir)
     }
     if (define.ParentDir) {
-      if (exists("ParentDir"))
+      if (exists("ParentDir")) # If this function has been run already, you have "ParentDir", which will be overwritten.
         iprint("ParentDir was defined as:", ParentDir)
       iprint("ParentDir will be:", OutDir)
       ww.assign_to_global("ParentDir", OutDir, 1)
