@@ -38,6 +38,8 @@ utils::globalVariables(c('OutDirOrig', 'OutDir', 'path_of_report', 'plotnameLast
 #' @param OutDir The output directory (absolute / full path).
 #' @param title Manually set the title of the report.
 #' @param append Set append to TRUE if you do not want to overwrite the previous report.
+#' @param backupfolder Create a time-stamped backup folder inside the working directory (OutDir)?
+#' @param recursive.folder Create output folder recursively, if parent folders do not exist. Parameter for dir.create().
 #' Use continue_logging_markdown() if you return logging into an existing report.
 #' FALSE by default: rerunning the script overwrites the previous report. Archive reports manually
 #' into the timestamped subfolder within the OutDir.
@@ -72,6 +74,8 @@ setup_MarkdownReports <-
             scriptname = basename(OutDir),
             title = "",
             setDir = TRUE,
+            recursive.folder = TRUE,
+            backupfolder = TRUE,
             append = FALSE,
             addTableOfContents = FALSE,
             b.defSize = c(
@@ -90,7 +94,7 @@ setup_MarkdownReports <-
             b.save.wplots = TRUE,
             b.def.color = "gold1") {
     if (!exists(OutDir)) {
-      dir.create(OutDir, showWarnings = FALSE)
+      dir.create(OutDir, showWarnings = FALSE, recursive = recursive.folder)
     }
     if (!substrRight(OutDir, 1) == "/")
       OutDir = paste0(OutDir, "/") # add '/' if necessary
@@ -128,7 +132,7 @@ setup_MarkdownReports <-
     if (setDir) {
       setwd(OutDir)
     }
-    if (!exists(BackupDir)) {
+    if (!exists(BackupDir) & backupfolder) {
       dir.create(BackupDir, showWarnings = FALSE)
       ww.assign_to_global("BackupDir", BackupDir, 1)
     }

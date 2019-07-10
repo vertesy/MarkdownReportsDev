@@ -5,10 +5,10 @@
 \title{setup_MarkdownReports}
 \usage{
 setup_MarkdownReports(OutDir = getwd(), scriptname = basename(OutDir),
-  title = "", setDir = TRUE, append = FALSE,
-  addTableOfContents = FALSE, b.defSize = c(def = 7, A4 = 8.27,
-  `1col.nature` = 3.5, `2col.nature` = 7.2, `1col.cell` = 3.35,
-  `1.5col.cell` = 4.49, `2col.cell` = 6.85)[1],
+  title = "", setDir = TRUE, recursive.folder = TRUE,
+  backupfolder = TRUE, append = FALSE, addTableOfContents = FALSE,
+  b.defSize = c(def = 7, A4 = 8.27, `1col.nature` = 3.5, `2col.nature` =
+  7.2, `1col.cell` = 3.35, `1.5col.cell` = 4.49, `2col.cell` = 6.85)[1],
   b.defSize.fullpage = 8.27, b.usepng = FALSE, b.png4Github = FALSE,
   b.mdlink = TRUE, b.save.wplots = TRUE, b.def.color = "gold1")
 }
@@ -25,10 +25,14 @@ Example: "GeneFilt.hist by MyFilteringScript".}
 \item{setDir}{Set the working directory to OutDir? Default: TRUE
 proper Table Of Contents by, e.g. Typora.}
 
-\item{append}{Set append to TRUE if you do not want to overwrite the previous report.
+\item{recursive.folder}{Create output folder recursively, if parent folders do not exist. Parameter for dir.create().
 Use continue_logging_markdown() if you return logging into an existing report.
 FALSE by default: rerunning the script overwrites the previous report. Archive reports manually
 into the timestamped subfolder within the OutDir.}
+
+\item{backupfolder}{Create a time-stamped backup folder inside the working directory (OutDir)?}
+
+\item{append}{Set append to TRUE if you do not want to overwrite the previous report.}
 
 \item{addTableOfContents}{write '[TOC]' below the header of the file, This is compiled to a}
 
