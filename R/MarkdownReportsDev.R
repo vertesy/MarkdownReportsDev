@@ -4,7 +4,7 @@
 # source("~/Github_repos/MarkdownReports/MarkdownReports/R/MarkdownReports.R")
 
 
-utils::globalVariables(c('OutDirOrig', 'OutDir', 'path_of_report', 'plotnameLastPlot',
+utils::globalVariables(c('OutDirOrig', 'OutDir', 'ParentDir', 'path_of_report', 'plotnameLastPlot',
                          'b.scriptname', 'b.usepng', 'b.png4Github', 'b.mfrow_def',
                          'b.bg_def', 'b.Subdirname', 'b.report.not.found', 'b.def.color'))
 
@@ -59,14 +59,16 @@ utils::globalVariables(c('OutDirOrig', 'OutDir', 'path_of_report', 'plotnameLast
 #' @param b.save.wplots A global background variable used by the plotting functions.
 #' If TRUE (default), plots will be saved to a .pdf file.
 #' @param addTableOfContents write '[TOC]' below the header of the file, This is compiled to a
+#' proper Table Of Contents by, e.g. Typora.
 #' @param scriptname Name of the script file you are running.
 #' This filename is written in the title field of .pdf files,
 #' so that you know which script generated that file.
 #' Example: "GeneFilt.hist by MyFilteringScript".
 #' @param b.def.color Set the default color for all wplot* functions.
 #' @param setDir Set the working directory to OutDir? Default: TRUE
-#' proper Table Of Contents by, e.g. Typora.
+#' @param saveSessionInfo save 'devtools::session_info()' results to '.session_info.DATE.txt.gz'
 #' @export
+#' @importFrom devtools session_info vioplot
 #' @examples setup_MarkdownReports( scriptname = "MyRscript.R", title = "Awesome Ananlysis",
 #' append = TRUE, b.png4Github = TRUE)
 
@@ -79,6 +81,7 @@ setup_MarkdownReports <-
             backupfolder = TRUE,
             append = FALSE,
             addTableOfContents = FALSE,
+            saveSessionInfo = TRUE,
             b.defSize = c(
               "def" = 7,
               "A4" = 8.27,
@@ -133,6 +136,15 @@ setup_MarkdownReports <-
     if (setDir) {
       setwd(OutDir)
     }
+    if (saveSessionInfo) {
+      defWidth = options("width")$width
+      options("width"= 200)
+      sink(file = paste0(".sessionInfo.", format(Sys.time(), format ="%Y.%m.%d" ),".txt"))
+      devtools::session_info()
+      sink()
+      options("width"= defWidth)
+      rm(defWidth)
+    }
     if (!exists(BackupDir) & backupfolder) {
       dir.create(BackupDir, showWarnings = FALSE)
       ww.assign_to_global("BackupDir", BackupDir, 1)
@@ -155,8 +167,8 @@ setup_MarkdownReports <-
 #' used by all ~wplot functions. Opening pair of the create_set_Original_OutDir function.
 #' @param ... Variables (strings, vectors) to be collapsed in consecutively.
 #' @param ParentDir Change the "OutDirOrig" variable to the
-#' @param define.ParentDir Report on what was the parent directory of the new subdir.
 #' current OutDir (before setting it to a subdir).
+#' @param define.ParentDir Report on what was the parent directory of the new subdir.
 #' @param setDir Change working directory to the newly defined subdirectory
 #' @export
 #' @examples create_set_SubDir (makeOutDirOrig = TRUE, setDir = TRUE, "MySubFolder")

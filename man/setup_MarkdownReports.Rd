@@ -7,8 +7,9 @@
 setup_MarkdownReports(OutDir = getwd(), scriptname = basename(OutDir),
   title = "", setDir = TRUE, recursive.folder = TRUE,
   backupfolder = TRUE, append = FALSE, addTableOfContents = FALSE,
-  b.defSize = c(def = 7, A4 = 8.27, `1col.nature` = 3.5, `2col.nature` =
-  7.2, `1col.cell` = 3.35, `1.5col.cell` = 4.49, `2col.cell` = 6.85)[1],
+  saveSessionInfo = TRUE, b.defSize = c(def = 7, A4 = 8.27,
+  `1col.nature` = 3.5, `2col.nature` = 7.2, `1col.cell` = 3.35,
+  `1.5col.cell` = 4.49, `2col.cell` = 6.85)[1],
   b.defSize.fullpage = 8.27, b.usepng = FALSE, b.png4Github = FALSE,
   b.mdlink = TRUE, b.save.wplots = TRUE, b.def.color = "gold1")
 }
@@ -22,8 +23,7 @@ Example: "GeneFilt.hist by MyFilteringScript".}
 
 \item{title}{Manually set the title of the report.}
 
-\item{setDir}{Set the working directory to OutDir? Default: TRUE
-proper Table Of Contents by, e.g. Typora.}
+\item{setDir}{Set the working directory to OutDir? Default: TRUE}
 
 \item{recursive.folder}{Create output folder recursively, if parent folders do not exist. Parameter for dir.create().
 Use continue_logging_markdown() if you return logging into an existing report.
@@ -34,7 +34,10 @@ into the timestamped subfolder within the OutDir.}
 
 \item{append}{Set append to TRUE if you do not want to overwrite the previous report.}
 
-\item{addTableOfContents}{write '[TOC]' below the header of the file, This is compiled to a}
+\item{addTableOfContents}{write '[TOC]' below the header of the file, This is compiled to a
+proper Table Of Contents by, e.g. Typora.}
+
+\item{saveSessionInfo}{save 'devtools::session_info()' results to '.session_info.DATE.txt.gz'}
 
 \item{b.defSize}{Default width of plot EXCEPT in pdfA4plot_on(), assuming h = w by default.
 c("def" = 7, "A4" = 8.27, "1col.nature" = 3.50, "2col.nature" = 7.20, "1col.cell" = 3.35,
@@ -56,6 +59,8 @@ all saved (.pdf) plots will be linked into your report.}
 
 \item{b.save.wplots}{A global background variable used by the plotting functions.
 If TRUE (default), plots will be saved to a .pdf file.}
+
+\item{b.def.color}{Set the default color for all wplot* functions.}
 }
 \description{
 Setup the markdown report file and the output directory, create a sub directory in "OutDir".

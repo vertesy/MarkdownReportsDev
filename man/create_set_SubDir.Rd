@@ -10,6 +10,8 @@ create_set_SubDir(..., define.ParentDir = TRUE, setDir = TRUE)
 \arguments{
 \item{...}{Variables (strings, vectors) to be collapsed in consecutively.}
 
+\item{define.ParentDir}{Report on what was the parent directory of the new subdir.}
+
 \item{setDir}{Change working directory to the newly defined subdirectory}
 
 \item{ParentDir}{Change the "OutDirOrig" variable to the
