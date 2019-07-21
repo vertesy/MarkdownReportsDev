@@ -4,18 +4,20 @@
 ######################################################################################################
 # source("~/MarkdownReports/Workflow_to_Create_an_R_Package.R")
 rm(list=ls(all.names = TRUE));
-try.dev.off()
+try(dev.off(), silent = TRUE)
 # install.packages("devtools")
 # Functions ------------------------
 # devtools::install_github(repo = "vertesy/MarkdownReports/MarkdownReports")
 try (source ('~/GitHub/TheCorvinas/R/CodeAndRoll.R'),silent= FALSE)
 
-irequire(devtools)
-irequire(roxygen2)
+# irequire("devtools")
+# install_version("devtools", version = "2.0.2", repos = "http://cran.at.r-project.org")
+irequire("devtools")
+irequire("roxygen2")
 irequire("stringr")
 
 kollapse <-function (..., print = TRUE) {
-  if (print == TRUE) {
+if (print == TRUE) {
     print(paste0(c(...), collapse = ""))
   }
   paste0(c(...), collapse = "")
@@ -44,7 +46,7 @@ DESCRIPTION <- list("Title" = "Generate Scientific Figures and Reports Easily"
     4. Describe your figures & findings in the same report in a clear and nicely formatted way, parsed from your variables into english sentences.
     5. Share your report, by exporting your report to .pdf, .html or .docx, or via Github or a personal website."
     , "License" = "GPL-3 + file LICENSE"
-    , "Version"= "4.0.0.3"
+    , "Version"= "4.0.0.5"
     , "Packaged" =  Sys.time()
     , "Repository" =  "CRAN"
     , "Imports" = "stats, methods, sm, graphics, grDevices, gplots, RColorBrewer, colorRamps, clipr, vioplot, VennDiagram"
@@ -84,7 +86,7 @@ document()
 # Install your package ------------------------------------------------
 # # setwd(RepositoryDir)
 install(RepositoryDir)
-A# require("MarkdownReportsDev")
+# require("MarkdownReportsDev")
 # # remove.packages("MarkdownReports")
 # # Test your package ------------------------------------------------
 # help("wplot")
@@ -99,10 +101,9 @@ cat("\014")
 # Clean up if not needed anymore ------------------------------------------------
 # View(installed.packages())
 # remove.packages("MarkdownReports")
-CranCHECK=F
-if (CranCHECK) {
-  check(RepositoryDir, cran = TRUE)
-}
+
+
+check(RepositoryDir, cran = TRUE)
 # as.package(RepositoryDir)
 #
 #
