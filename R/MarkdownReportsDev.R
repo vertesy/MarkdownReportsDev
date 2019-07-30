@@ -139,11 +139,18 @@ setup_MarkdownReports <-
     if (saveSessionInfo) {
       defWidth = options("width")$width
       options("width"= 200)
-      sink(file = paste0(".sessionInfo.", format(Sys.time(), format ="%Y.%m.%d" ),".txt"))
-      devtools::session_info()
-      sink()
+      # sink(file = paste0(".sessionInfo.", format(Sys.time(), format ="%Y.%m.%d" ),".txt"), type = "output")
+      # devtools::session_info()
+      # sink()
+      writeLines(
+        capture.output(
+          devtools::session_info()
+        ),con = paste0(".sessionInfo.", format(Sys.time(), format ="%Y.%m.%d" ),".txt")
+        )
+
       options("width"= defWidth)
       rm(defWidth)
+      llprint(".sessionInfo* is saved in the working directory (OutDir).")
     }
     if (!exists(BackupDir) & backupfolder) {
       dir.create(BackupDir, showWarnings = FALSE)
