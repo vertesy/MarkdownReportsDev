@@ -3854,6 +3854,7 @@ setup_logging_markdown <-
 #' @examples a = 1; b = 2; log_settings_MarkDown (a,b)
 
 log_settings_MarkDown <- function (...) {
+  print("Use md.LogSettingsFromList() for a list of parameters")
   call <- match.call()
   namez = sapply(as.list(call[-1]), deparse)
   value = c(...)
