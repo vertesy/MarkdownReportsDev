@@ -4,8 +4,7 @@
 \alias{subscript_in_plots}
 \title{subscript_in_plots}
 \usage{
-subscript_in_plots(prefix = "log", subscr = 2,
-  quantity = "arbitrary units")
+subscript_in_plots(prefix = "log", subscr = 2, quantity = "arbitrary units")
 }
 \arguments{
 \item{prefix}{String before the subscript.}

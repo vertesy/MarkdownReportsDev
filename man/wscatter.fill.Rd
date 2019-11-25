@@ -4,15 +4,36 @@
 \alias{wscatter.fill}
 \title{wscatter.fill}
 \usage{
-wscatter.fill(df2col = cbind(A = rnorm(100), B = rnorm(100)), ..., color,
-  xlim = range(df2col[, 1]), ylim = range(df2col[, 2]),
-  zlim = range(color), nlevels = 20, pch = 21, cex = 1,
-  plotname = substitute(df2col), plot.title = plotname, plot.axes,
-  key.title, key.axes, asp = NA, xaxs = "i", yaxs = "i", las = 1,
-  axes = TRUE, frame.plot = axes, xlab, ylab,
+wscatter.fill(
+  df2col = cbind(A = rnorm(100), B = rnorm(100)),
+  ...,
+  color,
+  xlim = range(df2col[, 1]),
+  ylim = range(df2col[, 2]),
+  zlim = range(color),
+  nlevels = 20,
+  pch = 21,
+  cex = 1,
+  plotname = substitute(df2col),
+  plot.title = plotname,
+  plot.axes,
+  key.title,
+  key.axes,
+  asp = NA,
+  xaxs = "i",
+  yaxs = "i",
+  las = 1,
+  axes = TRUE,
+  frame.plot = axes,
+  xlab,
+  ylab,
   savefile = unless.specified("b.save.wplots"),
-  w = unless.specified("b.defSize", 7), h = w, incrBottMarginBy = 0,
-  mdlink = ww.set.mdlink(), PNG = unless.specified("b.usepng"))
+  w = unless.specified("b.defSize", 7),
+  h = w,
+  incrBottMarginBy = 0,
+  mdlink = ww.set.mdlink(),
+  PNG = unless.specified("b.usepng")
+)
 }
 \arguments{
 \item{df2col}{Input data, a 2 column dataframe}

@@ -4,9 +4,17 @@
 \alias{filter_LP}
 \title{filter_LP}
 \usage{
-filter_LP(numeric_vector, threshold, passequal = FALSE, prepend = "",
-  return_survival_ratio = FALSE, na.rm = TRUE, plot.hist = TRUE,
-  saveplot = FALSE, ...)
+filter_LP(
+  numeric_vector,
+  threshold,
+  passequal = FALSE,
+  prepend = "",
+  return_survival_ratio = FALSE,
+  na.rm = TRUE,
+  plot.hist = TRUE,
+  saveplot = FALSE,
+  ...
+)
 }
 \arguments{
 \item{numeric_vector}{Values to be filtered.}

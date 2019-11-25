@@ -4,9 +4,14 @@
 \alias{wLinRegression}
 \title{wLinRegression}
 \usage{
-wLinRegression(DF, coeff = c("pearson", "spearman", "r2")[3],
-  textlocation = "topleft", cex = 1,
-  OverwritePrevPDF = unless.specified("b.save.wplots"), ...)
+wLinRegression(
+  DF,
+  coeff = c("pearson", "spearman", "r2")[3],
+  textlocation = "topleft",
+  cex = 1,
+  OverwritePrevPDF = unless.specified("b.save.wplots"),
+  ...
+)
 }
 \arguments{
 \item{DF}{The same dataframe as you provided to wplot() before you called this function}

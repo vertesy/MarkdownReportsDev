@@ -4,9 +4,18 @@
 \alias{filter_MidPass}
 \title{filter_MidPass}
 \usage{
-filter_MidPass(numeric_vector, HP_threshold, LP_threshold, prepend = "",
-  return_survival_ratio = FALSE, EdgePass = FALSE, na.rm = TRUE,
-  plot.hist = TRUE, saveplot = FALSE, ...)
+filter_MidPass(
+  numeric_vector,
+  HP_threshold,
+  LP_threshold,
+  prepend = "",
+  return_survival_ratio = FALSE,
+  EdgePass = FALSE,
+  na.rm = TRUE,
+  plot.hist = TRUE,
+  saveplot = FALSE,
+  ...
+)
 }
 \arguments{
 \item{numeric_vector}{Values to be filtered.}

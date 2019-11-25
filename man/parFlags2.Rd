@@ -4,8 +4,13 @@
 \alias{parFlags2}
 \title{parFlags2}
 \usage{
-parFlags2(prefix = ".", ..., pasteflg = TRUE, coll.char = ".",
-  coll.char.intra = "_")
+parFlags2(
+  prefix = ".",
+  ...,
+  pasteflg = TRUE,
+  coll.char = ".",
+  coll.char.intra = "_"
+)
 }
 \arguments{
 \item{prefix}{Append something before?}

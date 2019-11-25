@@ -4,11 +4,19 @@
 \alias{wvenn}
 \title{wvenn}
 \usage{
-wvenn(yourlist, imagetype = "png", alpha = 0.5,
-  fill = 1:length(yourlist), subt, ...,
-  w = unless.specified("b.defSize", 7), h = w,
-  mdlink = ww.set.mdlink(), plotname = substitute(yourlist),
-  openFolder = T)
+wvenn(
+  yourlist,
+  imagetype = "png",
+  alpha = 0.5,
+  fill = 1:length(yourlist),
+  subt,
+  ...,
+  w = unless.specified("b.defSize", 7),
+  h = w,
+  mdlink = ww.set.mdlink(),
+  plotname = substitute(yourlist),
+  openFolder = T
+)
 }
 \arguments{
 \item{yourlist}{The variable to plot.}

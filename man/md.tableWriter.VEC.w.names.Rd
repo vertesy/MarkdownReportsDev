@@ -4,9 +4,14 @@
 \alias{md.tableWriter.VEC.w.names}
 \title{md.tableWriter.VEC.w.names}
 \usage{
-md.tableWriter.VEC.w.names(NamedVector,
-  FullPath = ww.set.path_of_report(), percentify = FALSE,
-  title_of_table = NA, print2screen = FALSE, WriteOut = FALSE)
+md.tableWriter.VEC.w.names(
+  NamedVector,
+  FullPath = ww.set.path_of_report(),
+  percentify = FALSE,
+  title_of_table = NA,
+  print2screen = FALSE,
+  WriteOut = FALSE
+)
 }
 \arguments{
 \item{NamedVector}{A vector for the table body, with names as table header.}

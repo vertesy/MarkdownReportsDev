@@ -4,10 +4,16 @@
 \alias{barplot_label}
 \title{barplot_label}
 \usage{
-barplot_label(barplotted_variable, labels = iround(barplotted_variable),
-  bottom = FALSE, TopOffset = 0.5, relpos_bottom = 0.1,
+barplot_label(
+  barplotted_variable,
+  labels = iround(barplotted_variable),
+  bottom = FALSE,
+  TopOffset = 0.5,
+  relpos_bottom = 0.1,
   OverwritePrevPDF = unless.specified("b.save.wplots"),
-  filename = plotnameLastPlot, ...)
+  filename = plotnameLastPlot,
+  ...
+)
 }
 \arguments{
 \item{barplotted_variable}{The variable that you barplotted previously.}

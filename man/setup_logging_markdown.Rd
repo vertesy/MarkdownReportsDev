@@ -4,8 +4,7 @@
 \alias{setup_logging_markdown}
 \title{setup_logging_markdown (deprecated, use with create_set_OutDir, will be removed from V3)}
 \usage{
-setup_logging_markdown(fname, title = "", append = TRUE,
-  b.png4Github = TRUE)
+setup_logging_markdown(fname, title = "", append = TRUE, b.png4Github = TRUE)
 }
 \arguments{
 \item{fname}{Name of the report file.}

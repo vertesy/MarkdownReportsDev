@@ -4,9 +4,14 @@
 \alias{md.tableWriter.DF.w.dimnames}
 \title{md.tableWriter.DF.w.dimnames}
 \usage{
-md.tableWriter.DF.w.dimnames(df, FullPath = ww.set.path_of_report(),
-  percentify = FALSE, title_of_table = NA, print2screen = FALSE,
-  WriteOut = FALSE)
+md.tableWriter.DF.w.dimnames(
+  df,
+  FullPath = ww.set.path_of_report(),
+  percentify = FALSE,
+  title_of_table = NA,
+  print2screen = FALSE,
+  WriteOut = FALSE
+)
 }
 \arguments{
 \item{df}{Input data frame to be plotted}

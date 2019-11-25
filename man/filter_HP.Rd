@@ -4,9 +4,17 @@
 \alias{filter_HP}
 \title{filter_HP}
 \usage{
-filter_HP(numeric_vector, threshold, passequal = FALSE, prepend = "",
-  return_survival_ratio = FALSE, na.rm = TRUE, plot.hist = TRUE,
-  saveplot = FALSE, ...)
+filter_HP(
+  numeric_vector,
+  threshold,
+  passequal = FALSE,
+  prepend = "",
+  return_survival_ratio = FALSE,
+  na.rm = TRUE,
+  plot.hist = TRUE,
+  saveplot = FALSE,
+  ...
+)
 }
 \arguments{
 \item{numeric_vector}{Values to be filtered.}

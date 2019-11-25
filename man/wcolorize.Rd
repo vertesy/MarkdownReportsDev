@@ -4,10 +4,15 @@
 \alias{wcolorize}
 \title{wcolorize}
 \usage{
-wcolorize(vector = c(1, 1, 1:6), RColorBrewerSet = FALSE,
-  ReturnCategoriesToo = FALSE, show = FALSE, randomize = FALSE,
-  set = c(FALSE, "rich", "heat.colors", "terrain.colors", "topo.colors",
-  "matlab", "rainbow")[1])
+wcolorize(
+  vector = c(1, 1, 1:6),
+  RColorBrewerSet = FALSE,
+  ReturnCategoriesToo = FALSE,
+  show = FALSE,
+  randomize = FALSE,
+  set = c(FALSE, "rich", "heat.colors", "terrain.colors", "topo.colors", "matlab",
+    "rainbow")[1]
+)
 }
 \arguments{
 \item{vector}{A vector with categories, can be numbers or strings}

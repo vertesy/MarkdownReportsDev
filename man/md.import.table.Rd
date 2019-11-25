@@ -4,8 +4,14 @@
 \alias{md.import.table}
 \title{md.import.table}
 \usage{
-md.import.table(from.file.table, title_of_table, has.rownames = TRUE,
-  has.colnames = TRUE, field.sep = "\\t", to.file = path_of_report)
+md.import.table(
+  from.file.table,
+  title_of_table,
+  has.rownames = TRUE,
+  has.colnames = TRUE,
+  field.sep = "\\t",
+  to.file = path_of_report
+)
 }
 \arguments{
 \item{from.file.table}{The *.tsv file to be appended  as table at

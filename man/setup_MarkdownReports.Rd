@@ -4,14 +4,26 @@
 \alias{setup_MarkdownReports}
 \title{setup_MarkdownReports}
 \usage{
-setup_MarkdownReports(OutDir = getwd(), scriptname = basename(OutDir),
-  title = "", setDir = TRUE, recursive.folder = TRUE,
-  backupfolder = TRUE, append = FALSE, addTableOfContents = FALSE,
-  saveSessionInfo = TRUE, b.defSize = c(def = 7, A4 = 8.27,
-  `1col.nature` = 3.5, `2col.nature` = 7.2, `1col.cell` = 3.35,
-  `1.5col.cell` = 4.49, `2col.cell` = 6.85)[1],
-  b.defSize.fullpage = 8.27, b.usepng = FALSE, b.png4Github = FALSE,
-  b.mdlink = TRUE, b.save.wplots = TRUE, b.def.color = "gold1")
+setup_MarkdownReports(
+  OutDir = getwd(),
+  scriptname = basename(OutDir),
+  title = "",
+  setDir = TRUE,
+  recursive.folder = TRUE,
+  backupfolder = TRUE,
+  append = FALSE,
+  addTableOfContents = FALSE,
+  saveSessionInfo = TRUE,
+  saveParameterList = "p",
+  b.defSize = c(def = 7, A4 = 8.27, `1col.nature` = 3.5, `2col.nature` = 7.2,
+    `1col.cell` = 3.35, `1.5col.cell` = 4.49, `2col.cell` = 6.85)[1],
+  b.defSize.fullpage = 8.27,
+  b.usepng = FALSE,
+  b.png4Github = FALSE,
+  b.mdlink = TRUE,
+  b.save.wplots = TRUE,
+  b.def.color = "gold1"
+)
 }
 \arguments{
 \item{OutDir}{The output directory (absolute / full path).}
@@ -37,7 +49,9 @@ into the timestamped subfolder within the OutDir.}
 \item{addTableOfContents}{write '[TOC]' below the header of the file, This is compiled to a
 proper Table Of Contents by, e.g. Typora.}
 
-\item{saveSessionInfo}{save 'devtools::session_info()' results to '.session_info.DATE.txt.gz'}
+\item{saveSessionInfo}{save 'sessioninfo::session_info()' results to '.session_info.DATE.txt.gz'}
+
+\item{saveParameterList}{save the list of parameters stored in the variable name provides ("p" by default) as a table in the markdown report. Uses the md.LogSettingsFromList() function. Set to FALSE to disable this option.}
 
 \item{b.defSize}{Default width of plot EXCEPT in pdfA4plot_on(), assuming h = w by default.
 c("def" = 7, "A4" = 8.27, "1col.nature" = 3.50, "2col.nature" = 7.20, "1col.cell" = 3.35,

@@ -6,8 +6,12 @@
 Set the output directory of the script, and set the "NewOutDir" variable that is
  used by all ~wplot functions.}
 \usage{
-create_set_Original_OutDir(NewOutDir = OutDirOrig,
-  b.Subdirname = FALSE, setDir = TRUE)
+create_set_Original_OutDir(
+  NewOutDir = OutDirOrig,
+  b.Subdirname = FALSE,
+  setDir = TRUE,
+  verbose = TRUE
+)
 }
 \arguments{
 \item{NewOutDir}{The new OutDir}
@@ -15,6 +19,8 @@ create_set_Original_OutDir(NewOutDir = OutDirOrig,
 \item{b.Subdirname}{The current (sub) working directory}
 
 \item{setDir}{Change working directory to the newly defined subdirectory.}
+
+\item{verbose}{Print directory to screen? Default: TRUE}
 }
 \description{
 Closing pair of the create_set_SubDir function. Call when chaning back to the main dir.

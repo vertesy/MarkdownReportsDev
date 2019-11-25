@@ -4,10 +4,16 @@
 \alias{pdfA4plot_on.layout}
 \title{pdfA4plot_on.layout}
 \usage{
-pdfA4plot_on.layout(pname = date(), ..., layout_mat = rbind(1, c(2, 3),
-  4:5), w = unless.specified("b.defSize.fullpage", 8.27), h = 11.69,
-  one_file = TRUE, mdlink = ww.set.mdlink(),
-  title = ww.ttl_field(pname))
+pdfA4plot_on.layout(
+  pname = date(),
+  ...,
+  layout_mat = rbind(1, c(2, 3), 4:5),
+  w = unless.specified("b.defSize.fullpage", 8.27),
+  h = 11.69,
+  one_file = TRUE,
+  mdlink = ww.set.mdlink(),
+  title = ww.ttl_field(pname)
+)
 }
 \arguments{
 \item{pname}{Title of the plot (main parameter) and also the name of the file.}
