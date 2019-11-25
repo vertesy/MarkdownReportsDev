@@ -66,9 +66,10 @@ utils::globalVariables(c('OutDirOrig', 'OutDir', 'ParentDir', 'path_of_report', 
 #' Example: "GeneFilt.hist by MyFilteringScript".
 #' @param b.def.color Set the default color for all wplot* functions.
 #' @param setDir Set the working directory to OutDir? Default: TRUE
-#' @param saveSessionInfo save 'devtools::session_info()' results to '.session_info.DATE.txt.gz'
+#' @param saveSessionInfo save 'sessioninfo::session_info()' results to '.session_info.DATE.txt.gz'
+#' @param saveParameterList save the list of parameters stored in the variable name provides ("p" by default) as a table in the markdown report. Uses the md.LogSettingsFromList() function. Set to FALSE to disable this option.
 #' @export
-#' @importFrom devtools session_info vioplot
+#' @import sessioninfo vioplot
 #' @examples setup_MarkdownReports( scriptname = "MyRscript.R", title = "Awesome Ananlysis",
 #' append = TRUE, b.png4Github = TRUE)
 
@@ -82,6 +83,7 @@ setup_MarkdownReports <-
             append = FALSE,
             addTableOfContents = FALSE,
             saveSessionInfo = TRUE,
+            saveParameterList = "p",
             b.defSize = c(
               "def" = 7,
               "A4" = 8.27,
@@ -140,11 +142,11 @@ setup_MarkdownReports <-
       defWidth = options("width")$width
       options("width"= 200)
       # sink(file = paste0(".sessionInfo.", format(Sys.time(), format ="%Y.%m.%d" ),".txt"), type = "output")
-      # devtools::session_info()
+      # sessioninfo::session_info()
       # sink()
       writeLines(
         capture.output(
-          devtools::session_info()
+          sessioninfo::session_info()
         ),con = paste0(".sessionInfo.", format(Sys.time(), format ="%Y.%m.%d" ),".txt")
         )
 
@@ -155,6 +157,13 @@ setup_MarkdownReports <-
     if (!exists(BackupDir) & backupfolder) {
       dir.create(BackupDir, showWarnings = FALSE)
       ww.assign_to_global("BackupDir", BackupDir, 1)
+    }
+    saveParameterList
+    if (saveParameterList != FALSE) {
+      if (exists(saveParameterList)) {
+        md.LogSettingsFromList(saveParameterList)
+      } else { iprint ("No parameter list is defined in variable: ", saveParameterList,
+                       ". It has to be a list of key:value pairs like: p$thr=10")}
     }
     ww.assign_to_global("b.defSize", b.defSize, 1)
     ww.assign_to_global("b.defSize.fullpage", b.defSize.fullpage, 1)
@@ -177,12 +186,14 @@ setup_MarkdownReports <-
 #' current OutDir (before setting it to a subdir).
 #' @param define.ParentDir Report on what was the parent directory of the new subdir.
 #' @param setDir Change working directory to the newly defined subdirectory
+#' @param verbose Print directory to screen? Default: TRUE
 #' @export
 #' @examples create_set_SubDir (makeOutDirOrig = TRUE, setDir = TRUE, "MySubFolder")
 
 create_set_SubDir <-
   function (..., define.ParentDir = TRUE,
-            setDir = TRUE) {
+            setDir = TRUE,
+            verbose = TRUE) {
     b.Subdirname = kollapse(...)
     OutDir = ww.set.OutDir()
 
@@ -192,7 +203,7 @@ create_set_SubDir <-
     NewOutDir = gsub(x = NewOutDir,
                      pattern = '//',
                      replacement = '/') # replace //
-    iprint("All files will be saved under 'NewOutDir': ", NewOutDir)
+    if (verbose) iprint("All files will be saved under 'NewOutDir': ", NewOutDir)
     if (!dir.exists(NewOutDir)) {
       dir.create(NewOutDir, showWarnings = FALSE)
     }
@@ -201,11 +212,11 @@ create_set_SubDir <-
     }
     if (define.ParentDir) {
       if (exists("ParentDir")) # If this function has been run already, you have "ParentDir", which will be overwritten.
-        iprint("ParentDir was defined as:", ParentDir)
-      iprint("ParentDir will be:", OutDir)
+        if (verbose) iprint("ParentDir was defined as:", ParentDir)
+      if (verbose) iprint("ParentDir will be:", OutDir)
       ww.assign_to_global("ParentDir", OutDir, 1)
     } #if
-    iprint("Call *create_set_Original_OutDir()* when chaning back to the main dir.")
+    if (verbose) iprint("Call *create_set_Original_OutDir()* when chaning back to the main dir.")
     ww.assign_to_global("OutDir", NewOutDir, 1)
     ww.assign_to_global("b.Subdirname", b.Subdirname, 1)
     # Flag that md.image.linker uses
@@ -220,14 +231,16 @@ create_set_SubDir <-
 #' @param NewOutDir The new OutDir
 #' @param b.Subdirname The current (sub) working directory
 #' @param setDir Change working directory to the newly defined subdirectory.
+#' @param verbose Print directory to screen? Default: TRUE
 #' @export
 #' @examples create_set_Original_OutDir (getwd(),"/")
 
 create_set_Original_OutDir <-
   function (NewOutDir = OutDirOrig,
             b.Subdirname = FALSE,
-            setDir = TRUE) {
-    iprint("All files will be saved under the original OutDir: ", NewOutDir)
+            setDir = TRUE,
+            verbose = TRUE) {
+    if (verbose) iprint("All files will be saved under the original OutDir: ", NewOutDir)
     if (!exists(NewOutDir)) {
       dir.create(NewOutDir, showWarnings = FALSE)
     }
@@ -272,18 +285,19 @@ continue_logging_markdown <- function (b.scriptname) {
 #'
 #' @param ... Variables (strings, vectors) to be collapsed in consecutively.
 #' @param setDir Set the working directory to OutDir? Default: TRUE
+#' @param verbose Print directory to screen? Default: TRUE
 #'
 #' @export
 #' @examples create_set_OutDir (setDir = TRUE, getwd(),"/"   )
 
-create_set_OutDir <- function (..., setDir = TRUE) {
+create_set_OutDir <- function (..., setDir = TRUE, verbose = TRUE) {
   OutDir = kollapse(..., print = FALSE)
   if (!substrRight(OutDir, 1) == "/")
     OutDir = paste0(OutDir, "/") # add '/' if necessary
   OutDir = gsub(x = OutDir,
                 pattern = '//',
                 replacement = '/')
-  iprint("All files will be saved under 'OutDir': ", OutDir)
+  if (verbose) iprint("All files will be saved under 'OutDir': ", OutDir)
   if (!exists(OutDir)) {
     dir.create(OutDir, showWarnings = FALSE)
   }
