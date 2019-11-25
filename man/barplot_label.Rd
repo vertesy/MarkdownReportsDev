@@ -12,6 +12,7 @@ barplot_label(
   relpos_bottom = 0.1,
   OverwritePrevPDF = unless.specified("b.save.wplots"),
   filename = plotnameLastPlot,
+  PNG_ = unless.specified("b.usepng", F),
   ...
 )
 }
@@ -30,6 +31,8 @@ barplot_label(
 wplot* function made (It is stored in plotnameLastPlot variable). Never inserts an mdlink.}
 
 \item{filename}{Filename to overwrite after errorbars are added to the current barplot.}
+
+\item{PNG_}{Set to true if you want to save the plot as PNG instead of the default PDF.}
 
 \item{...}{Pass any other parameter of the corresponding
 text function (most of them should work).}
