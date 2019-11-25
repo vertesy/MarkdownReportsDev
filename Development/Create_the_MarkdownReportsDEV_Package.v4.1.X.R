@@ -46,21 +46,23 @@ DESCRIPTION <- list("Title" = "Generate Scientific Figures and Reports Easily"
     4. Describe your figures & findings in the same report in a clear and nicely formatted way, parsed from your variables into english sentences.
     5. Share your report, by exporting your report to .pdf, .html or .docx, or via Github or a personal website."
     , "License" = "GPL-3 + file LICENSE"
-    , "Version"= "4.0.0.5"
+    , "Version"= "4.1.1.0"
     , "Packaged" =  Sys.time()
     , "Repository" =  "CRAN"
-    , "Imports" = "stats, methods, sm, graphics, grDevices, gplots, RColorBrewer, colorRamps, clipr, vioplot, VennDiagram"
+    , "Imports" = "stats, methods, sm, graphics, grDevices, gplots, RColorBrewer, colorRamps, clipr, vioplot, VennDiagram, sessioninfo"
     # , "Suggests" = ""
     , "BugReports"= "https://github.com/vertesy/MarkdownReports/issues"
 )
 
+
 setwd(RepositoryDir)
-if ( !dir.exists(RepositoryDir) ) { create(path = RepositoryDir, description = DESCRIPTIO, rstudio = TRUE)
+if ( !dir.exists(RepositoryDir) ) { create(path = RepositoryDir, description = DESCRIPTION, rstudio = TRUE)
 } else {
     getwd()
     file.remove(c("DESCRIPTION","NAMESPACE", "MarkdownReportsDev.Rproj"))
-    setup(path = RepositoryDir, description = DESCRIPTION, rstudio = TRUE)
-  }
+    create_package(path = RepositoryDir, fields = DESCRIPTION)
+}
+
 
 # go and write fun's ------------------------------------------------------------------------
 # file.edit(Package_FnP)
@@ -90,7 +92,7 @@ install(RepositoryDir)
 # # remove.packages("MarkdownReports")
 # # Test your package ------------------------------------------------
 # help("wplot")
-cat("\014")
+# cat("\014")
 # devtools::run_examples()
 
 
@@ -101,7 +103,6 @@ cat("\014")
 # Clean up if not needed anymore ------------------------------------------------
 # View(installed.packages())
 # remove.packages("MarkdownReports")
-
 
 check(RepositoryDir, cran = TRUE)
 # as.package(RepositoryDir)
