@@ -336,7 +336,7 @@ wplot_save_this <-
             w = unless.specified("b.defSize", 7),
             h = w,
             mdlink = FALSE,
-            PNG = unless.specified("b.usepng")) {
+            PNG = unless.specified("b.usepng", F)) {
     if (!OverwritePrevPDF) {plotname = make.names(date())}
 
     ww.dev.copy(
@@ -432,7 +432,7 @@ wplot <-
             mdlink = ww.set.mdlink(),
             w = unless.specified("b.defSize", 7),
             h = w,
-            PNG = unless.specified("b.usepng")) {
+            PNG = unless.specified("b.usepng", F)) {
     x = df2col[, 1]
     y = df2col[, 2]
     fname = kollapse(plotname, ".plot")
@@ -601,7 +601,7 @@ wscatter.fill <-
             h = w,
             incrBottMarginBy = 0,
             mdlink = ww.set.mdlink(),
-            PNG = unless.specified("b.usepng")) {
+            PNG = unless.specified("b.usepng", F)) {
     x = df2col[, 1]
     y = df2col[, 2]
     CNN = colnames(df2col)
@@ -1199,7 +1199,7 @@ wpie <-
             w = unless.specified("b.defSize", 7),
             h = w,
             mdlink = ww.set.mdlink(),
-            PNG = unless.specified("b.usepng"),
+            PNG = unless.specified("b.usepng", F),
             ...) {
     # if (!require("gplots")) {
     #   print("Please install gplots: install.packages('gplots')")
@@ -1320,7 +1320,7 @@ wstripchart <-
             w = unless.specified("b.defSize", 7),
             h = w,
             mdlink = ww.set.mdlink(),
-            PNG = unless.specified("b.usepng"),
+            PNG = unless.specified("b.usepng", F),
             ...) {
 
     col_ <- col # to avoid circular reference in the inside function argument
@@ -1469,7 +1469,7 @@ wstripchart_list <- function (yourlist,
             w = unless.specified("b.defSize"),
             h = w,
             mdlink = ww.set.mdlink(),
-            PNG = unless.specified("b.usepng")) {
+            PNG = unless.specified("b.usepng", F)) {
     fname = kollapse(main, ".stripchart")
     if (incrBottMarginBy) {
       .ParMarDefault <- par("mar")
@@ -1607,7 +1607,7 @@ wvioplot_list <-
             w = unless.specified("b.defSize", 7),
             h = w,
             mdlink = ww.set.mdlink(),
-            PNG = unless.specified("b.usepng")) {
+            PNG = unless.specified("b.usepng", F)) {
     stopifnot(is.list(yourlist))
     # if (!require("vioplot")) {
     #   print("Please install vioplot: install.packages('vioplot')")
@@ -1749,7 +1749,7 @@ wviostripchart_list <-
             w = unless.specified("b.defSize", 7),
             h = w,
             mdlink = ww.set.mdlink(),
-            PNG = unless.specified("b.usepng")) {
+            PNG = unless.specified("b.usepng", F)) {
     fname = kollapse(main, ".VioStripchart")
     # if (!require("vioplot")) {
     #   print("Please install vioplot: install.packages('vioplot')")
@@ -1949,7 +1949,7 @@ wbarplot_dfCol <-
             savefile = unless.specified("b.save.wplots"),
             w = unless.specified("b.defSize", 7),
             h = w,
-            PNG = unless.specified("b.usepng")) {
+            PNG = unless.specified("b.usepng", F)) {
     stopifnot(colName %in% colnames(df))
     variable = unlist(df[, colName])
     stopifnot(length(variable) > 1)
@@ -2007,7 +2007,7 @@ whist_dfCol <-
             savefile = unless.specified("b.save.wplots"),
             w = unless.specified("b.defSize", 7),
             h = w,
-            PNG = unless.specified("b.usepng")) {
+            PNG = unless.specified("b.usepng", F)) {
     stopifnot(colName %in% colnames(df))
     variable = as.vector(unlist(df[, colName]))
     stopifnot(length(variable) > 1)
