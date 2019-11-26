@@ -2402,6 +2402,8 @@ wlegend.label <-
 #' wplot* function made (It is stored in plotnameLastPlot variable). Never inserts an mdlink.
 #' @param filename Filename to overwrite after errorbars are added to the current barplot.
 #' @param PNG_ Set to true if you want to save the plot as PNG instead of the default PDF.
+#' @param w Width of the saved pdf image, in inches.
+#' @param h Height of the saved pdf image, in inches.
 #' @param ... Pass any other parameter of the corresponding
 #' text function (most of them should work).
 #' @import graphics
@@ -2409,6 +2411,8 @@ wlegend.label <-
 #'
 #' @examples barplot (1:10);
 #' barplot_label (barplotted_variable = 1:10, labels = 11:2, filename = "myBarplot.pdf")
+
+
 
 
 barplot_label <-
@@ -2420,7 +2424,11 @@ barplot_label <-
             OverwritePrevPDF = unless.specified("b.save.wplots"),
             filename = plotnameLastPlot,
             PNG_ = unless.specified("b.usepng",F),
+            w = 7,
+            h = w,
             ...) {
+    w_ = w
+    h_ = h
     x = barplot(barplotted_variable, plot = FALSE)
     y = barplotted_variable
     # stopifnot(length(x) == length(y))
@@ -2437,10 +2445,9 @@ barplot_label <-
       text(x, y, labels = labels, ...)
     }
     if (OverwritePrevPDF) {
-      wplot_save_this(plotname = filename, mdlink = FALSE, PNG = PNG_,...)
+      wplot_save_this(plotname = filename, mdlink = FALSE, PNG = PNG_, w = w_, h = h_, ...)
     }
   }
-
 
 #'wLinRegression
 #'
