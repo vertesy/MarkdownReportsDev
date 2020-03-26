@@ -116,7 +116,7 @@ Install directly from **GitHub** via **devtools** with one R command:
 
     # install.packages("devtools"); # If you don't have it
     require("devtools")
-    devtools::install_github(repo = "vertesy/MarkdownReports/MarkdownReports")
+    devtools::install_github(repo = "vertesy/MarkdownReportsDev")
 
 ...then simply load the package:
 
@@ -125,7 +125,7 @@ Install directly from **GitHub** via **devtools** with one R command:
 Alternatively, you simply source it from the web. 
 *This way function help will not work, and you will have no local copy of the code on your hard drive.*
 
-    source("https://raw.githubusercontent.com/vertesy/MarkdownReports/master/MarkdownReports/R/MarkdownReports.R")
+    source("https://raw.githubusercontent.com/vertesy/MarkdownReportsDev/master/R/MarkdownReportsDev.R")
 
 <br><br>
 ## Discover 4 Yourself!
