@@ -8,7 +8,7 @@ try(dev.off(), silent = TRUE)
 # install.packages("devtools")
 # Functions ------------------------
 # devtools::install_github(repo = "vertesy/MarkdownReports/MarkdownReports")
-try (source ('~/GitHub/TheCorvinas/R/CodeAndRoll.R'),silent= FALSE)
+try (source ('~/GitHub/CodeAndRoll/CodeAndRoll.R'),silent= FALSE)
 
 # irequire("devtools")
 # install_version("devtools", version = "2.0.2", repos = "http://cran.at.r-project.org")
@@ -24,8 +24,8 @@ if (print == TRUE) {
 }
 
 # Setup ------------------------
-PackageName = 	"MarkdownReportsDev"
-# PackageName = 	"MarkdownReports"
+# PackageName = 	"MarkdownReportsDev"
+PackageName = 	"MarkdownReports"
 setwd("~/GitHub/")
 
 RepositoryDir = kollapse("~/GitHub/",PackageName,"/")
@@ -98,6 +98,7 @@ install(RepositoryDir)
 
 
 # Test if you can install from github ------------------------------------------------
+# devtools::install_github(repo = "vertesy/MarkdownReportsDev")
 # devtools::install_github(repo = "vertesy/MarkdownReports/MarkdownReports")
 # require("MarkdownReports")
 
