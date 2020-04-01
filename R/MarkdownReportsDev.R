@@ -2905,6 +2905,37 @@ md.LogSettingsFromList <- function (parameterlist,
 }
 
 
+# Writing markdown tables --------------------------------------------------------------------------
+
+#' md.List2Table
+#'
+#' Broader variant of md.LogSettingsFromList(). Log the values (col2) from a named (col1) list, in a table format
+#'  in the report.
+#' @param title Title of the table.
+#' @param colname2 Name of the 2nd column.
+#' @param parameterlist List of Paramters
+#' @param maxlen Maximum length of entries in a parameter list element
+#' @export
+#' @examples md.LogSettingsFromList(parameterlist = list("min" = 4, "method" = "pearson", "max" = 10))
+
+md.List2Table <- function (parameterlist,
+                           title="List elements",
+                           colname2="Value",
+                                    maxlen = 20) {
+  LZ = unlist(lapply(parameterlist, length)) # collapse paramters with multiple entires
+  LNG = names(which(LZ > 1))
+  for (i in LNG) {
+    if (length(parameterlist[[i]]) > maxlen)
+      parameterlist[[i]] = parameterlist[[i]][1:maxlen]
+    parameterlist[[i]] = paste(parameterlist[[i]], collapse = ", ")
+  } #for
+  DF = t(as.data.frame(parameterlist))
+  colnames(DF) = colname2
+  md.tableWriter.DF.w.dimnames(DF, title_of_table = title)
+}
+
+
+
 #' md.tableWriter.DF.w.dimnames
 #'
 #' Take an R data frame with row- and column- names, parse a markdown table from it,
@@ -3330,7 +3361,7 @@ stopif <-
 #' @param x Unrounded number.
 #' @param digitz Number of digits to keep. 3 by default.
 #' @export
-#' @examples iround (x = 2.3232, digitz = 3)
+#' @examples iround(x = 2.3232, digitz = 3)
 
 iround <- function (x, digitz = 3) {
   signif(x, digits = digitz)
