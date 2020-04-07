@@ -2837,9 +2837,11 @@ llwrite_list <- function(yourlist, printName = "self") {
 #' rownames(YourDataFrameWithRowAndColumnNames) = letters[1:NROW(YourDataFrameWithRowAndColumnNames)]
 #' write.simple.tsv(YourDataFrameWithRowAndColumnNames)
 
-write.simple.tsv <- function(input_df, extension = 'tsv', ManualName = "", o = FALSE,
-                             gzip = FALSE , separator = "\t", ...  ) {
+write.simple.tsv <- function(input_df, separator = "\t", extension = 'tsv', ManualName = "", o = FALSE,
+                             gzip = FALSE, ...  ) {
+  if (separator %in% c(',', ';')) extension <- 'csv'
   fname = kollapse (..., print = FALSE); if (nchar (fname) < 2 ) { fname = substitute(input_df) }
+
   if (nchar(ManualName)) {FnP = kollapse(ManualName)
   } else { FnP = ww.FnP_parser (fname, extension) }
   utils::write.table (input_df, file = FnP, sep = separator, row.names = TRUE,
