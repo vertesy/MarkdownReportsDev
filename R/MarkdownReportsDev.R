@@ -2830,6 +2830,7 @@ llwrite_list <- function(yourlist, printName = "self") {
 #' @param ManualName Specify full filename if you do not want to name it by the variable name.
 #' @param o Open the file after saving? FALSE by default
 #' @param gzip Compress the file after saving? FALSE by default
+#' @param separator Field separator, such as "," for csv
 #' @param ... Pass any other argument to the kollapse() function used for file name.
 #' @export
 #' @examples YourDataFrameWithRowAndColumnNames = cbind("A" = rnorm(100), "B" = rpois(100, 8))
@@ -2837,11 +2838,11 @@ llwrite_list <- function(yourlist, printName = "self") {
 #' write.simple.tsv(YourDataFrameWithRowAndColumnNames)
 
 write.simple.tsv <- function(input_df, extension = 'tsv', ManualName = "", o = FALSE,
-                             gzip = FALSE , ...  ) {
+                             gzip = FALSE , separator = "\t", ...  ) {
   fname = kollapse (..., print = FALSE); if (nchar (fname) < 2 ) { fname = substitute(input_df) }
   if (nchar(ManualName)) {FnP = kollapse(ManualName)
   } else { FnP = ww.FnP_parser (fname, extension) }
-  utils::write.table (input_df, file = FnP, sep = "\t", row.names = TRUE,
+  utils::write.table (input_df, file = FnP, sep = separator, row.names = TRUE,
                       col.names = NA, quote = FALSE  )
   printme = if(length(dim(input_df))) {
     paste0("Dim: ", dim(input_df) )

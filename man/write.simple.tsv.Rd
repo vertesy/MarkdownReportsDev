@@ -10,6 +10,7 @@ write.simple.tsv(
   ManualName = "",
   o = FALSE,
   gzip = FALSE,
+  separator = "\\t",
   ...
 )
 }
@@ -23,6 +24,8 @@ write.simple.tsv(
 \item{o}{Open the file after saving? FALSE by default}
 
 \item{gzip}{Compress the file after saving? FALSE by default}
+
+\item{separator}{Field separator, such as "," for csv}
 
 \item{...}{Pass any other argument to the kollapse() function used for file name.}
 }

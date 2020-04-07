@@ -24,8 +24,8 @@ if (print == TRUE) {
 }
 
 # Setup ------------------------
-# PackageName = 	"MarkdownReportsDev"
-PackageName = 	"MarkdownReports"
+PackageName = 	"MarkdownReportsDev"
+# PackageName = 	"MarkdownReports"
 setwd("~/GitHub/")
 
 RepositoryDir = kollapse("~/GitHub/",PackageName,"/")
