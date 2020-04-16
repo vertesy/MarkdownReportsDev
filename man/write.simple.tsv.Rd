@@ -6,16 +6,18 @@
 \usage{
 write.simple.tsv(
   input_df,
+  separator = "\\t",
   extension = "tsv",
   ManualName = "",
   o = FALSE,
   gzip = FALSE,
-  separator = "\\t",
   ...
 )
 }
 \arguments{
 \item{input_df}{Your Dataframe with row- and column-names}
+
+\item{separator}{Field separator, such as "," for csv}
 
 \item{extension}{e.g.: tsv}
 
@@ -24,8 +26,6 @@ write.simple.tsv(
 \item{o}{Open the file after saving? FALSE by default}
 
 \item{gzip}{Compress the file after saving? FALSE by default}
-
-\item{separator}{Field separator, such as "," for csv}
 
 \item{...}{Pass any other argument to the kollapse() function used for file name.}
 }

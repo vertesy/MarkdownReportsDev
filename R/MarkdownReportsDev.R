@@ -37,7 +37,7 @@ utils::globalVariables(c('OutDirOrig', 'OutDir', 'ParentDir', 'path_of_report', 
 #' @param OutDir The output directory (absolute / full path).
 #' @param title Manually set the title of the report.
 #' @param append Set append to TRUE if you do not want to overwrite the previous report.
-#' @param backupfolder Create a time-stamped backup folder inside the working directory (OutDir)?
+#' @param backupfolder Create a time-stamped backup folder inside the working directory (OutDir).
 #' @param recursive.folder Create output folder recursively, if parent folders do not exist. Parameter for dir.create().
 #' Use continue_logging_markdown() if you return logging into an existing report.
 #' FALSE by default: rerunning the script overwrites the previous report. Archive reports manually
@@ -2916,8 +2916,8 @@ md.LogSettingsFromList <- function (parameterlist,
 #'  in the report.
 #' @param title Title of the table.
 #' @param colname2 Name of the 2nd column.
-#' @param parameterlist List of Paramters
-#' @param maxlen Maximum length of entries in a parameter list element
+#' @param parameterlist List of Paramters.
+#' @param maxlen Maximum length of entries in a parameter list element,.
 #' @export
 #' @examples md.LogSettingsFromList(parameterlist = list("min" = 4, "method" = "pearson", "max" = 10))
 
@@ -3088,14 +3088,14 @@ md.tableWriter.VEC.w.names <-
 
 #' md.LinkTable
 #'
-#' Take a dataframe where every entry is a string containing an html link, parse and write out
-#'  a properly formatted markdown table
-#' @param tableOfLinkswRownames a dataframe where every entry is a string containing an html link
+#' Take a dataframe where every entry is a string containing an html link, parse and write out.
+#'  a properly formatted markdown table.
+#' @param tableOfLinkswRownames A dataframe where every entry is a string containing an html link.
 #' @export
 #'
 #' @examples tableOfLinkswRownames(tableOfLinkswRownames = df_of_LinksParsedByDatabaseLinkeR)
 
-md.LinkTable <- function(tableOfLinkswRownames) { # Take a dataframe where every entry is a string containing an html link, parse and write out
+md.LinkTable <- function(tableOfLinkswRownames) {
   TBL = tableOfLinkswRownames
   RN = rownames(tableOfLinkswRownames)
   for (i in 1:ncol(tableOfLinkswRownames)) {

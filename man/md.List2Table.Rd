@@ -22,7 +22,7 @@ md.List2Table(
 }
 \description{
 Broader variant of md.LogSettingsFromList(). Log the values (col2) from a named (col1) list, in a table format
- in the report.
+in the report.
 }
 \examples{
 md.LogSettingsFromList(parameterlist = list("min" = 4, "method" = "pearson", "max" = 10))
