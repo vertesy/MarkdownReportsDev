@@ -3085,6 +3085,28 @@ md.tableWriter.VEC.w.names <-
 
 
 
+
+#' md.LinkTable
+#'
+#' Take a dataframe where every entry is a string containing an html link, parse and write out
+#'  a properly formatted markdown table
+#' @param tableOfLinkswRownames a dataframe where every entry is a string containing an html link
+#' @export
+#'
+#' @examples tableOfLinkswRownames(tableOfLinkswRownames = df_of_LinksParsedByDatabaseLinkeR)
+
+md.LinkTable <- function(tableOfLinkswRownames) { # Take a dataframe where every entry is a string containing an html link, parse and write out
+  TBL = tableOfLinkswRownames
+  RN = rownames(tableOfLinkswRownames)
+  for (i in 1:ncol(tableOfLinkswRownames)) {
+    x = tableOfLinkswRownames[, i]
+    TBL[, i] = paste0("[", RN, "]", "(", x, ")")
+  } #for
+  md.tableWriter.DF.w.dimnames(TBL,
+                               FullPath = paste0(OutDir, substitute(tableOfLinkswRownames), ".tsv.md"))
+}
+
+
 #' md.import.table
 #'
 #' Import a table (.csv, or tab seprated values, .tsv file) and write it
