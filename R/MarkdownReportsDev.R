@@ -101,8 +101,9 @@ setup_MarkdownReports <-
     if (!exists(OutDir)) {
       dir.create(OutDir, showWarnings = FALSE, recursive = recursive.folder)
     }
-    if (!substrRight(OutDir, 1) == "/")
-      OutDir = paste0(OutDir, "/") # add '/' if necessary
+    OutDir = AddTrailingSlash(OutDir) # add '/' if necessary
+    # if (!substrRight(OutDir, 1) == "/")
+    #   OutDir = paste0(OutDir, "/")
 
     ww.assign_to_global("OutDir", OutDir, 1)
     iprint("All files will be saved under 'OutDir': ", OutDir)
@@ -197,8 +198,10 @@ create_set_SubDir <-
     OutDir = ww.set.OutDir()
 
     NewOutDir = kollapse(OutDir, ..., print = FALSE)
-    if (!substrRight(NewOutDir, 1) == "/")
-      NewOutDir = paste0(NewOutDir, "/") # add '/' if necessary
+
+    NewOutDir = AddTrailingSlash(NewOutDir) # add '/' if necessary
+    # if (!substrRight(NewOutDir, 1) == "/")
+    #   NewOutDir = paste0(NewOutDir, "/") # add '/' if necessary
     NewOutDir = gsub(x = NewOutDir,
                      pattern = '//',
                      replacement = '/') # replace //
@@ -291,8 +294,9 @@ continue_logging_markdown <- function (b.scriptname) {
 
 create_set_OutDir <- function (..., setDir = TRUE, verbose = TRUE) {
   OutDir = kollapse(..., print = FALSE)
-  if (!substrRight(OutDir, 1) == "/")
-    OutDir = paste0(OutDir, "/") # add '/' if necessary
+  OutDir = AddTrailingSlash(OutDir) # add '/' if necessary
+  # if (!substrRight(OutDir, 1) == "/")
+  #   OutDir = paste0(OutDir, "/") # add '/' if necessary
   OutDir = gsub(x = OutDir,
                 pattern = '//',
                 replacement = '/')
@@ -3722,8 +3726,9 @@ ww.set.OutDir <- function() {
       iprint("OutDir not defined !!! Saving in working directory.")
       paste0(getwd(),"/", collapse = "")
     }
-  if (!substrRight(NewOutDir, 1) == "/"){
-    NewOutDir = paste0(NewOutDir, "/") # add '/' if necessary
+  NewOutDir = AddTrailingSlash(NewOutDir) # add '/' if necessary
+  # if (!substrRight(NewOutDir, 1) == "/"){
+  #   NewOutDir = paste0(NewOutDir, "/") # add '/' if necessary
   }
   gsub(x = NewOutDir, pattern = '//', replacement = '/')
 }
@@ -3974,3 +3979,17 @@ log_settings_MarkDown <- function (...) {
 
 
 
+#' AddTrailingSlash
+#'
+#' Add final '/' if missing from a file path.
+#' @param string The file path potentially missing the trailing slash
+#' @export
+#'
+#' @examples AddTrailingSlash (string = "stairway/to/heaven")
+
+AddTrailingSlash <- function(string = InputD) {#
+  LastChr <- substr(string, nchar(string), nchar(string))
+  if (!LastChr == "/")
+    string = paste0(string, "/")
+  return(string)
+}
