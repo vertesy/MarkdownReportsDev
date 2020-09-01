@@ -3729,7 +3729,7 @@ ww.set.OutDir <- function() {
   NewOutDir = AddTrailingSlash(NewOutDir) # add '/' if necessary
   # if (!substrRight(NewOutDir, 1) == "/"){
   #   NewOutDir = paste0(NewOutDir, "/") # add '/' if necessary
-  }
+  # }
   gsub(x = NewOutDir, pattern = '//', replacement = '/')
 }
 
@@ -3987,7 +3987,7 @@ log_settings_MarkDown <- function (...) {
 #'
 #' @examples AddTrailingSlash (string = "stairway/to/heaven")
 
-AddTrailingSlash <- function(string = InputD) {#
+AddTrailingSlash <- function(string = InputD) { #
   LastChr <- substr(string, nchar(string), nchar(string))
   if (!LastChr == "/")
     string = paste0(string, "/")
