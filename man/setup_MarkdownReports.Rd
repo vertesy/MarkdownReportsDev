@@ -42,7 +42,7 @@ Use continue_logging_markdown() if you return logging into an existing report.
 FALSE by default: rerunning the script overwrites the previous report. Archive reports manually
 into the timestamped subfolder within the OutDir.}
 
-\item{backupfolder}{Create a time-stamped backup folder inside the working directory (OutDir)?}
+\item{backupfolder}{Create a time-stamped backup folder inside the working directory (OutDir).}
 
 \item{append}{Set append to TRUE if you do not want to overwrite the previous report.}
 
