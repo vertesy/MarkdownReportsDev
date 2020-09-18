@@ -4,7 +4,7 @@
 \alias{AddTrailingSlash}
 \title{AddTrailingSlash}
 \usage{
-AddTrailingSlash(string = InputD)
+AddTrailingSlash(string = "stairway/to/heaven")
 }
 \arguments{
 \item{string}{The file path potentially missing the trailing slash}

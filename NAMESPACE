@@ -2,6 +2,7 @@
 
 S3method(na.omit,strip)
 export(AddTrailingSlash)
+export(RemoveDoubleSlash)
 export(as.factor.numeric)
 export(barplot_label)
 export(color_check)
