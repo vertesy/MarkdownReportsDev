@@ -102,8 +102,7 @@ setup_MarkdownReports <-
       dir.create(OutDir, showWarnings = FALSE, recursive = recursive.folder)
     }
     OutDir = AddTrailingSlash(OutDir) # add '/' if necessary
-    # if (!substrRight(OutDir, 1) == "/")
-    #   OutDir = paste0(OutDir, "/")
+    OutDir = RemoveDoubleSlash(OutDir)
 
     ww.assign_to_global("OutDir", OutDir, 1)
     iprint("All files will be saved under 'OutDir': ", OutDir)
@@ -200,11 +199,7 @@ create_set_SubDir <-
     NewOutDir = kollapse(OutDir, ..., print = FALSE)
 
     NewOutDir = AddTrailingSlash(NewOutDir) # add '/' if necessary
-    # if (!substrRight(NewOutDir, 1) == "/")
-    #   NewOutDir = paste0(NewOutDir, "/") # add '/' if necessary
-    NewOutDir = gsub(x = NewOutDir,
-                     pattern = '//',
-                     replacement = '/') # replace //
+    NewOutDir = RemoveDoubleSlash(NewOutDir)
     if (verbose) iprint("All files will be saved under 'NewOutDir': ", NewOutDir)
     if (!dir.exists(NewOutDir)) {
       dir.create(NewOutDir, showWarnings = FALSE)
@@ -295,11 +290,7 @@ continue_logging_markdown <- function (b.scriptname) {
 create_set_OutDir <- function (..., setDir = TRUE, verbose = TRUE) {
   OutDir = kollapse(..., print = FALSE)
   OutDir = AddTrailingSlash(OutDir) # add '/' if necessary
-  # if (!substrRight(OutDir, 1) == "/")
-  #   OutDir = paste0(OutDir, "/") # add '/' if necessary
-  OutDir = gsub(x = OutDir,
-                pattern = '//',
-                replacement = '/')
+  OutDir = RemoveDoubleSlash(OutDir)
   if (verbose) iprint("All files will be saved under 'OutDir': ", OutDir)
   if (!exists(OutDir)) {
     dir.create(OutDir, showWarnings = FALSE)
@@ -3727,10 +3718,7 @@ ww.set.OutDir <- function() {
       paste0(getwd(),"/", collapse = "")
     }
   NewOutDir = AddTrailingSlash(NewOutDir) # add '/' if necessary
-  # if (!substrRight(NewOutDir, 1) == "/"){
-  #   NewOutDir = paste0(NewOutDir, "/") # add '/' if necessary
-  # }
-  gsub(x = NewOutDir, pattern = '//', replacement = '/')
+  RemoveDoubleSlash(NewOutDir)
 }
 
 
@@ -3987,9 +3975,23 @@ log_settings_MarkDown <- function (...) {
 #'
 #' @examples AddTrailingSlash (string = "stairway/to/heaven")
 
-AddTrailingSlash <- function(string = InputD) { #
+AddTrailingSlash <- function(string = "stairway/to/heaven") { #
   LastChr <- substr(string, nchar(string), nchar(string))
   if (!LastChr == "/")
     string = paste0(string, "/")
   return(string)
 }
+
+#' RemoveDoubleSlash
+#'
+#' Remove Double Slash '/'  from string.
+#' @param string The file path potentially having Double Slash
+#' @export
+#'
+#' @examples RemoveDoubleSlash (string = "stairway//to/heaven")
+
+RemoveDoubleSlash <- function(string = "stairway//to/heaven") { #
+  gsub(x = string, pattern = '//', replacement = '/')
+}
+
+
