@@ -3969,7 +3969,7 @@ log_settings_MarkDown <- function (...) {
 
 #' AddTrailingSlash
 #'
-#' Add final '/' if missing from a file path.
+#' Adds a final slash '/', if missing from a string (file path).
 #' @param string The file path potentially missing the trailing slash
 #' @export
 #'
@@ -3984,14 +3984,49 @@ AddTrailingSlash <- function(string = "stairway/to/heaven") { #
 
 #' RemoveDoubleSlash
 #'
-#' Remove Double Slash '/'  from string.
+#' RemoveDoubleSlash removes multiple consecutive slashes (e.g. '//') from a string (file path). Also works for 2,3 consecutive slashes
 #' @param string The file path potentially having Double Slash
 #' @export
 #'
-#' @examples RemoveDoubleSlash (string = "stairway//to/heaven")
+#' @examples RemoveDoubleSlash (string = "stairway//to///heaven")
 
 RemoveDoubleSlash <- function(string = "stairway//to/heaven") { #
-  gsub(x = string, pattern = '//', replacement = '/')
+  gsub(x = string, pattern = '//|///|////', replacement = '/')
 }
 
+
+
+#' FixPath
+#'
+#' FixPath removes multiple consecutive slashes (e.g. '//') from a string and adds a final '/' if missing from a file path.
+#' @param string The file path potentially having Double Slash
+#' @export
+#'
+#' @examples FixPath(string = "stairway//to/heaven")
+
+FixPath <- function(string = "stairway//to/heaven") { #
+  string <- gsub(x = string, pattern = '//|///|////', replacement = '/')
+  LastChr <- substr(string, nchar(string), nchar(string))
+  if (!LastChr == "/")
+    string = paste0(string, "/")
+  return(string)
+}
+
+
+#' ParseFilePath
+#'
+#' ParseFilePath pastes elements by slash, then removes Double Slashes '//' from a string and adds a final '/' if missing from a file path.
+#' @param string The file path potentially having Double Slash
+#' @export
+#'
+#' @examples ParseFilePath(string = "stairway///to/heaven")
+
+ParseFilePath <- function(...) { #
+  string <- paste(..., sep = '/', collapse = '/')  # kollapse by (forward) slash
+  string <- gsub(x = string, pattern = '//', replacement = '/') # RemoveDoubleSlash
+  LastChr <- substr(string, nchar(string), nchar(string)) # AddTrailingSlash
+  if (!LastChr == "/")
+    string = paste0(string, "/")
+  return(string)
+}
 
