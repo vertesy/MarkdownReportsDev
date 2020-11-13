@@ -3,12 +3,12 @@
 # 01 Jan 2018
 ######################################################################################################
 # source("~/MarkdownReports/Workflow_to_Create_an_R_Package.R")
-rm(list=ls(all.names = TRUE));
+rm(list = ls(all.names = TRUE));
 try(dev.off(), silent = TRUE)
 # install.packages("devtools")
 # Functions ------------------------
 # devtools::install_github(repo = "vertesy/MarkdownReports/MarkdownReports")
-try (source ('~/GitHub/CodeAndRoll/CodeAndRoll.R'),silent= FALSE)
+try (source('~/GitHub/CodeAndRoll/CodeAndRoll.R'),silent= FALSE)
 
 # irequire("devtools")
 # install_version("devtools", version = "2.0.2", repos = "http://cran.at.r-project.org")
