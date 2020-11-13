@@ -16,7 +16,7 @@ irequire("devtools")
 irequire("roxygen2")
 irequire("stringr")
 
-kollapse <-function (..., print = TRUE) {
+kollapse <-function(..., print = TRUE) {
 if (print == TRUE) {
     print(paste0(c(...), collapse = ""))
   }
