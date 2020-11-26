@@ -8,7 +8,7 @@ try(dev.off(), silent = TRUE)
 # install.packages("devtools")
 # Functions ------------------------
 # devtools::install_github(repo = "vertesy/MarkdownReports/MarkdownReports")
-try (source('~/GitHub/CodeAndRoll/CodeAndRoll.R'),silent= FALSE)
+try (source('~/GitHub/Packages/CodeAndRoll/CodeAndRoll.R'),silent= FALSE)
 
 # irequire("devtools")
 # install_version("devtools", version = "2.0.2", repos = "http://cran.at.r-project.org")
@@ -28,11 +28,11 @@ PackageName = 	"MarkdownReportsDev"
 # PackageName = 	"MarkdownReports"
 setwd("~/GitHub/")
 
-RepositoryDir = kollapse("~/GitHub/",PackageName,"/")
-fname = 	kollapse(PackageName,".R")
+RepositoryDir = kollapse("~/GitHub/Packages/", PackageName, "/")
+fname = 	kollapse(PackageName, ".R")
 Package_FnP = 	kollapse(RepositoryDir, "R/", fname)
 
-BackupDir = "~/GitHub/MarkdownReports/Development/"
+BackupDir = "~/GitHub/Packages/MarkdownReports/Development/"
 dir.create(BackupDir)
 
 # devtools::use_package("vioplot")
@@ -47,7 +47,7 @@ DESCRIPTION <- list("Title" = "Generate Scientific Figures and Reports Easily"
     4. Describe your figures & findings in the same report in a clear and nicely formatted way, parsed from your variables into english sentences.
     5. Share your report, by exporting your report to .pdf, .html or .docx, or via Github or a personal website."
     , "License" = "GPL-3 + file LICENSE"
-    , "Version"= "4.1.5"
+    , "Version"= "4.1.6"
     , "Packaged" =  Sys.time()
     , "Repository" =  "CRAN"
     , "Imports" = "stats, methods, sm, graphics, grDevices, gplots, RColorBrewer, colorRamps, clipr, vioplot, VennDiagram, sessioninfo"

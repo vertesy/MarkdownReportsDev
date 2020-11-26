@@ -41,7 +41,7 @@ wplot* function made (It is stored in plotnameLastPlot variable). Never inserts 
 \item{h}{Height of the saved pdf image, in inches.}
 
 \item{...}{Pass any other parameter of the corresponding
-text function (most of them should work).}
+text function(most of them should work).}
 }
 \description{
 Add extra labels to your bar plots at the top or the base.

@@ -18,7 +18,7 @@ error_bar(x, y, upper, lower = upper, width.whisker = 0.1, ...)
 \item{width.whisker}{Width of the error bar whisker.}
 
 \item{...}{Pass any other argument to the arrows function.
-arrows function (most of them should work).}
+arrows function(most of them should work).}
 }
 \description{
 Put error bars on top of your bar plots. This functionality is now integrated into

@@ -30,7 +30,7 @@ wviostripchart_list(
 \item{yourlist}{Input list to be plotted.}
 
 \item{...}{Pass any other parameter of the corresponding plotting
-function (most of them should work).}
+function(most of them should work).}
 
 \item{pch}{Define the symbol for each data point. A number \link{0-25} or any string between ""-s.}
 

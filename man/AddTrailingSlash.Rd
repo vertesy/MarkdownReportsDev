@@ -10,7 +10,7 @@ AddTrailingSlash(string = "stairway/to/heaven")
 \item{string}{The file path potentially missing the trailing slash}
 }
 \description{
-Add final '/' if missing from a file path.
+Adds a final slash '/', if missing from a string (file path).
 }
 \examples{
 AddTrailingSlash (string = "stairway/to/heaven")

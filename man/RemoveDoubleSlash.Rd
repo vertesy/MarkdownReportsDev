@@ -10,8 +10,8 @@ RemoveDoubleSlash(string = "stairway//to/heaven")
 \item{string}{The file path potentially having Double Slash}
 }
 \description{
-Remove Double Slash '/'  from string.
+RemoveDoubleSlash removes multiple consecutive slashes (e.g. '//') from a string (file path). Also works for 2,3 consecutive slashes
 }
 \examples{
-RemoveDoubleSlash (string = "stairway//to/heaven")
+RemoveDoubleSlash (string = "stairway//to///heaven")
 }

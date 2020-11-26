@@ -38,7 +38,7 @@ wscatter.fill(
 \arguments{
 \item{df2col}{Input data, a 2 column dataframe}
 
-\item{...}{Pass any other parameter of the corresponding plotting function (most of them should
+\item{...}{Pass any other parameter of the corresponding plotting function(most of them should
 work).}
 
 \item{color}{Filling color of the symbols}

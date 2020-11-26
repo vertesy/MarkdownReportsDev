@@ -19,7 +19,7 @@ wbarplot_dfCol(
 \item{df}{Input data frame to be plotted}
 
 \item{...}{Pass any other parameter of the corresponding
-plotting function (most of them should work).}
+plotting function(most of them should work).}
 
 \item{colName}{Which column to plot (by name).}
 

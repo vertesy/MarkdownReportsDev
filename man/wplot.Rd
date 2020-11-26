@@ -42,7 +42,7 @@ wplot(
 
 \item{pch}{Define the symbol for each data point. A number \link{0-25} or any string between ""-s.}
 
-\item{...}{Pass any other parameter of the corresponding plotting function (most of them should
+\item{...}{Pass any other parameter of the corresponding plotting function(most of them should
 work).}
 
 \item{panel_first}{Draw a backround grid, if set to "grid(NULL)"}

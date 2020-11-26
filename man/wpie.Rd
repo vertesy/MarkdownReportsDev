@@ -40,7 +40,7 @@ wpie(
 
 \item{PNG}{Set to true if you want to save the plot as PNG instead of the default PDF.}
 
-\item{...}{Pass any other parameter of the corresponding plotting function (most of them should
+\item{...}{Pass any other parameter of the corresponding plotting function(most of them should
 work).}
 }
 \description{

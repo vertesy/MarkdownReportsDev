@@ -23,7 +23,7 @@ whist_dfCol(
 \item{col}{Color of the plot.}
 
 \item{...}{Pass any other parameter of the corresponding
-plotting function (most of them should work).}
+plotting function(most of them should work).}
 
 \item{savefile}{Save plot as pdf in OutDir, TRUE by default.}
 

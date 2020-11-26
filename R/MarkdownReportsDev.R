@@ -347,6 +347,39 @@ wplot_save_this <-
   }
 
 
+#' wplot_save_pheatmap
+#'
+#' Save pheatmap object. Modified from:
+#' https://stackoverflow.com/questions/43051525/how-to-draw-pheatmap-plot-to-screen-and-also-save-to-file
+#' @param x The pheatmap object to save.
+#' @param filename File name (saved as .pdf, inside working directory).
+#' @param width width of the plot in inches.
+#' @param height height of the plot in inches.
+#' @export
+#'
+#' @examples test = matrix(rnorm(200), 20, 10);
+#' colnames(test) = paste("Test", 1:10, sep = "");
+#' rownames(test) = paste("Gene", 1:20, sep = "");
+#' ph.test <- pheatmap::pheatmap(test);
+#' wplot_save_pheatmap(ph.test)
+
+wplot_save_pheatmap <-
+  function(x,
+           filename = substitute(x),
+           width = 15,
+           height = width) {
+    stopifnot(!missing(x))
+    filename <- ppp(filename, "pdf")
+    pdf(file = filename,
+        width = width,
+        height = height)
+    grid::grid.newpage()
+    grid::grid.draw(x$gtable)
+    dev.off()
+    print(kpps(getwd(), filename))
+  }
+
+
 #' wplot
 #'
 #' Create and save scatter plots as .pdf, in "OutDir". If mdlink = TRUE, it inserts a .pdf and a .png
@@ -2841,7 +2874,7 @@ write.simple.tsv <- function(input_df, separator = "\t", extension = 'tsv', Manu
   } else { FnP = ww.FnP_parser (fname, extension) }
   utils::write.table (input_df, file = FnP, sep = separator, row.names = TRUE,
                       col.names = NA, quote = FALSE  )
-  printme = if(length(dim(input_df))) {
+  printme = if (length(dim(input_df))) {
     paste0("Dim: ", dim(input_df) )
   }else {
     paste0("Length (of your vector): ", length(input_df) )

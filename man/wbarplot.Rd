@@ -35,7 +35,7 @@ wbarplot(
 \arguments{
 \item{variable}{The variable to plot.}
 
-\item{...}{Pass any other parameter of the corresponding plotting function (most of them should
+\item{...}{Pass any other parameter of the corresponding plotting function(most of them should
 work).}
 
 \item{col}{Color of the plot.}

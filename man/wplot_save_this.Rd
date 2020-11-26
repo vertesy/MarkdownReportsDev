@@ -17,7 +17,7 @@ wplot_save_this(
 \arguments{
 \item{plotname}{Title of the plot (main parameter) and also the name of the file.}
 
-\item{...}{Pass any other parameter of the corresponding plotting function (most of them should
+\item{...}{Pass any other parameter of the corresponding plotting function(most of them should
 work).}
 
 \item{OverwritePrevPDF}{Overwrite previous PDF image (as name stored in plotnameLastPlot).

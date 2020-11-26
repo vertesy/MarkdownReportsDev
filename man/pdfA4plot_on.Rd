@@ -20,7 +20,7 @@ pdfA4plot_on(
 \item{pname}{Title of the plot (main parameter) and also the name of the file.}
 
 \item{...}{Pass any other parameter of the corresponding
-plotting function (most of them should work).}
+plotting function(most of them should work).}
 
 \item{w}{Width of the saved pdf image, in inches. c("A4" = 8.27, "1col.nature" = 3.50,
 "2col.nature" = 7.20, "1col.cell" = 3.35, "1.5col.cell" = 4.49, "2col.cell" = 6.85).}

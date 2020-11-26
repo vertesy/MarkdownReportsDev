@@ -30,7 +30,7 @@ wvenn(
 \item{subt}{Subtitle}
 
 \item{...}{Pass any other parameter of the corresponding venn.diagram()
-function (most of them should work).}
+function(most of them should work).}
 
 \item{w}{Width of the saved pdf image, in inches.}
 
