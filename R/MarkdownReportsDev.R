@@ -2009,7 +2009,7 @@ wbarplot_dfCol <-
 #'
 #' Use this version of whist() if you iterate over columns  or rows of a data frame.
 #' You can name the file by naming the variable.
-#' Cannot be used with dynamically called variables [e.g. call vectors within a loop]
+#' Cannot be used with dynamically called variables (e.g. call vectors within a loop).
 #'
 #' @param df Input data frame to be plotted
 #' @param col Color of the plot.
@@ -2438,8 +2438,7 @@ wlegend.label <-
 #' @export
 #'
 #' @examples barplot (1:10);
-#' barplot_label (barplotted_variable = 1:10, labels = 11:2, filename = "myBarplot.pdf")
-
+#' barplot_label(barplotted_variable = 1:10, labels = 11:2, filename = "myBarplot.pdf")
 
 
 
@@ -2973,7 +2972,7 @@ md.List2Table <- function(parameterlist,
 #' and write it to the markdown report, set by "path_of_report".
 #' @param df Input data frame to be plotted
 #' @param FullPath Full path to the file.
-#' @param percentify Format numbers [0, 1] to percentages 0-100.
+#' @param percentify Format numbers between 0-1 to percentages 0-100.
 #' @param title_of_table Title above the table (in the markdown report).
 #' @param print2screen Print the markdown formatted table to the sceen.
 #' @param WriteOut Write the table into a TSV file.
@@ -3533,7 +3532,7 @@ substrRight <- function(x, n) {
 #' percentage_formatter
 #'
 #' Parse a string of 0-100% from a number between 0 and 1.
-#' @param x A vector of numbers between [0, 1]/
+#' @param x A vector of numbers between 0-1.
 #' @param digitz Number of digits to keep. 3 by default.
 #' @export
 #' @examples percentage_formatter (x = 4.2822212, digitz = 3)
@@ -4049,7 +4048,7 @@ FixPath <- function(string = "stairway//to/heaven") { #
 #' ParseFilePath
 #'
 #' ParseFilePath pastes elements by slash, then removes Double Slashes '//' from a string and adds a final '/' if missing from a file path.
-#' @param string The file path potentially having Double Slash
+#' @param ...  The set of strings (character vectors) to be parsed into a file path, and potentially having Double Slashes, potentially missing a trailing slash.
 #' @export
 #'
 #' @examples ParseFilePath(string = "stairway///to/heaven")
