@@ -369,7 +369,7 @@ wplot_save_pheatmap <-
            width = 15,
            height = width) {
     stopifnot(!missing(x))
-    filename <- ppp(filename, "pdf")
+    filename <- ppp(filename, ".heatmap.pdf")
     pdf(file = filename,
         width = width,
         height = height)
@@ -3538,7 +3538,7 @@ substrRight <- function(x, n) {
 #' @examples percentage_formatter (x = 4.2822212, digitz = 3)
 
 percentage_formatter <- function(x, digitz = 3) {
-  a = paste(100 * iround(x, digitz), "%", sep = " ")
+  a = paste(100 * signif(x, digitz), "%", sep = " ")
   a[a == "NaN %"] = NaN
   a[a == "NA %"] = NA
   return(a)
