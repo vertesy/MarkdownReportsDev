@@ -7,7 +7,7 @@
 ParseFilePath(...)
 }
 \arguments{
-\item{string}{The file path potentially having Double Slash}
+\item{...}{The set of strings (character vectors) to be parsed into a file path, and potentially having Double Slashes, potentially missing a trailing slash.}
 }
 \description{
 ParseFilePath pastes elements by slash, then removes Double Slashes '//' from a string and adds a final '/' if missing from a file path.
