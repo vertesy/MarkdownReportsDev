@@ -4027,6 +4027,19 @@ RemoveDoubleSlash <- function(string = "stairway//to/heaven") { #
 }
 
 
+#' RemoveFinalSlash
+#'
+#' RemoveFinalSlash removes the final slash from a string
+#' @param string The file path potentially having Final Slash
+#' @export
+#'
+#' @examples RemoveDoubleSlash (string = "stairway//to///heaven")
+
+RemoveFinalSlash <- function(string = "stairway/to/heaven/") { #
+  gsub(x = string, pattern = '/$', replacement = '')
+}
+
+
 
 #' FixPath
 #'
