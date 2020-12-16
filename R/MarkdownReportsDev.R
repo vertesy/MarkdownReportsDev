@@ -26,6 +26,295 @@ utils::globalVariables(c('OutDirOrig', 'OutDir', 'ParentDir', 'path_of_report', 
 # - Alternative versions
 
 
+
+######################################################################
+# Explicit dependencies on MarkdownReportsDev
+######################################################################
+
+# - ...
+
+######################################################################
+# Duplicated functions to avoid dependencies
+######################################################################
+
+
+#' kollapse
+#'
+#' Collapses values and strings to one string (without a white space).
+#' It also prints the results (good for a quick check)
+#' @param ... Variables (strings, vectors) to be collapsed in consecutively.
+#' @param collapseby collapse elements into a string separated by this character
+#' @param print Print the results to the terminal. TRUE by default.
+#' @export
+#' @examples kollapse("Hello ", LETTERS[24],
+#' ", the winning numbers are ", c(1, 3, 5, 65, 11), " . Yay!")
+
+kollapse <- function(...,
+                     collapseby = "",
+                     print = TRUE) {
+  if (print == TRUE) {
+    print(paste0(c(...), collapse = collapseby))
+  }
+  paste0(c(...), collapse = collapseby)
+}
+
+
+######################################################################
+# Functions moved here, but should not be here
+######################################################################
+
+
+# Generic ------------------------------------------------------------------------------------------
+
+#' stopif
+#'
+#' Stop script if the condition is met, and print a message
+#' @param condition any condition check that gives TRUE or FALSE
+#' @param message print a message
+#' @export
+#' @examples a = 1; stopif (a!= 1, message = "A is 1")
+
+stopif <-
+  function(condition, message = "") {
+    if (condition) {
+      iprint (message)
+      stop()
+    }
+  }
+
+
+#' iround
+#'
+#' Rounds a value to the significant amount of digits. Its a wrapper for signif().
+#' @param x Unrounded number.
+#' @param digitz Number of digits to keep. 3 by default.
+#' @export
+#' @examples iround(x = 2.3232, digitz = 3)
+
+iround <- function(x, digitz = 3) {
+  signif(x, digits = digitz)
+}
+
+
+#' cv
+#'
+#' Calculates the coefficient of variation (CV) for a numeric vector (it excludes NA-s by default)
+#' @param x A vector with numbers
+#' @param na.rm Remove NA-s? Default: TRUE
+#' @import stats
+#' @export
+#'
+#' @examples cv(rnorm(100, sd = 10))
+
+cv <- function(x, na.rm = TRUE) {
+  sd( x, na.rm = na.rm)/mean(x, na.rm = na.rm)
+}
+
+
+#' modus
+#'
+#' Calculates the mode (modus) of a numeric vector (it excludes NA-s by default). https://en.wikipedia.org/wiki/Mode_(statistics)
+#' @param x A numeric vector
+#' @import stats
+#' @export
+#' @examples modus(c(1, 1, 2, 3, 3, 3, 4, 5)); modus(1:4)
+
+modus <- function(x) {
+  x = unlist(na.exclude(x))
+  ux <- unique(x)
+  tab <- tabulate(match(x, ux));
+  ux[tab == max(tab)]
+}
+
+
+#' as.factor.numeric
+#'
+#' Turn any vector into numeric categories as.numeric(as.factor(vec))
+#' @param vec vector of factors or strings
+#' @param rename Rename the vector?
+#' @param ... Pass any other argument to as.factor()
+#' @export
+#'
+#' @examples as.factor.numeric(LETTERS[1:4])
+
+as.factor.numeric <- function(vec, rename = FALSE, ...) {
+  vec2 = as.numeric(as.factor(vec, ...)) ;
+  names (vec2) <- if ( !rename & !is.null(names(vec) ) ) { names (vec)
+  } else { vec }
+  return(vec2)
+}
+
+
+#' na.omit.strip
+#'
+#' Omit NA values from a vector and return a clean vector without any spam.
+#' @param object Values to filter for NA
+#' @param silent Silence the data structure coversion warning: anything ->vector
+#' @param ... Pass any other argument to na.omit()
+#' @importFrom stats na.omit
+#' @export
+#'
+#' @examples # na.omit.strip(c(1, 2, 3, NA, NaN, 2))
+
+na.omit.strip <- function(object, silent = FALSE, ...) {
+  if (is.data.frame(object)) {
+    if (min(dim(object)) > 1 & silent == FALSE) {
+      iprint(dim(object), "dimensional array is converted to a vector.")
+    }
+    object = unlist(object)
+  }
+  clean = stats::na.omit(object, ...)
+  attributes(clean)$na.action <- NULL
+  return(clean)
+}
+
+
+
+
+# String Manipulation ------------------------------------------------------------------------------
+
+#' substrRight
+#'
+#' Take the right substring of a string
+#' @param x a character vector.
+#' @param n integer. The number of elements on the right to be kept.
+#' @export
+#' @examples substrRight  ("Not cool", n = 4)
+
+substrRight <- function(x, n) {
+  substr(x, nchar(x) - n + 1, nchar(x))
+}
+
+#' percentage_formatter
+#'
+#' Parse a string of 0-100% from a number between 0 and 1.
+#' @param x A vector of numbers between 0-1.
+#' @param digitz Number of digits to keep. 3 by default.
+#' @export
+#' @examples percentage_formatter (x = 4.2822212, digitz = 3)
+
+percentage_formatter <- function(x, digitz = 3) {
+  a = paste(100 * signif(x, digitz), "%", sep = " ")
+  a[a == "NaN %"] = NaN
+  a[a == "NA %"] = NA
+  return(a)
+}
+
+#' translate
+#'
+#' Replaces a set of values in a vector with another set of values, it translates your vector.
+#' Oldvalues and newvalues have to be 1-to-1 corespoding vectors.
+#' @param vec set of values where you want to replace
+#' @param oldvalues oldvalues (from)
+#' @param newvalues newvalues (to)
+#' @export
+#' @examples A = 1:3; translate(vec = A, oldvalues = 2:3, newvalues = letters[1:2])
+
+translate = replace_values <- function(vec, oldvalues, newvalues) {
+  Nr = length(oldvalues)
+  if (Nr > length(newvalues)) {
+    if (length(newvalues) == 1) {
+      newvalues = rep(newvalues, length(oldvalues))
+    } else if (length(newvalues) > 1) {
+      iprint("PROVIDE ONE NEWVALUE, OR THE SAME NUMEBR OF NEWVALUES AS OLDVALUES.")
+    }
+  }
+  tmp = vec
+  for (i in 1:Nr) {
+    oldval = oldvalues[i]
+    tmp[vec == oldval] = newvalues[i]
+  }
+  return(tmp)
+}
+# 'chartr("a-cX", "D-Fw", x) does the same as above in theory,
+# but it did not seem very robust regarding your input...'
+
+
+#' AddTrailingSlash
+#'
+#' Adds a final slash '/', if missing from a string (file path).
+#' @param string The file path potentially missing the trailing slash
+#' @export
+#'
+#' @examples AddTrailingSlash (string = "stairway/to/heaven")
+
+AddTrailingSlash <- function(string = "stairway/to/heaven") { #
+  LastChr <- substr(string, nchar(string), nchar(string))
+  if (!LastChr == "/")
+    string = paste0(string, "/")
+  return(string)
+}
+
+#' RemoveDoubleSlash
+#'
+#' RemoveDoubleSlash removes multiple consecutive slashes (e.g. '//') from a string (file path). Also works for 2,3 consecutive slashes
+#' @param string The file path potentially having Double Slash
+#' @export
+#'
+#' @examples RemoveDoubleSlash (string = "stairway//to///heaven")
+
+RemoveDoubleSlash <- function(string = "stairway//to/heaven") { #
+  gsub(x = string, pattern = '//|///|////', replacement = '/')
+}
+
+
+#' RemoveFinalSlash
+#'
+#' RemoveFinalSlash removes the final slash from a string
+#' @param string The file path potentially having Final Slash
+#' @export
+#'
+#' @examples RemoveDoubleSlash (string = "stairway//to///heaven")
+
+RemoveFinalSlash <- function(string = "stairway/to/heaven/") { #
+  gsub(x = string, pattern = '/$', replacement = '')
+}
+
+
+
+#' FixPath
+#'
+#' FixPath removes multiple consecutive slashes (e.g. '//') from a string and adds a final '/' if missing from a file path.
+#' @param string The file path potentially having Double Slash
+#' @export
+#'
+#' @examples FixPath(string = "stairway//to/heaven")
+
+FixPath <- function(string = "stairway//to/heaven") { #
+  string <- gsub(x = string, pattern = '//|///|////', replacement = '/')
+  LastChr <- substr(string, nchar(string), nchar(string))
+  if (!LastChr == "/")
+    string = paste0(string, "/")
+  return(string)
+}
+
+
+#' ParseFilePath
+#'
+#' ParseFilePath pastes elements by slash, then removes Double Slashes '//' from a string and adds a final '/' if missing from a file path.
+#' @param ...  The set of strings (character vectors) to be parsed into a file path, and potentially having Double Slashes, potentially missing a trailing slash.
+#' @export
+#'
+#' @examples ParseFilePath(string = "stairway///to/heaven")
+
+ParseFilePath <- function(...) { #
+  string <- paste(..., sep = '/', collapse = '/')  # kollapse by (forward) slash
+  string <- gsub(x = string, pattern = '//', replacement = '/') # RemoveDoubleSlash
+  LastChr <- substr(string, nchar(string), nchar(string)) # AddTrailingSlash
+  if (!LastChr == "/")
+    string = paste0(string, "/")
+  return(string)
+}
+
+
+
+# ------------------------------------------------------------------------------------------------
+
+
+
+######################################################################
+# Original functions
+######################################################################
 # Setup --------------------------------------------------------------------------------------------
 
 #' setup_MarkdownReports
@@ -3388,191 +3677,6 @@ filter_MidPass <-
 
 
 
-# Generic ------------------------------------------------------------------------------------------
-
-#' stopif
-#'
-#' Stop script if the condition is met, and print a message
-#' @param condition any condition check that gives TRUE or FALSE
-#' @param message print a message
-#' @export
-#' @examples a = 1; stopif (a!= 1, message = "A is 1")
-
-stopif <-
-  function(condition, message = "") {
-    if (condition) {
-      iprint (message)
-      stop()
-    }
-  }
-
-
-#' iround
-#'
-#' Rounds a value to the significant amount of digits. Its a wrapper for signif().
-#' @param x Unrounded number.
-#' @param digitz Number of digits to keep. 3 by default.
-#' @export
-#' @examples iround(x = 2.3232, digitz = 3)
-
-iround <- function(x, digitz = 3) {
-  signif(x, digits = digitz)
-}
-
-
-#' cv
-#'
-#' Calculates the coefficient of variation (CV) for a numeric vector (it excludes NA-s by default)
-#' @param x A vector with numbers
-#' @param na.rm Remove NA-s? Default: TRUE
-#' @import stats
-#' @export
-#'
-#' @examples cv(rnorm(100, sd = 10))
-
-cv <- function(x, na.rm = TRUE) {
-  sd( x, na.rm = na.rm)/mean(x, na.rm = na.rm)
-}
-
-
-#' modus
-#'
-#' Calculates the mode (modus) of a numeric vector (it excludes NA-s by default). https://en.wikipedia.org/wiki/Mode_(statistics)
-#' @param x A numeric vector
-#' @import stats
-#' @export
-#' @examples modus(c(1, 1, 2, 3, 3, 3, 4, 5)); modus(1:4)
-
-modus <- function(x) {
-  x = unlist(na.exclude(x))
-  ux <- unique(x)
-  tab <- tabulate(match(x, ux));
-  ux[tab == max(tab)]
-}
-
-
-#' as.factor.numeric
-#'
-#' Turn any vector into numeric categories as.numeric(as.factor(vec))
-#' @param vec vector of factors or strings
-#' @param rename Rename the vector?
-#' @param ... Pass any other argument to as.factor()
-#' @export
-#'
-#' @examples as.factor.numeric(LETTERS[1:4])
-
-as.factor.numeric <- function(vec, rename = FALSE, ...) {
-  vec2 = as.numeric(as.factor(vec, ...)) ;
-  names (vec2) <- if ( !rename & !is.null(names(vec) ) ) { names (vec)
-  } else { vec }
-  return(vec2)
-}
-
-
-#' na.omit.strip
-#'
-#' Omit NA values from a vector and return a clean vector without any spam.
-#' @param object Values to filter for NA
-#' @param silent Silence the data structure coversion warning: anything ->vector
-#' @param ... Pass any other argument to na.omit()
-#' @importFrom stats na.omit
-#' @export
-#'
-#' @examples # na.omit.strip(c(1, 2, 3, NA, NaN, 2))
-
-na.omit.strip <- function(object, silent = FALSE, ...) {
-  if (is.data.frame(object)) {
-    if (min(dim(object)) > 1 & silent == FALSE) {
-      iprint(dim(object), "dimensional array is converted to a vector.")
-    }
-    object = unlist(object)
-  }
-  clean = stats::na.omit(object, ...)
-  attributes(clean)$na.action <- NULL
-  return(clean)
-}
-
-
-
-
-# String Manipulation ------------------------------------------------------------------------------
-
-#' kollapse
-#'
-#' Collapses values and strings to one string (without a white space).
-#' It also prints the results (good for a quick check)
-#' @param ... Variables (strings, vectors) to be collapsed in consecutively.
-#' @param collapseby collapse elements into a string separated by this character
-#' @param print Print the results to the terminal. TRUE by default.
-#' @export
-#' @examples kollapse("Hello ", LETTERS[24],
-#' ", the winning numbers are ", c(1, 3, 5, 65, 11), " . Yay!")
-
-kollapse <- function(...,
-                      collapseby = "",
-                      print = TRUE) {
-  if (print == TRUE) {
-    print(paste0(c(...), collapse = collapseby))
-  }
-  paste0(c(...), collapse = collapseby)
-}
-
-#' substrRight
-#'
-#' Take the right substring of a string
-#' @param x a character vector.
-#' @param n integer. The number of elements on the right to be kept.
-#' @export
-#' @examples substrRight  ("Not cool", n = 4)
-
-substrRight <- function(x, n) {
-  substr(x, nchar(x) - n + 1, nchar(x))
-}
-
-#' percentage_formatter
-#'
-#' Parse a string of 0-100% from a number between 0 and 1.
-#' @param x A vector of numbers between 0-1.
-#' @param digitz Number of digits to keep. 3 by default.
-#' @export
-#' @examples percentage_formatter (x = 4.2822212, digitz = 3)
-
-percentage_formatter <- function(x, digitz = 3) {
-  a = paste(100 * signif(x, digitz), "%", sep = " ")
-  a[a == "NaN %"] = NaN
-  a[a == "NA %"] = NA
-  return(a)
-}
-
-#' translate
-#'
-#' Replaces a set of values in a vector with another set of values, it translates your vector.
-#' Oldvalues and newvalues have to be 1-to-1 corespoding vectors.
-#' @param vec set of values where you want to replace
-#' @param oldvalues oldvalues (from)
-#' @param newvalues newvalues (to)
-#' @export
-#' @examples A = 1:3; translate(vec = A, oldvalues = 2:3, newvalues = letters[1:2])
-
-translate = replace_values <- function(vec, oldvalues, newvalues) {
-  Nr = length(oldvalues)
-  if (Nr > length(newvalues)) {
-    if (length(newvalues) == 1) {
-      newvalues = rep(newvalues, length(oldvalues))
-    } else if (length(newvalues) > 1) {
-      iprint("PROVIDE ONE NEWVALUE, OR THE SAME NUMEBR OF NEWVALUES AS OLDVALUES.")
-    }
-  }
-  tmp = vec
-  for (i in 1:Nr) {
-    oldval = oldvalues[i]
-    tmp[vec == oldval] = newvalues[i]
-  }
-  return(tmp)
-}
-# 'chartr("a-cX", "D-Fw", x) does the same as above in theory,
-# but it did not seem very robust regarding your input...'
-
 # Annotation parse / create / manipulate -----------------------------------------------------------
 
 #' getCategories
@@ -3998,81 +4102,4 @@ log_settings_MarkDown <- function(...) {
   md.tableWriter.DF.w.dimnames(value, title_of_table = "Settings")
 }
 
-
-
-#' AddTrailingSlash
-#'
-#' Adds a final slash '/', if missing from a string (file path).
-#' @param string The file path potentially missing the trailing slash
-#' @export
-#'
-#' @examples AddTrailingSlash (string = "stairway/to/heaven")
-
-AddTrailingSlash <- function(string = "stairway/to/heaven") { #
-  LastChr <- substr(string, nchar(string), nchar(string))
-  if (!LastChr == "/")
-    string = paste0(string, "/")
-  return(string)
-}
-
-#' RemoveDoubleSlash
-#'
-#' RemoveDoubleSlash removes multiple consecutive slashes (e.g. '//') from a string (file path). Also works for 2,3 consecutive slashes
-#' @param string The file path potentially having Double Slash
-#' @export
-#'
-#' @examples RemoveDoubleSlash (string = "stairway//to///heaven")
-
-RemoveDoubleSlash <- function(string = "stairway//to/heaven") { #
-  gsub(x = string, pattern = '//|///|////', replacement = '/')
-}
-
-
-#' RemoveFinalSlash
-#'
-#' RemoveFinalSlash removes the final slash from a string
-#' @param string The file path potentially having Final Slash
-#' @export
-#'
-#' @examples RemoveDoubleSlash (string = "stairway//to///heaven")
-
-RemoveFinalSlash <- function(string = "stairway/to/heaven/") { #
-  gsub(x = string, pattern = '/$', replacement = '')
-}
-
-
-
-#' FixPath
-#'
-#' FixPath removes multiple consecutive slashes (e.g. '//') from a string and adds a final '/' if missing from a file path.
-#' @param string The file path potentially having Double Slash
-#' @export
-#'
-#' @examples FixPath(string = "stairway//to/heaven")
-
-FixPath <- function(string = "stairway//to/heaven") { #
-  string <- gsub(x = string, pattern = '//|///|////', replacement = '/')
-  LastChr <- substr(string, nchar(string), nchar(string))
-  if (!LastChr == "/")
-    string = paste0(string, "/")
-  return(string)
-}
-
-
-#' ParseFilePath
-#'
-#' ParseFilePath pastes elements by slash, then removes Double Slashes '//' from a string and adds a final '/' if missing from a file path.
-#' @param ...  The set of strings (character vectors) to be parsed into a file path, and potentially having Double Slashes, potentially missing a trailing slash.
-#' @export
-#'
-#' @examples ParseFilePath(string = "stairway///to/heaven")
-
-ParseFilePath <- function(...) { #
-  string <- paste(..., sep = '/', collapse = '/')  # kollapse by (forward) slash
-  string <- gsub(x = string, pattern = '//', replacement = '/') # RemoveDoubleSlash
-  LastChr <- substr(string, nchar(string), nchar(string)) # AddTrailingSlash
-  if (!LastChr == "/")
-    string = paste0(string, "/")
-  return(string)
-}
 
