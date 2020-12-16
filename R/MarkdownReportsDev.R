@@ -3954,11 +3954,11 @@ ww.md.image.link.parser <- function(...) {
 #'
 #' Internal function. Creates the string written into the PDF files "Title' (metadata) field.
 #' @param flname Name of the plot
-#' @param creator String X in: "plotblabla by X". Defaults: "Rscript".
+#' @param creator String X in: "plotblabla by X". Defaults: "MarkdownReports".
 #' @export
 #' @examples ww.ttl_field("/Users/myplot.jpg")
 
-ww.ttl_field <- function(plotname, creator = "Rscript") {
+ww.ttl_field <- function(plotname, creator = "MarkdownReports") {
   paste0(basename(plotname), " by "
          , unless.specified("b.scriptname", def = creator) )
 }
