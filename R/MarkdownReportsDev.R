@@ -1,7 +1,7 @@
-## MarkdownReports.R
+## MarkdownReportsDev.R
 # author: Abel Vertesy
 # date: Mon Nov 25 12:12:50 2019 ------------------------------
-# source("~/Github_repos/MarkdownReports/MarkdownReports/R/MarkdownReports.R")
+# source("~/Github/Packages/MarkdownReportsDev/R/MarkdownReportsDev.R")
 
 utils::globalVariables(c('OutDirOrig', 'OutDir', 'ParentDir', 'path_of_report', 'plotnameLastPlot',
                          'b.scriptname', 'b.usepng', 'b.png4Github', 'b.mfrow_def',
@@ -3437,8 +3437,8 @@ cv <- function(x, na.rm = TRUE) {
 
 #' modus
 #'
-#' Calculates the modus of a numeric vector (it excludes NA-s by default)
-#' @param x A vector with numbers
+#' Calculates the mode (modus) of a numeric vector (it excludes NA-s by default). https://en.wikipedia.org/wiki/Mode_(statistics)
+#' @param x A numeric vector
 #' @import stats
 #' @export
 #' @examples modus(c(1, 1, 2, 3, 3, 3, 4, 5)); modus(1:4)
@@ -3920,7 +3920,7 @@ ww.dev.copy <- function(PNG_ = FALSE,
 
 #' ww.assign_to_global
 #'
-#' function loading results in global environment.
+#' A function loading results to the global environment.
 #' Source: https://stackoverflow.com/questions/28180989/
 #' @param name Name of the global variabe to be assigned
 #' @param value Value of the global variabe to be assigned
@@ -3928,7 +3928,8 @@ ww.dev.copy <- function(PNG_ = FALSE,
 #'
 #' @export
 
-ww.assign_to_global <- function(name, value, pos=1){
+ww.assign_to_global <- function(name, value, pos=1, verbose = TRUE){
+  if (verbose) iprint(name, "defined as:", value) # , "is a new global environment variable"
   assign(name, value, envir=as.environment(pos) )
 }
 
