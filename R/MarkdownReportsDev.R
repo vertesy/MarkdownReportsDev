@@ -3840,21 +3840,18 @@ ww.variable.exists.and.true <- function(var, alt.message = NULL) {
 #' ww.set.OutDir
 #'
 #' Checks if global variable OutDir is defined. If not,
-#' it defines it as the current working directory
+#' it returns the current working directory
 #' @export
 #'
 #' @examples ww.set.OutDir()
 
 ww.set.OutDir <- function() {
+  if (exists("OutDir"))   iprint("OutDir not defined !!! Saving in working directory.")
+  if (dir.exists(OutDir)) iprint("OutDir defined, but folder does not exist!!! Saving in working directory.")
   NewOutDir =
-    if (exists("OutDir")) {
-      OutDir
-    } else {
-      iprint("OutDir not defined !!! Saving in working directory.")
-      paste0(getwd(),"/", collapse = "")
-    }
-  NewOutDir = AddTrailingSlash(NewOutDir) # add '/' if necessary
-  RemoveDoubleSlash(NewOutDir)
+    if (exists("OutDir") & dir.exists(OutDir)) { OutDir
+    } else {     paste0(getwd(), "/", collapse = "")}
+    FixPath(NewOutDir)
 }
 
 
