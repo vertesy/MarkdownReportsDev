@@ -190,13 +190,16 @@ substrRight <- function(x, n) {
 #' Parse a string of 0-100% from a number between 0 and 1.
 #' @param x A vector of numbers between 0-1.
 #' @param digitz Number of digits to keep. 3 by default.
+#' @param keep.names Keep vector names
 #' @export
 #' @examples percentage_formatter (x = 4.2822212, digitz = 3)
 
-percentage_formatter <- function(x, digitz = 3) {
+percentage_formatter <- function(x, digitz = 3, keep.names = F) {
+  if (keep.names) nmz <- names(x)
   a = paste(100 * signif(x, digitz), "%", sep = " ")
   a[a == "NaN %"] = NaN
   a[a == "NA %"] = NA
+  if (keep.names) names(a) <- nmz
   return(a)
 }
 
@@ -287,6 +290,8 @@ FixPath <- function(string = "stairway//to/heaven") { #
     string = paste0(string, "/")
   return(string)
 }
+
+
 
 
 #' ParseFilePath
