@@ -316,6 +316,25 @@ ParseFilePath <- function(...) { #
 # ------------------------------------------------------------------------------------------------
 
 
+#' FixUnderscores
+#'
+#' FixUnderscores removes multiple consecutive underscores (e.g. '_') from a string, and optionally also removes a final '_'.
+#' @param string The file path potentially having Double Slash
+#' @export
+#'
+#' @examples FixUnderscores(string = "stairway//to/heaven")
+
+FixUnderscores <- function(string = "stairway__to_heaven_", trimFinal = TRUE) { #
+  string <- gsub(x = string, pattern = '_+', replacement = '_')
+  LastChr <- substr(string, nchar(string), nchar(string))
+  if (trimFinal & LastChr == "_")
+    iprint('LastChr: ', LastChr)
+    string = substr(string, 1, (nchar(string)-1))
+  return(string)
+}
+
+
+
 
 ######################################################################
 # Original functions
