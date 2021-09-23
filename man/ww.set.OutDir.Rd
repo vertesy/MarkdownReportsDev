@@ -8,7 +8,7 @@ ww.set.OutDir()
 }
 \description{
 Checks if global variable OutDir is defined. If not,
-it defines it as the current working directory
+it returns the current working directory
 }
 \examples{
 ww.set.OutDir()

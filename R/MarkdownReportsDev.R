@@ -3507,8 +3507,9 @@ md.import.table <-
 #' @param threshold A numeric value above which "numeric_vector" passes.
 #' @param passequal Pass if a value is larger, or equal than the threshold. FALSE by default.
 #' @param prepend Text prepended to the results.
-#' @param return_survival_ratio Return a number with the survival ratio (TRUE),
-#'  or a logical index vector of the survivors (FALSE).
+#' @param return_conclusion Return conclusion sentence that (also printed). return_survival_ratio must be FALSE
+#' @param return_survival_ratio Return a number with the survival ratio (TRUE).
+#' or a logical index vector of the survivors (FALSE). return_conclusion must be FALSE
 #' @param plot.hist Plot the histogram of the input data
 #' @param saveplot Save the histogram as PDF, FALSE by defeault
 #' @param na.rm Remove NA-s? Default: TRUE
@@ -3523,6 +3524,7 @@ filter_HP <-
            passequal = FALSE,
            prepend = "",
            return_survival_ratio = FALSE,
+           return_conclusion = FALSE,
            na.rm = TRUE,
            plot.hist = TRUE,
            saveplot = FALSE,
@@ -3577,8 +3579,9 @@ filter_HP <-
 #' @param threshold A numeric value below which "numeric_vector" passes.
 #' @param passequal Pass if a value is smaller, or equal than the threshold. FALSE by default.
 #' @param prepend Text prepended to the results.
-#' @param return_survival_ratio Return a number with the survival ratio (TRUE),
-#' or a logical index vector of the survivors (FALSE).
+#' @param return_conclusion Return conclusion sentence that (also printed). return_survival_ratio must be FALSE
+#' @param return_survival_ratio Return a number with the survival ratio (TRUE).
+#' or a logical index vector of the survivors (FALSE). return_conclusion must be FALSE
 #' @param plot.hist Plot the histogram of the input data
 #' @param saveplot Save the histogram as PDF, FALSE by defeault
 #' @param na.rm Remove NA-s? Default: TRUE
@@ -3593,6 +3596,7 @@ filter_LP <-
            passequal = FALSE,
            prepend = "",
            return_survival_ratio = FALSE,
+           return_conclusion = FALSE,
            na.rm = TRUE,
            plot.hist = TRUE,
            saveplot = FALSE,
@@ -3625,6 +3629,8 @@ filter_LP <-
     }
     if (return_survival_ratio) {
       return (sum(survivors, na.rm = na.rm) / length(survivors))
+    } else if (return_conclusion) {
+      conclusion
     } else if (!return_survival_ratio) {
       return (survivors)
     }
@@ -3639,8 +3645,9 @@ filter_LP <-
 #' @param HP_threshold Lower threshold value. (>= )
 #' @param LP_threshold Upper threshold value. (<)
 #' @param prepend Text prepended to the results.
-#' @param return_survival_ratio Return a number with the survival ratio (TRUE),
-#' or a logical index vector of the survivors (FALSE).
+#' @param return_conclusion Return conclusion sentence that (also printed). return_survival_ratio must be FALSE
+#' @param return_survival_ratio Return a number with the survival ratio (TRUE).
+#' or a logical index vector of the survivors (FALSE). return_conclusion must be FALSE
 #' @param EdgePass If TRUE, it reverses the filter:
 #' everything passes except between the two thresholds.
 #' @param plot.hist Plot the histogram of the input data
@@ -3657,6 +3664,7 @@ filter_MidPass <-
            LP_threshold,
            prepend = "",
            return_survival_ratio = FALSE,
+           return_conclusion = FALSE,
            EdgePass = FALSE,
            na.rm = TRUE,
            plot.hist = TRUE,

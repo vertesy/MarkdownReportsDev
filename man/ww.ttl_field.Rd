@@ -4,9 +4,11 @@
 \alias{ww.ttl_field}
 \title{ww.ttl_field}
 \usage{
-ww.ttl_field(flname)
+ww.ttl_field(plotname, creator = "MarkdownReports")
 }
 \arguments{
+\item{creator}{String X in: "plotblabla by X". Defaults: "MarkdownReports".}
+
 \item{flname}{Name of the plot}
 }
 \description{

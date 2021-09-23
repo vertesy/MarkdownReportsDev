@@ -3,6 +3,7 @@
 S3method(na.omit,strip)
 export(AddTrailingSlash)
 export(FixPath)
+export(FixUnderscores)
 export(ParseFilePath)
 export(RemoveDoubleSlash)
 export(RemoveFinalSlash)
