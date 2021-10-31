@@ -4,7 +4,7 @@
 ## MarkdownReportsDev is discontinued.
 
 Further development in MarkdownReports. See: #4.
-MarkdownReportsDev was made when big changes were happening. The development reached its goals. Further development will be in MarkdownReports.
+MarkdownReportsDev was made when big changes were happening. The development reached its goals. Further development will be in [MarkdownReports](https://github.com/vertesy/MarkdownReports).
 
 
 ## News
