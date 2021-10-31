@@ -3876,17 +3876,18 @@ ww.variable.exists.and.true <- function(var, alt.message = NULL) {
 #'
 #' Checks if global variable OutDir is defined. If not,
 #' it returns the current working directory
+#' @param dir OutDir to check and set.
 #' @export
 #'
 #' @examples ww.set.OutDir()
 
-ww.set.OutDir <- function() {
-  if (exists("OutDir"))   iprint("OutDir not defined !!! Saving in working directory.")
-  if (dir.exists(OutDir)) iprint("OutDir defined, but folder does not exist!!! Saving in working directory.")
+ww.set.OutDir <- function(dir = OutDir) {
+  if (!exists("OutDir")) iprint("OutDir not defined !!! Saving in working directory."); dir = getwd();
+  if (!dir.exists(dir)) iprint("OutDir defined, but folder does not exist!!! Saving in working directory.")
   NewOutDir =
-    if (exists("OutDir") & dir.exists(OutDir)) { OutDir
+    if (exists("OutDir") & dir.exists(dir)) { dir
     } else {     paste0(getwd(), "/", collapse = "")}
-    FixPath(NewOutDir)
+  return(FixPath(NewOutDir))
 }
 
 
@@ -3939,6 +3940,7 @@ ww.set.PlotName <- function() {
 
 ww.FnP_parser <- function(fname, ext_wo_dot) {
   path = ww.set.OutDir()
+  print(path)
   FnP = if (methods::hasArg(ext_wo_dot)) {
     kollapse (path, fname, ".", ext_wo_dot)
   } else {
