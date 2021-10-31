@@ -666,6 +666,7 @@ wplot_save_this <-
 #' Save pheatmap object. Modified from:
 #' https://stackoverflow.com/questions/43051525/how-to-draw-pheatmap-plot-to-screen-and-also-save-to-file
 #' @param x The pheatmap object to save.
+#' @param suffix Suffix to File name.
 #' @param filename File name (saved as .pdf, inside working directory).
 #' @param width width of the plot in inches.
 #' @param height height of the plot in inches.
@@ -679,7 +680,8 @@ wplot_save_this <-
 
 wplot_save_pheatmap <-
   function(x,
-           filename = substitute(x),
+           suffix = NULL,
+           filename = kpp(substitute(x), suffix),
            width = 15,
            height = width) {
     stopifnot(!missing(x))
