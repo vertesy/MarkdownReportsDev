@@ -1,6 +1,10 @@
 
  _cite via:_ [![DOI](https://zenodo.org/badge/20391/vertesy/MarkdownReports.svg)](https://zenodo.org/badge/latestdoi/20391/vertesy/MarkdownReports)
 
+## MarkdownReportsDev is discontinued.
+
+Further development in MarkdownReports. See: #4.
+MarkdownReportsDev was made when big changes were happening. The development reached its goals. Further development will be in MarkdownReports.
 
 
 ## News
